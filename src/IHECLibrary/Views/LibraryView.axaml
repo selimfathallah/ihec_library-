@@ -1,0 +1,185 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:IHECLibrary.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+             x:Class="IHECLibrary.Views.LibraryView"
+             x:DataType="vm:LibraryViewModel">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <!-- Barre de navigation -->
+    <Grid Grid.Row="0" Background="White" Height="70">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      
+      <!-- Logo et titre -->
+      <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+        <TextBlock Text="IHEC Library" FontSize="24" FontWeight="Bold" Foreground="#2E74A8"/>
+      </StackPanel>
+      
+      <!-- Menu de navigation -->
+      <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Content="Home" Command="{Binding NavigateToHomeCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="Library" Command="{Binding NavigateToLibraryCommand}" 
+                Background="#E6F2F8" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="HEC 1.0" Command="{Binding NavigateToChatbotCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="Profile" Command="{Binding NavigateToProfileCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+      </StackPanel>
+      
+      <!-- Recherche et profil -->
+      <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+        <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" Margin="0,0,15,0"/>
+        <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
+          <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+        </Border>
+        <TextBlock Text="{Binding UserFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+      </StackPanel>
+    </Grid>
+    
+    <!-- Contenu principal -->
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="250"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      
+      <!-- Filtres -->
+      <Border Grid.Column="0" Background="#F8F9FA" Padding="20">
+        <StackPanel>
+          <TextBlock Text="Filters" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,20"/>
+          
+          <!-- Catégories -->
+          <TextBlock Text="Categories" FontWeight="SemiBold" Margin="0,0,0,10"/>
+          <ItemsControl ItemsSource="{Binding Categories}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:CategoryViewModel">
+                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,5,0,5"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          
+          <!-- Disponibilité -->
+          <TextBlock Text="Availability" FontWeight="SemiBold" Margin="0,20,0,10"/>
+          <RadioButton Content="Available" IsChecked="{Binding IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5"/>
+          <RadioButton Content="All" IsChecked="{Binding !IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5"/>
+          
+          <!-- Langue -->
+          <TextBlock Text="Language" FontWeight="SemiBold" Margin="0,20,0,10"/>
+          <ItemsControl ItemsSource="{Binding Languages}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:LanguageViewModel">
+                <RadioButton Content="{Binding Name}" IsChecked="{Binding IsSelected}" GroupName="Language" Margin="0,5,0,5"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          
+          <!-- Bouton d'application des filtres -->
+          <Button Content="Apply Filters" Command="{Binding ApplyFiltersCommand}" 
+                  Background="#2E74A8" Foreground="White" 
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                  Height="40" CornerRadius="4" Margin="0,20,0,0"/>
+        </StackPanel>
+      </Border>
+      
+      <!-- Liste des livres -->
+      <Grid Grid.Column="1" Margin="20">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- En-tête avec titre et tri -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          
+          <TextBlock Grid.Column="0" Text="{Binding PageTitle}" FontSize="24" FontWeight="Bold"/>
+          
+          <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Sort by:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox SelectedItem="{Binding SelectedSortOption}" ItemsSource="{Binding SortOptions}" Width="150">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="sys:String">
+                  <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+        </Grid>
+        
+        <!-- Grille de livres -->
+        <ScrollViewer Grid.Row="1">
+          <ItemsControl ItemsSource="{Binding Books}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:BookViewModel">
+                <Border Background="{Binding BackgroundColor}" Width="220" Height="250" CornerRadius="8" Padding="15" Margin="0,0,15,15">
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Icône du livre -->
+                    <Image Grid.Row="0" Source="/Assets/book_icon.png" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                    
+                    <!-- Statut de disponibilité -->
+                    <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 
+                            HorizontalAlignment="Center" Padding="10,5" Margin="0,0,0,10">
+                      <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" FontSize="12"/>
+                    </Border>
+                    
+                    <!-- Titre du livre -->
+                    <TextBlock Grid.Row="2" Text="{Binding Title}" FontWeight="SemiBold" FontSize="16" 
+                               HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                    
+                    <!-- Auteur -->
+                    <TextBlock Grid.Row="3" Text="{Binding Author}" FontSize="14" 
+                               HorizontalAlignment="Center" Margin="0,5,0,5"/>
+                    
+                    <!-- Catégorie -->
+                    <TextBlock Grid.Row="4" Text="{Binding Category}" FontSize="12" Foreground="Gray" 
+                               HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                    
+                    <!-- Bouton d'action -->
+                    <Button Grid.Row="5" Content="{Binding ActionButtonText}" Command="{Binding ActionCommand}" 
+                            Background="{Binding ActionButtonBackground}" Foreground="White" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                            VerticalAlignment="Bottom" Height="40" CornerRadius="4"/>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

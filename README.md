@@ -1,0 +1,70 @@
+# IHEC Library - Fichier README
+
+## À propos du projet
+
+IHEC Library est une application de bureau développée spécifiquement pour la communauté du collège "IHEC Carthage". Cette application permet aux étudiants et au personnel administratif de gérer et d'accéder aux ressources académiques de la bibliothèque de manière efficace et intuitive.
+
+## Structure du projet
+
+Ce package contient les éléments suivants :
+
+```
+IHEC_Library/
+├── dist/                  # Packages d'installation pour différentes plateformes
+│   ├── windows/           # Version Windows
+│   ├── macos/             # Version macOS
+│   ├── linux/             # Version Linux
+│   └── source/            # Code source complet
+├── documentation/         # Documentation complète
+│   ├── README.md          # Vue d'ensemble du projet
+│   ├── INSTALLATION.md    # Guide d'installation
+│   ├── USER_MANUAL.md     # Manuel d'utilisation
+│   ├── TECHNICAL_DOCUMENTATION.md # Documentation technique
+│   └── DEPLOYMENT.md      # Guide de déploiement
+├── database/              # Scripts et schéma de la base de données
+├── src/                   # Code source de l'application
+└── build.sh               # Script de compilation
+```
+
+## Installation rapide
+
+1. Choisissez le package correspondant à votre système d'exploitation dans le dossier `dist`
+2. Suivez les instructions dans le fichier `documentation/INSTALLATION.md`
+
+## Documentation
+
+Consultez les fichiers suivants pour plus d'informations :
+
+- `documentation/README.md` - Vue d'ensemble du projet
+- `documentation/INSTALLATION.md` - Guide d'installation détaillé
+- `documentation/USER_MANUAL.md` - Manuel d'utilisation complet
+- `documentation/TECHNICAL_DOCUMENTATION.md` - Documentation technique
+- `documentation/DEPLOYMENT.md` - Guide de déploiement
+
+## Compilation depuis les sources
+
+Si vous souhaitez compiler l'application depuis les sources :
+
+1. Assurez-vous d'avoir installé .NET SDK 6.0 ou supérieur
+2. Exécutez le script `build.sh` pour compiler l'application pour toutes les plateformes
+3. Les packages compilés seront disponibles dans le dossier `dist`
+
+## Configuration des APIs
+
+L'application utilise deux APIs externes :
+
+1. **Supabase** pour la base de données et l'authentification
+   - URL : https://kwsczjtdjexydcbzbpws.supabase.co
+   - Clé : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3c2N6anRkamV4eWRjYnpicHdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUwNjkyNzMsImV4cCI6MjA2MDY0NTI3M30.xfwy8okepbA3d0yaDCUpUXUyvKYUKR1w7SLW3gam5HM
+
+2. **Gemini** pour le chatbot intelligent
+   - Clé API : AIzaSyAHGzJNWYMGDDsSzpAUFn92XjETHFjQ07c
+
+Ces clés sont déjà configurées dans l'application.
+
+## Support
+
+Pour toute assistance technique, veuillez contacter :
+
+- **Email** : support.bibliotheque@ihec.ucar.tn
+- **Téléphone** : +216 71 775 948

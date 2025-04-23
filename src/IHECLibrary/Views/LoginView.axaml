@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:IHECLibrary.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="IHECLibrary.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="400" />
+    </Grid.ColumnDefinitions>
+
+    <!-- Partie gauche avec logo et image -->
+    <Grid Grid.Column="0" Background="#E6F2F8">
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="IHEC" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center"/>
+        <TextBlock Text="Library" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center" Margin="0,-20,0,0"/>
+        <Image Source="/Assets/student_books.png" Width="300" Height="300" Margin="0,20,0,0"/>
+      </StackPanel>
+    </Grid>
+
+    <!-- Partie droite avec formulaire de connexion -->
+    <Border Grid.Column="1" Background="White" Padding="30">
+      <StackPanel VerticalAlignment="Center">
+        <TextBlock Text="Login to your account" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,30"/>
+        
+        <TextBlock Text="Email" Margin="0,0,0,5"/>
+        <TextBox Text="{Binding Email}" Watermark="Enter Email" Height="40" Margin="0,0,0,15"/>
+        
+        <TextBlock Text="Password" Margin="0,0,0,5"/>
+        <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Height="40" Margin="0,0,0,5"/>
+        
+        <Button Content="Recover Password?" Command="{Binding ForgotPasswordCommand}" 
+                HorizontalAlignment="Right" Background="Transparent" Foreground="#2E74A8"
+                Padding="0" Margin="0,0,0,30"/>
+        
+        <Button Content="Sign In" Command="{Binding SignInCommand}" 
+                Background="#2E74A8" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Height="50" CornerRadius="4" Margin="0,0,0,20"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+          <TextBlock Text="Or continue with" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <Button Command="{Binding GoogleSignInCommand}" 
+                HorizontalAlignment="Center" Background="Transparent" Padding="0">
+          <Image Source="/Assets/google_logo.png" Width="40" Height="40"/>
+        </Button>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+          <TextBlock Text="Don't have an account? " VerticalAlignment="Center"/>
+          <Button Content="Register" Command="{Binding GoToRegisterCommand}" 
+                  Background="Transparent" Foreground="#2E74A8" Padding="0"/>
+        </StackPanel>
+        
+        <Button Content="Login as Administrator" Command="{Binding GoToAdminLoginCommand}" 
+                HorizontalAlignment="Center" Background="Transparent" Foreground="#2E74A8"
+                Padding="0" Margin="0,10,0,0"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

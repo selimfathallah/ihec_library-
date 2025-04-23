@@ -1,0 +1,213 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:IHECLibrary.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+             x:Class="IHECLibrary.Views.AdminDashboardView"
+             x:DataType="vm:AdminDashboardViewModel">
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="250"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <!-- Sidebar de navigation -->
+    <Border Grid.Column="0" Background="#2E74A8">
+      <StackPanel>
+        <StackPanel Margin="20,30,20,50">
+          <TextBlock Text="IHEC" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+          <TextBlock Text="Library" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,-10,0,0"/>
+          <TextBlock Text="Administration" FontSize="16" Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+        
+        <Button Content="Dashboard" Command="{Binding NavigateToDashboardCommand}" 
+                Background="#1E5F8A" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Books Management" Command="{Binding NavigateToBooksCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Users Management" Command="{Binding NavigateToUsersCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Borrowings" Command="{Binding NavigateToBorrowingsCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Reservations" Command="{Binding NavigateToReservationsCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Admin Accounts" Command="{Binding NavigateToAdminsCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Settings" Command="{Binding NavigateToSettingsCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,0,0,2"/>
+        
+        <Button Content="Sign Out" Command="{Binding SignOutCommand}" 
+                Background="Transparent" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                Padding="20,15" Margin="0,30,0,0"/>
+      </StackPanel>
+    </Border>
+    
+    <!-- Contenu principal -->
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      
+      <!-- En-tête -->
+      <Grid Grid.Row="0" Background="White" Height="70">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Grid.Column="0" Text="Dashboard" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Center" Margin="30,0,0,0"/>
+        
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,30,0">
+          <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
+            <Image Source="{Binding AdminProfilePicture}" Stretch="UniformToFill"/>
+          </Border>
+          <TextBlock Text="{Binding AdminFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        </StackPanel>
+      </Grid>
+      
+      <!-- Contenu du dashboard -->
+      <ScrollViewer Grid.Row="1" Padding="30">
+        <StackPanel>
+          <!-- Statistiques générales -->
+          <Grid ColumnDefinitions="*,*,*,*" Margin="0,0,0,30">
+            <Border Grid.Column="0" Background="#E6F2F8" CornerRadius="8" Padding="20" Margin="0,0,10,0">
+              <StackPanel>
+                <TextBlock Text="{Binding TotalBooksCount}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Total Books" FontSize="14" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+            
+            <Border Grid.Column="1" Background="#E6F0FF" CornerRadius="8" Padding="20" Margin="10,0,10,0">
+              <StackPanel>
+                <TextBlock Text="{Binding TotalUsersCount}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Registered Users" FontSize="14" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+            
+            <Border Grid.Column="2" Background="#E6FFE6" CornerRadius="8" Padding="20" Margin="10,0,10,0">
+              <StackPanel>
+                <TextBlock Text="{Binding ActiveBorrowingsCount}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Active Borrowings" FontSize="14" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+            
+            <Border Grid.Column="3" Background="#FFE6E6" CornerRadius="8" Padding="20" Margin="10,0,0,0">
+              <StackPanel>
+                <TextBlock Text="{Binding PendingReservationsCount}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Pending Reservations" FontSize="14" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+          </Grid>
+          
+          <!-- Activité récente -->
+          <TextBlock Text="Recent Activity" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+          <Border Background="#F8F9FA" CornerRadius="8" Padding="20" Margin="0,0,0,30">
+            <ItemsControl ItemsSource="{Binding RecentActivities}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ActivityViewModel">
+                  <Border BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Padding="0,15">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <Border Grid.Column="0" Background="{Binding ActivityColor}" CornerRadius="20" Width="40" Height="40" Margin="0,0,15,0">
+                        <TextBlock Text="{Binding ActivityIcon}" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                      </Border>
+                      
+                      <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding ActivityTitle}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding ActivityDescription}" FontSize="12" Foreground="Gray" Margin="0,5,0,0"/>
+                      </StackPanel>
+                      
+                      <TextBlock Grid.Column="2" Text="{Binding ActivityTime}" FontSize="12" Foreground="Gray" VerticalAlignment="Center"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Border>
+          
+          <!-- Livres populaires -->
+          <TextBlock Text="Popular Books" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+          <Border Background="#F8F9FA" CornerRadius="8" Padding="20" Margin="0,0,0,30">
+            <ItemsControl ItemsSource="{Binding PopularBooks}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:PopularBookViewModel">
+                  <Border BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Padding="0,15">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <Image Grid.Column="0" Source="/Assets/book_icon.png" Width="50" Height="50" Margin="0,0,15,0"/>
+                      
+                      <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Author}" FontSize="12" Margin="0,5,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                          <TextBlock Text="{Binding BorrowCount}" FontSize="12" Foreground="#2E74A8" FontWeight="SemiBold"/>
+                          <TextBlock Text=" borrowings" FontSize="12" Foreground="Gray"/>
+                        </StackPanel>
+                      </StackPanel>
+                      
+                      <Button Grid.Column="2" Content="View Details" Command="{Binding ViewDetailsCommand}" 
+                              Background="#2E74A8" Foreground="White" 
+                              VerticalAlignment="Center" Padding="15,10" CornerRadius="4"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Border>
+          
+          <!-- Utilisateurs actifs -->
+          <TextBlock Text="Active Users" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+          <Border Background="#F8F9FA" CornerRadius="8" Padding="20">
+            <ItemsControl ItemsSource="{Binding ActiveUsers}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ActiveUserViewModel">
+                  <Border BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Padding="0,15">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <Border Grid.Column="0" CornerRadius="20" Width="40" Height="40" ClipToBounds="True" Margin="0,0,15,0">
+                        <Image Source="{Binding ProfilePicture}" Stretch="UniformToFill"/>
+                      </Border>
+                      
+                      <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding FullName}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Email}" FontSize="12" Foreground="Gray" Margin="0,5,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                          <TextBlock Text="{Binding BorrowedBooksCount}" FontSize="12" Foreground="#2E74A8" FontWeight="SemiBold"/>
+                          <TextBlock Text=" books currently borrowed" FontSize="12" Foreground="Gray"/>
+                        </StackPanel>
+                      </StackPanel>
+                      
+                      <Button Grid.Column="2" Content="View Profile" Command="{Binding ViewProfileCommand}" 
+                              Background="#2E74A8" Foreground="White" 
+                              VerticalAlignment="Center" Padding="15,10" CornerRadius="4"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>
