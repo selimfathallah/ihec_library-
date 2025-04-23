@@ -1,9 +1,9 @@
-Date: 23/04/2025 1:57:26 PM
+Date: 23/04/2025 4:00:59 PM
 Exception: Exception has been thrown by the target of an invocation.
 Stack Trace:    at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
    at System.Activator.CreateInstance(Type type, Boolean nonPublic, Boolean wrapExceptions)
    at System.Activator.CreateInstance(Type type)
-   at IHECLibrary.ViewLocator.Build(Object param) in C:\Users\GIGABYTE\Desktop\ihec library\IHECLibrary\src\IHECLibrary\ViewLocator.cs:line 21
+   at IHECLibrary.ViewLocator.Build(Object param) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 21
    at Avalonia.Controls.Presenters.ContentPresenter.CreateChild(Object content, Control oldChild, IDataTemplate template)
    at Avalonia.Controls.Presenters.ContentPresenter.UpdateChild(Object content)
    at Avalonia.Controls.Presenters.ContentPresenter.UpdateChild()
@@ -36,4 +36,4 @@ Stack Trace:    at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOn
    at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.StartCore(String[] args)
    at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.Start(String[] args)
    at Avalonia.ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(AppBuilder builder, String[] args, Action`1 lifetimeBuilder)
-   at IHECLibrary.Program.Main(String[] args) in C:\Users\GIGABYTE\Desktop\ihec library\IHECLibrary\src\IHECLibrary\Program.cs:line 37
+   at IHECLibrary.Program.Main(String[] args) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Program.cs:line 37

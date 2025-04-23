@@ -188,7 +188,14 @@ namespace IHECLibrary.Tests
         {
             try
             {
-                DriveInfo drive = new DriveInfo(Path.GetPathRoot(path));
+                string? driveName = Path.GetPathRoot(path);
+                if (string.IsNullOrEmpty(driveName))
+                {
+                    LogDebugInfo("Unable to determine drive root for path: " + path);
+                    return 0;
+                }
+                
+                DriveInfo drive = new DriveInfo(driveName);
                 long availableBytes = drive.AvailableFreeSpace;
                 return availableBytes / (1024 * 1024); // Convert to MB
             }

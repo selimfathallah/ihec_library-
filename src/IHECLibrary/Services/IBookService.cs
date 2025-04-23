@@ -19,33 +19,4 @@ namespace IHECLibrary.Services
         Task<List<BookModel>> GetBooksByFiltersAsync(List<string> categories, bool availableOnly, string? language);
         Task<bool> CancelReservationAsync(string reservationId);
     }
-
-    public class BookModel
-    {
-        public string Id { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
-        public string ISBN { get; set; } = string.Empty;
-        public int PublicationYear { get; set; }
-        public string Publisher { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string CoverImageUrl { get; set; } = string.Empty;
-        public int AvailableCopies { get; set; }
-        public int TotalCopies { get; set; }
-        public List<BookRatingModel> Ratings { get; set; } = new List<BookRatingModel>();
-        public int LikesCount { get; set; }
-        public bool IsLikedByCurrentUser { get; set; }
-    }
-
-    public class BookRatingModel
-    {
-        public string Id { get; set; } = string.Empty;
-        public string UserId { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
-        public string UserProfilePictureUrl { get; set; } = string.Empty;
-        public int Rating { get; set; }
-        public string? Comment { get; set; }
-        public DateTime CreatedAt { get; set; }
-    }
 }
