@@ -54,14 +54,9 @@ Si vous souhaitez compiler l'application depuis les sources :
 L'application utilise deux APIs externes :
 
 1. **Supabase** pour la base de données et l'authentification
-   - URL : https://kwsczjtdjexydcbzbpws.supabase.co
-   - Clé : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3c2N6anRkamV4eWRjYnpicHdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUwNjkyNzMsImV4cCI6MjA2MDY0NTI3M30.xfwy8okepbA3d0yaDCUpUXUyvKYUKR1w7SLW3gam5HM
-
+   
 2. **Gemini** pour le chatbot intelligent
-   - Clé API : AIzaSyAHGzJNWYMGDDsSzpAUFn92XjETHFjQ07c
-
-Ces clés sont déjà configurées dans l'application.
-
+   
 ## Support
 
 Pour toute assistance technique, veuillez contacter :
