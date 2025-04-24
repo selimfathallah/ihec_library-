@@ -38,12 +38,16 @@ namespace IHECLibrary.ViewModels
 
         private readonly INavigationService _navigationService;
         private readonly IAdminService _adminService;
+        private readonly IUserService _userService;
+        private readonly IBookService _bookService;
         private readonly IAuthService _authService;
 
-        public AdminDashboardViewModel(INavigationService navigationService, IAdminService adminService, IAuthService authService)
+        public AdminDashboardViewModel(INavigationService navigationService, IAdminService adminService, IUserService userService, IBookService bookService, IAuthService authService)
         {
             _navigationService = navigationService;
             _adminService = adminService;
+            _userService = userService;
+            _bookService = bookService;
             _authService = authService;
 
             LoadAdminData();
@@ -167,6 +171,7 @@ namespace IHECLibrary.ViewModels
         [RelayCommand]
         private async Task SignOut()
         {
+            // Use the _authService (not _adminService) for sign out functionality
             var result = await _authService.SignOutAsync();
             if (result)
             {

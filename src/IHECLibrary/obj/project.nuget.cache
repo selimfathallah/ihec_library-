@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "egRcf+fKjRw=",
+  "dgSpecHash": "xhelyf7IjUw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\GIGABYTE\\Desktop\\ihec library\\IHECLibrary\\src\\IHECLibrary\\IHECLibrary.csproj",
+  "projectFilePath": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GIGABYTE\\.nuget\\packages\\avalonia\\11.2.7\\avalonia.11.2.7.nupkg.sha512",
     "C:\\Users\\GIGABYTE\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.22045.20230930\\avalonia.angle.windows.natives.2.1.22045.20230930.nupkg.sha512",

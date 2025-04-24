@@ -91,8 +91,18 @@
                     <RowDefinition Height="*"/>
                   </Grid.RowDefinitions>
                   
-                  <!-- Icône du livre -->
-                  <Image Grid.Row="0" Source="/Assets/book_icon.png" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                  <!-- Icône du livre - replaced with vector graphics -->
+                  <Canvas Grid.Row="0" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <Border Canvas.Left="10" Canvas.Top="10" Width="50" Height="50" 
+                            Background="{Binding AvailabilityColor}" CornerRadius="3" />
+                    <Border Canvas.Left="12" Canvas.Top="12" Width="46" Height="46" 
+                            BorderBrush="White" BorderThickness="2" CornerRadius="3" />
+                    <Line Canvas.Left="0" StartPoint="20,18" EndPoint="52,18" Stroke="White" StrokeThickness="1.5" />
+                    <Line Canvas.Left="0" StartPoint="20,26" EndPoint="52,26" Stroke="White" StrokeThickness="1.5" />
+                    <Line Canvas.Left="0" StartPoint="20,34" EndPoint="52,34" Stroke="White" StrokeThickness="1.5" />
+                    <Line Canvas.Left="0" StartPoint="20,42" EndPoint="45,42" Stroke="White" StrokeThickness="1.5" />
+                    <Line Canvas.Left="0" StartPoint="20,50" EndPoint="45,50" Stroke="White" StrokeThickness="1.5" />
+                  </Canvas>
                   
                   <!-- Statut de disponibilité -->
                   <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 

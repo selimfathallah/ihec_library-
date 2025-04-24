@@ -11,3 +11,386 @@
 [2025-04-23 01:38:42.496] Application IHEC Library démarrée
 [2025-04-23 01:41:55.264] Application IHEC Library démarrée
 [2025-04-23 13:57:19.485] Application IHEC Library démarrée
+[2025-04-23 15:46:12.700] Application IHEC Library démarrée
+[2025-04-23 15:46:40.593] Application IHEC Library démarrée
+[2025-04-23 15:59:08.982] Application IHEC Library démarrée
+[2025-04-23 15:59:40.787] Application IHEC Library démarrée
+[2025-04-23 16:00:10.870] Application IHEC Library démarrée
+[2025-04-23 16:00:58.229] Application IHEC Library démarrée
+[2025-04-23 16:03:16.031] Application IHEC Library démarrée
+[2025-04-23 17:25:56.368] Application IHEC Library démarrée
+[2025-04-23 22:15:59.187] Application IHEC Library démarrée
+[2025-04-24 11:17:32.014] Application IHEC Library démarrée
+[2025-04-24 11:17:36.862] Creating MainWindow
+[2025-04-24 11:17:38.050] Setting up navigation service
+[2025-04-24 11:17:38.096] Application started successfully
+[2025-04-24 11:17:38.216] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 11:17:38.218] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 11:17:38.265] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 11:17:38.265] ViewLocator: Inner exception: The resource /Assets/student_books.png could not be found.
+[2025-04-24 11:17:38.301] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.LoginView.!XamlIlPopulate(IServiceProvider , LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 21
+   at IHECLibrary.Views.LoginView.!XamlIlPopulateTrampoline(LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 0
+   at IHECLibrary.Views.LoginView.InitializeComponent() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 15
+   at IHECLibrary.Views.LoginView..ctor() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:17:38.303] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.LoginView: Error in view initialization: The resource /Assets/student_books.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/student_books.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.LoginView.!XamlIlPopulate(IServiceProvider , LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 21
+   at IHECLibrary.Views.LoginView.!XamlIlPopulateTrampoline(LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 0
+   at IHECLibrary.Views.LoginView.InitializeComponent() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 15
+   at IHECLibrary.Views.LoginView..ctor() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:17:38.304] Inner Exception in view IHECLibrary.Views.LoginView: The resource /Assets/student_books.png could not be found.
+[2025-04-24 11:49:56.548] Application IHEC Library démarrée
+[2025-04-24 11:49:57.228] Creating MainWindow
+[2025-04-24 11:49:57.499] Setting up navigation service
+[2025-04-24 11:49:57.550] Application started successfully
+[2025-04-24 11:49:57.694] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 11:49:57.696] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 11:50:22.340] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 11:50:22.342] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 11:50:22.365] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 11:50:22.365] ViewLocator: Inner exception: The resource /Assets/student_with_books.png could not be found.
+[2025-04-24 11:50:22.449] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:50:22.452] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.RegisterView: Error in view initialization: The resource /Assets/student_with_books.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/student_with_books.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:50:22.453] Inner Exception in view IHECLibrary.Views.RegisterView: The resource /Assets/student_with_books.png could not be found.
+[2025-04-24 12:25:19.963] Application IHEC Library démarrée
+[2025-04-24 12:25:20.616] Creating MainWindow
+[2025-04-24 12:25:20.891] Setting up navigation service
+[2025-04-24 12:25:20.934] Application started successfully
+[2025-04-24 12:25:21.068] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 12:25:21.092] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 12:25:33.329] ViewLocator: Looking for view IHECLibrary.Views.AdminLoginView for ViewModel IHECLibrary.ViewModels.AdminLoginViewModel
+[2025-04-24 12:25:33.330] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
+[2025-04-24 12:26:03.293] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 12:26:03.294] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 12:26:11.953] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 12:26:11.954] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 12:26:11.969] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 12:26:11.970] ViewLocator: Inner exception: The resource /Assets/student_with_books.png could not be found.
+[2025-04-24 12:26:12.003] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 12:26:12.004] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.RegisterView: Error in view initialization: The resource /Assets/student_with_books.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/student_with_books.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 12:26:12.005] Inner Exception in view IHECLibrary.Views.RegisterView: The resource /Assets/student_with_books.png could not be found.
+[2025-04-24 12:32:30.571] Application IHEC Library démarrée
+[2025-04-24 12:32:31.235] Creating MainWindow
+[2025-04-24 12:32:31.477] Setting up navigation service
+[2025-04-24 12:32:31.523] Application started successfully
+[2025-04-24 12:32:31.658] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 12:32:31.659] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 12:32:34.119] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 12:32:34.120] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 12:41:35.741] Application IHEC Library démarrée
+[2025-04-24 12:41:36.320] Creating MainWindow
+[2025-04-24 12:41:36.586] Setting up navigation service
+[2025-04-24 12:41:36.641] Application started successfully
+[2025-04-24 12:41:36.824] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 12:41:36.825] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 12:41:40.993] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 12:41:40.995] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 13:00:14.636] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 13:00:14.637] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 15:48:15.363] Application IHEC Library démarrée
+[2025-04-24 15:48:20.640] Creating MainWindow
+[2025-04-24 15:48:21.938] Setting up navigation service
+[2025-04-24 15:48:21.993] Application started successfully
+[2025-04-24 15:48:22.134] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 15:48:22.135] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 15:54:26.916] Application IHEC Library démarrée
+[2025-04-24 15:54:27.530] Creating MainWindow
+[2025-04-24 15:54:27.792] Setting up navigation service
+[2025-04-24 15:54:27.849] Application started successfully
+[2025-04-24 15:54:27.983] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 15:54:27.984] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:07:45.999] Application IHEC Library démarrée
+[2025-04-24 16:07:46.499] Creating MainWindow
+[2025-04-24 16:07:46.684] Setting up navigation service
+[2025-04-24 16:07:46.720] Application started successfully
+[2025-04-24 16:07:46.824] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:07:46.825] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:08:18.583] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 16:08:18.584] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 16:09:04.136] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:09:04.137] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:09:22.174] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:09:22.176] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:11:19.365] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 16:11:19.366] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 16:11:23.538] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-04-24 16:11:23.539] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-04-24 16:11:23.548] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 16:11:23.549] ViewLocator: Inner exception: The resource /Assets/send_icon.png could not be found.
+[2025-04-24 16:11:23.580] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulate(IServiceProvider , ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 149
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulateTrampoline(ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 0
+   at IHECLibrary.Views.ChatbotView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 15
+   at IHECLibrary.Views.ChatbotView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:11:23.582] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.ChatbotView: Error in view initialization: The resource /Assets/send_icon.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/send_icon.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulate(IServiceProvider , ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 149
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulateTrampoline(ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 0
+   at IHECLibrary.Views.ChatbotView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 15
+   at IHECLibrary.Views.ChatbotView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:11:23.582] Inner Exception in view IHECLibrary.Views.ChatbotView: The resource /Assets/send_icon.png could not be found.
+[2025-04-24 16:11:56.857] Application IHEC Library démarrée
+[2025-04-24 16:11:57.399] Creating MainWindow
+[2025-04-24 16:11:57.588] Setting up navigation service
+[2025-04-24 16:11:57.620] Application started successfully
+[2025-04-24 16:11:57.713] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:11:57.714] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:13:29.020] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:13:29.021] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:13:44.220] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 16:13:44.222] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 16:13:44.240] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 16:13:44.241] ViewLocator: Inner exception: The resource /Assets/bronze_badge.png could not be found.
+[2025-04-24 16:13:44.272] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulate(IServiceProvider , ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 108
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulateTrampoline(ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 0
+   at IHECLibrary.Views.ProfileView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 15
+   at IHECLibrary.Views.ProfileView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:13:44.275] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.ProfileView: Error in view initialization: The resource /Assets/bronze_badge.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/bronze_badge.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulate(IServiceProvider , ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 108
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulateTrampoline(ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 0
+   at IHECLibrary.Views.ProfileView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 15
+   at IHECLibrary.Views.ProfileView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:13:44.277] Inner Exception in view IHECLibrary.Views.ProfileView: The resource /Assets/bronze_badge.png could not be found.
+[2025-04-24 16:14:02.176] Application IHEC Library démarrée
+[2025-04-24 16:14:02.695] Creating MainWindow
+[2025-04-24 16:14:02.876] Setting up navigation service
+[2025-04-24 16:14:02.909] Application started successfully
+[2025-04-24 16:14:03.001] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:14:03.002] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:14:36.161] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:14:36.162] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:14:42.741] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 16:14:42.742] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 16:16:12.927] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:16:12.928] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:18:36.569] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 16:18:36.570] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 16:18:39.416] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:18:39.417] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:18:41.104] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 16:18:41.105] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 16:18:42.243] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:18:42.244] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:21:42.609] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 16:21:42.610] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 16:21:42.625] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 16:21:42.626] ViewLocator: Inner exception: The resource /Assets/bronze_badge.png could not be found.
+[2025-04-24 16:21:42.651] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulate(IServiceProvider , ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 108
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulateTrampoline(ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 0
+   at IHECLibrary.Views.ProfileView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 15
+   at IHECLibrary.Views.ProfileView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:21:42.652] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.ProfileView: Error in view initialization: The resource /Assets/bronze_badge.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/bronze_badge.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulate(IServiceProvider , ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 108
+   at IHECLibrary.Views.ProfileView.!XamlIlPopulateTrampoline(ProfileView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ProfileView.axaml:line 0
+   at IHECLibrary.Views.ProfileView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 15
+   at IHECLibrary.Views.ProfileView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ProfileView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:21:42.653] Inner Exception in view IHECLibrary.Views.ProfileView: The resource /Assets/bronze_badge.png could not be found.
+[2025-04-24 16:33:19.814] Application IHEC Library démarrée
+[2025-04-24 16:33:20.387] Creating MainWindow
+[2025-04-24 16:33:20.574] Setting up navigation service
+[2025-04-24 16:33:20.607] Application started successfully
+[2025-04-24 16:33:20.712] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:33:20.713] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:33:45.620] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:33:45.621] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:33:50.755] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 16:33:50.757] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 16:33:57.049] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-04-24 16:33:57.050] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-04-24 16:33:57.059] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 16:33:57.060] ViewLocator: Inner exception: The resource /Assets/send_icon.png could not be found.
+[2025-04-24 16:33:57.104] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulate(IServiceProvider , ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 149
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulateTrampoline(ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 0
+   at IHECLibrary.Views.ChatbotView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 15
+   at IHECLibrary.Views.ChatbotView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:33:57.105] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.ChatbotView: Error in view initialization: The resource /Assets/send_icon.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/send_icon.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulate(IServiceProvider , ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 149
+   at IHECLibrary.Views.ChatbotView.!XamlIlPopulateTrampoline(ChatbotView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/ChatbotView.axaml:line 0
+   at IHECLibrary.Views.ChatbotView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 15
+   at IHECLibrary.Views.ChatbotView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\ChatbotView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 16:33:57.106] Inner Exception in view IHECLibrary.Views.ChatbotView: The resource /Assets/send_icon.png could not be found.
+[2025-04-24 16:34:15.618] Application IHEC Library démarrée
+[2025-04-24 16:34:16.164] Creating MainWindow
+[2025-04-24 16:34:16.446] Setting up navigation service
+[2025-04-24 16:34:16.515] Application started successfully
+[2025-04-24 16:34:16.640] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 16:34:16.641] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 16:34:30.705] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:34:30.706] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:34:33.129] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 16:34:33.130] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 16:37:47.282] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 16:37:47.283] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 16:53:06.157] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 16:53:06.158] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 17:17:30.689] Application IHEC Library démarrée
+[2025-04-24 17:17:36.320] Creating MainWindow
+[2025-04-24 17:17:37.772] Setting up navigation service
+[2025-04-24 17:17:37.840] Application started successfully
+[2025-04-24 17:17:38.086] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 17:17:38.087] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 17:18:05.416] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:18:05.418] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:18:14.938] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 17:18:14.940] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 17:40:13.483] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:40:13.484] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:43:49.652] Application IHEC Library démarrée
+[2025-04-24 17:43:50.199] Creating MainWindow
+[2025-04-24 17:43:50.419] Setting up navigation service
+[2025-04-24 17:43:50.460] Application started successfully
+[2025-04-24 17:43:50.582] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 17:43:50.583] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 17:44:38.704] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:44:38.705] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:44:50.288] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 17:44:50.290] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 17:44:59.171] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:44:59.172] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:45:05.177] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 17:45:05.178] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 17:45:19.960] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:45:19.961] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:45:33.939] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 17:45:33.940] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 17:45:35.016] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 17:45:35.017] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 17:45:44.096] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 17:45:44.097] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 17:45:48.691] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 17:45:48.692] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:00:43.315] Application IHEC Library démarrée
+[2025-04-24 18:00:43.800] Creating MainWindow
+[2025-04-24 18:00:44.009] Setting up navigation service
+[2025-04-24 18:00:44.043] Application started successfully
+[2025-04-24 18:00:44.163] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 18:00:44.164] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 18:02:05.436] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 18:02:05.437] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 18:02:11.930] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 18:02:11.931] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 18:02:58.285] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:02:58.287] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 18:03:02.684] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:03:02.685] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:04:00.078] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 18:04:00.079] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 18:04:39.388] Application IHEC Library démarrée
+[2025-04-24 18:04:39.921] Creating MainWindow
+[2025-04-24 18:04:40.181] Setting up navigation service
+[2025-04-24 18:04:40.215] Application started successfully
+[2025-04-24 18:04:40.325] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 18:04:40.325] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 18:04:45.271] ViewLocator: Looking for view IHECLibrary.Views.AdminLoginView for ViewModel IHECLibrary.ViewModels.AdminLoginViewModel
+[2025-04-24 18:04:45.272] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
+[2025-04-24 18:05:12.901] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 18:05:12.902] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 18:05:44.623] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:05:44.624] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 18:05:53.355] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 18:05:53.356] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 18:05:54.555] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:05:54.557] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:05:55.976] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 18:05:55.977] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 18:05:56.672] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:05:56.672] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 18:05:57.330] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:05:57.331] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:05:58.128] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 18:05:58.129] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 18:05:59.295] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:05:59.296] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:06:54.344] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:06:54.345] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 18:07:03.663] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:07:03.664] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:07:19.976] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-04-24 18:07:19.977] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-04-24 18:07:53.582] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:07:53.585] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-24 18:07:55.248] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-24 18:07:55.249] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-24 18:07:56.566] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-24 18:07:56.567] ViewLocator: Creating instance of IHECLibrary.Views.HomeView

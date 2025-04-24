@@ -3,13 +3,14 @@ using System;
 using System.Threading.Tasks;
 using IHECLibrary.ViewModels;
 using Avalonia.Controls;
+using IHECLibrary.Views;
 
 namespace IHECLibrary.Services.Implementations
 {
     public class NavigationService : INavigationService
     {
         private readonly IServiceProvider _serviceProvider;
-        private MainWindow? _mainWindow;
+        private Views.MainWindow? _mainWindow;
         
         public event EventHandler<NavigationEventArgs>? NavigationRequested;
 
@@ -18,7 +19,7 @@ namespace IHECLibrary.Services.Implementations
             _serviceProvider = serviceProvider;
         }
 
-        public void SetMainWindow(MainWindow mainWindow)
+        public void SetMainWindow(Views.MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
         }

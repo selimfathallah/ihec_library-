@@ -14,12 +14,41 @@
       <ColumnDefinition Width="450" />
     </Grid.ColumnDefinitions>
 
-    <!-- Partie gauche avec logo et image -->
+    <!-- Partie gauche avec logo et illustration vectorielle -->
     <Grid Grid.Column="0" Background="#E6F2F8">
       <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
         <TextBlock Text="IHEC" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center"/>
         <TextBlock Text="Library" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center" Margin="0,-20,0,0"/>
-        <Image Source="/Assets/student_with_books.png" Width="300" Height="300" Margin="0,20,0,0"/>
+        
+        <!-- Vector-based student with books illustration -->
+        <Canvas Width="300" Height="300" Margin="0,20,0,0">
+          <!-- Student figure -->
+          <Ellipse Canvas.Left="130" Canvas.Top="30" Width="60" Height="60" 
+                   Fill="#2E74A8"/>
+          <Path Canvas.Left="100" Canvas.Top="90" 
+                Data="M 60,0 C 30,60 40,120 60,180 L 20,180 C 0,120 10,60 0,0 Z" 
+                Fill="#2E74A8"/>
+          <Path Canvas.Left="140" Canvas.Top="90" 
+                Data="M 0,0 C 30,60 20,120 0,180 L 40,180 C 60,120 50,60 60,0 Z" 
+                Fill="#2E74A8"/>
+          
+          <!-- Books in arms -->
+          <Rectangle Canvas.Left="80" Canvas.Top="120" Width="160" Height="30" 
+                     Fill="#4390C9" RadiusX="5" RadiusY="5"/>
+          <Rectangle Canvas.Left="85" Canvas.Top="110" Width="150" Height="20" 
+                     Fill="#7AADD6" RadiusX="5" RadiusY="5"/>
+          <Rectangle Canvas.Left="95" Canvas.Top="100" Width="130" Height="15" 
+                     Fill="#B3D7EB" RadiusX="5" RadiusY="5"/>
+          
+          <!-- Student face features -->
+          <Ellipse Canvas.Left="145" Canvas.Top="45" Width="8" Height="8" 
+                   Fill="White"/>
+          <Ellipse Canvas.Left="165" Canvas.Top="45" Width="8" Height="8" 
+                   Fill="White"/>
+          <Path Canvas.Left="150" Canvas.Top="60" 
+                Data="M 0,0 C 5,5 15,5 20,0" 
+                Stroke="White" StrokeThickness="2" Fill="Transparent"/>
+        </Canvas>
       </StackPanel>
     </Grid>
 
@@ -70,20 +99,59 @@
           </ComboBox>
           
           <TextBlock Text="Password" Margin="0,0,0,5"/>
-          <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="Password" Height="40" Margin="0,0,0,15"/>
+          <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="Password" Height="40" Margin="0,0,0,5"/>
           
-          <Button Content="Create" Command="{Binding RegisterCommand}" 
-                  Background="#2E74A8" Foreground="White" 
-                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                  Height="50" CornerRadius="4" Margin="0,0,0,20"/>
+          <!-- Add visible error message display -->
+          <TextBlock Text="{Binding ErrorMessage}" 
+                     IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+                     Foreground="Red" 
+                     TextWrapping="Wrap" 
+                     Margin="0,5,0,10"/>
+          
+          <!-- Create button with loading indicator -->
+          <Grid>
+            <Button Content="Create" Command="{Binding RegisterCommand}" 
+                    Background="#2E74A8" Foreground="White" 
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Height="50" CornerRadius="4" Margin="0,0,0,20"
+                    IsEnabled="{Binding !IsLoading}"/>
+            
+            <!-- Loading indicator -->
+            <ProgressBar IsIndeterminate="True" 
+                         IsVisible="{Binding IsLoading}"
+                         HorizontalAlignment="Stretch"
+                         Height="5"
+                         Margin="0,0,0,20"
+                         VerticalAlignment="Bottom"/>
+          </Grid>
           
           <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
             <TextBlock Text="Or continue with" VerticalAlignment="Center"/>
           </StackPanel>
           
+          <!-- Google styled button with vector logo -->
           <Button Command="{Binding GoogleSignInCommand}" 
-                  HorizontalAlignment="Center" Background="Transparent" Padding="0">
-            <Image Source="/Assets/google_logo.png" Width="40" Height="40"/>
+                  HorizontalAlignment="Center" Background="White" 
+                  BorderBrush="#DDDDDD" BorderThickness="1"
+                  Padding="15,8" CornerRadius="4" Margin="0,0,0,20">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <!-- Google G logo colors -->
+              <Canvas Width="20" Height="20">
+                <Ellipse Canvas.Left="0" Canvas.Top="0" Width="20" Height="20" 
+                         StrokeThickness="0" Fill="Transparent"/>
+                <Path Data="M 10,0 A 10,10 0 1,0 10,20 A 10,10 0 1,0 10,0 M 10,2 A 8,8 0 1,0 10,18 A 8,8 0 1,0 10,2"
+                      Fill="#FFFFFF" StrokeThickness="0"/>
+                <Path Data="M 10,0 A 10,10 0 0,1 20,10 L 10,10 Z" 
+                      Fill="#4285F4" StrokeThickness="0"/>
+                <Path Data="M 20,10 A 10,10 0 0,1 10,20 L 10,10 Z" 
+                      Fill="#34A853" StrokeThickness="0"/>
+                <Path Data="M 10,20 A 10,10 0 0,1 0,10 L 10,10 Z" 
+                      Fill="#FBBC05" StrokeThickness="0"/>
+                <Path Data="M 0,10 A 10,10 0 0,1 10,0 L 10,10 Z" 
+                      Fill="#EA4335" StrokeThickness="0"/>
+              </Canvas>
+              <TextBlock Text="Sign in with Google" VerticalAlignment="Center"/>
+            </StackPanel>
           </Button>
           
           <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">

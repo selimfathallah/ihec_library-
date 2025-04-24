@@ -15,44 +15,41 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = IHECLibrary
-build_property.ProjectDir = C:\Users\GIGABYTE\Desktop\ihec library\IHECLibrary\src\IHECLibrary\
+build_property.ProjectDir = c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 6.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/App.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/MainWindow.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/AdminDashboardView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/AdminDashboardView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/AdminLoginView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/AdminLoginView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/AdminRegisterView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/AdminRegisterView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/ChatbotView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/ChatbotView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/HomeView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/HomeView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/LibraryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/LibraryView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/LoginView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/LoginView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/MainWindow.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/ProfileView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/ProfileView.axaml]
-build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
-
-[C:/Users/GIGABYTE/Desktop/ihec library/IHECLibrary/src/IHECLibrary/Views/RegisterView.axaml]
+[c:/Users/GIGABYTE/Desktop/ihec_library-/ihec_library-/src/IHECLibrary/Views/RegisterView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

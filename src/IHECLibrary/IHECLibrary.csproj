@@ -11,6 +11,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <!-- Exclude root MainWindow files to avoid duplicates -->
+    <Compile Remove="MainWindow.axaml.cs" />
+    <None Remove="MainWindow.axaml" />
+    <AvaloniaXaml Remove="MainWindow.axaml" />
   </ItemGroup>
 
   <ItemGroup>

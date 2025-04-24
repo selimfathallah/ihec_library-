@@ -95,11 +95,18 @@ namespace IHECLibrary.ViewModels
                 var result = await _authService.RegisterAsync(registrationModel);
                 if (result.Success)
                 {
+                    // Add debug logging
+                    Console.WriteLine("Registration successful, navigating to Home view");
+                    // Clear any error message
+                    ErrorMessage = string.Empty;
+                    
+                    // Ensure we navigate to the Home view
                     await _navigationService.NavigateToAsync("Home");
                 }
                 else
                 {
                     ErrorMessage = result.ErrorMessage ?? "Échec de l'inscription. Veuillez réessayer.";
+                    Console.WriteLine($"Registration failed: {ErrorMessage}");
                 }
             }
             catch (System.Exception ex)
