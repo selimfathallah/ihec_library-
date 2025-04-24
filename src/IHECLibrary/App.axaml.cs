@@ -215,8 +215,10 @@ namespace IHECLibrary
             // Register other services
             services.AddSingleton<IUserService>(provider => 
                 new SupabaseUserService(supabaseClient, provider.GetRequiredService<IAuthService>()));
-            services.AddSingleton<IBookService>(provider => 
-                new SupabaseBookService(supabaseClient, provider.GetRequiredService<IUserService>()));
+            
+            // Use MockBookService instead of SupabaseBookService
+            services.AddSingleton<IBookService, Services.Implementations.Mock.MockBookService>();
+            
             services.AddSingleton<IChatbotService>(provider => 
                 new GeminiChatbotService("AIzaSyAHGzJNWYMGDDsSzpAUFn92XjETHFjQ07c", provider.GetRequiredService<IBookService>()));
             services.AddSingleton<IAdminService>(provider => 

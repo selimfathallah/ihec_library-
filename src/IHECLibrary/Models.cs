@@ -21,6 +21,7 @@ namespace IHECLibrary
         public int LikesCount { get; set; }
         public bool IsLikedByCurrentUser { get; set; }
         public string Language { get; set; } = string.Empty;
+        public decimal RatingAverage { get; set; } = 0;
     }
 
     public class BookRatingModel

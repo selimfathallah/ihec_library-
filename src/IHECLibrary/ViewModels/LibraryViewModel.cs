@@ -39,6 +39,23 @@ namespace IHECLibrary.ViewModels
         [ObservableProperty]
         private string _selectedSortOption = string.Empty;
 
+        [ObservableProperty]
+        private int _currentPage = 1;
+
+        [ObservableProperty]
+        private int _totalPages = 1;
+
+        [ObservableProperty]
+        private bool _isLoading = false;
+
+        [ObservableProperty]
+        private bool _hasNextPage = false;
+
+        [ObservableProperty]
+        private bool _hasPreviousPage = false;
+
+        private const int PAGE_SIZE = 12;
+
         public ObservableCollection<string> SortOptions { get; } = new ObservableCollection<string>
         {
             "Most Popular", "Newest", "Title A-Z", "Author A-Z"
@@ -103,39 +120,83 @@ namespace IHECLibrary.ViewModels
 
         private async void LoadBooks()
         {
-            List<BookModel> books;
+            IsLoading = true;
+            try
+            {
+                List<BookModel> books;
+                string? categoryFilter = null;
+                string? searchFilter = null;
 
-            // Si des filtres initiaux sont fournis, les appliquer
-            if (_initialFilters != null && !string.IsNullOrEmpty(_initialFilters.SearchQuery))
-            {
-                SearchQuery = _initialFilters.SearchQuery;
-                books = await _bookService.GetBooksBySearchAsync(SearchQuery);
-                PageTitle = $"Search Results: {SearchQuery}";
-            }
-            else if (_initialFilters != null && !string.IsNullOrEmpty(_initialFilters.Category))
-            {
-                books = await _bookService.GetBooksByCategoryAsync(_initialFilters.Category);
-            }
-            else
-            {
-                // Obtenir les catégories sélectionnées
-                var selectedCategories = Categories.Where(c => c.IsSelected).Select(c => c.Name).ToList();
-                
-                // Obtenir la langue sélectionnée
+                // Si des filtres initiaux sont fournis, les appliquer
+                if (_initialFilters != null && !string.IsNullOrEmpty(_initialFilters.SearchQuery))
+                {
+                    SearchQuery = _initialFilters.SearchQuery;
+                    searchFilter = SearchQuery;
+                    PageTitle = $"Search Results: {SearchQuery}";
+                }
+                else if (_initialFilters != null && !string.IsNullOrEmpty(_initialFilters.Category))
+                {
+                    categoryFilter = _initialFilters.Category;
+                }
+                else
+                {
+                    // Get selected categories for the filter
+                    var selectedCategories = Categories.Where(c => c.IsSelected).Select(c => c.Name).ToList();
+                    if (selectedCategories.Count > 0)
+                    {
+                        categoryFilter = selectedCategories.First(); // Use first category for the filter
+                    }
+                }
+
+                // Use the new GetRealBooksAsync method to fetch books with pagination
+                books = await _bookService.GetRealBooksAsync(
+                    page: CurrentPage,
+                    pageSize: PAGE_SIZE,
+                    category: categoryFilter,
+                    searchQuery: searchFilter
+                );
+
+                // Apply additional filtering if needed
+                if (IsAvailableOnly)
+                {
+                    books = books.Where(b => b.AvailableCopies > 0).ToList();
+                }
+
+                // Apply language filtering
                 var selectedLanguage = Languages.FirstOrDefault(l => l.IsSelected)?.Name;
-                
-                // Appliquer les filtres
-                books = await _bookService.GetBooksByFiltersAsync(selectedCategories, IsAvailableOnly, selectedLanguage);
+                if (!string.IsNullOrEmpty(selectedLanguage))
+                {
+                    books = books.Where(b => 
+                        string.IsNullOrEmpty(b.Language) || 
+                        b.Language.Equals(selectedLanguage, StringComparison.OrdinalIgnoreCase)
+                    ).ToList();
+                }
+
+                // Calculate pagination info
+                // Estimate total pages based on current results
+                // In a real world scenario, we'd want to get an actual count from the API
+                TotalPages = Math.Max(1, (int)Math.Ceiling(books.Count / (double)PAGE_SIZE));
+                HasNextPage = CurrentPage < TotalPages;
+                HasPreviousPage = CurrentPage > 1;
+
+                // Apply sorting
+                books = SortBooks(books);
+
+                // Update the book collection
+                Books.Clear();
+                foreach (var book in books)
+                {
+                    Books.Add(new BookViewModel(book, _bookService));
+                }
             }
-
-            // Appliquer le tri
-            books = SortBooks(books);
-
-            // Mettre à jour la collection de livres
-            Books.Clear();
-            foreach (var book in books)
+            catch (Exception ex)
             {
-                Books.Add(new BookViewModel(book, _bookService));
+                Console.WriteLine($"Error loading books: {ex.Message}");
+                // You might want to add error handling UI here
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -196,6 +257,36 @@ namespace IHECLibrary.ViewModels
                     Books.Add(new BookViewModel(book, _bookService));
                 }
             }
+        }
+
+        [RelayCommand]
+        private Task NextPage()
+        {
+            if (HasNextPage)
+            {
+                CurrentPage++;
+                LoadBooks();
+            }
+            return Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private Task PreviousPage()
+        {
+            if (HasPreviousPage)
+            {
+                CurrentPage--;
+                LoadBooks();
+            }
+            return Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private Task RefreshBooks()
+        {
+            CurrentPage = 1;
+            LoadBooks();
+            return Task.CompletedTask;
         }
     }
 

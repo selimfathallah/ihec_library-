@@ -551,6 +551,137 @@ namespace IHECLibrary.Services.Implementations
             }
         }
 
+        /// <summary>
+        /// Fetches real books from the Supabase database with enhanced details including statistics
+        /// </summary>
+        /// <param name="page">Page number (1-based)</param>
+        /// <param name="pageSize">Number of items per page</param>
+        /// <param name="category">Optional category filter</param>
+        /// <param name="searchQuery">Optional search query</param>
+        /// <returns>List of book models with detailed information</returns>
+        public async Task<List<BookModel>> GetRealBooksAsync(int page = 1, int pageSize = 10, string? category = null, string? searchQuery = null)
+        {
+            try
+            {
+                // Adjust pagination values
+                page = Math.Max(1, page);
+                pageSize = Math.Clamp(pageSize, 5, 50);
+                int rangeStart = (page - 1) * pageSize;
+                int rangeEnd = rangeStart + pageSize - 1;
+                
+                // Get all books and filter in memory instead of trying to cast
+                var booksResult = await _supabaseClient.From<DbBook>().Get();
+                var allBooks = booksResult.Models;
+                
+                // Apply filters on the client side
+                var filteredBooks = allBooks.AsEnumerable();
+                
+                if (!string.IsNullOrEmpty(category))
+                {
+                    filteredBooks = filteredBooks.Where(b => 
+                        b.Category != null && b.Category.Equals(category, StringComparison.OrdinalIgnoreCase)
+                    );
+                }
+                
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    filteredBooks = filteredBooks.Where(b => 
+                        (b.Title != null && b.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                        (b.Author != null && b.Author.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                        (b.Description != null && b.Description.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                        (b.ISBN != null && b.ISBN.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                    );
+                }
+                
+                // Apply pagination after filtering
+                var pagedBooks = filteredBooks
+                    .Skip(rangeStart)
+                    .Take(pageSize)
+                    .ToList();
+                
+                if (pagedBooks.Count == 0)
+                {
+                    return new List<BookModel>();
+                }
+                
+                // Get book IDs for batch fetching statistics
+                var bookIds = pagedBooks.Where(b => b.BookId != null).Select(b => b.BookId!).ToList();
+                
+                // Fetch book statistics in a single query
+                var bookStatsResult = await _supabaseClient.From<DbBookStatistics>()
+                    .Filter("book_id", Postgrest.Constants.Operator.In, bookIds)
+                    .Get();
+                
+                var statsDict = bookStatsResult.Models
+                    .Where(s => s.BookId != null)
+                    .ToDictionary(s => s.BookId!, s => s);
+                
+                // Create book models with enhanced data
+                var bookModels = new List<BookModel>();
+                
+                foreach (var book in pagedBooks)
+                {
+                    if (book?.BookId == null) continue;
+                    
+                    var bookModel = new BookModel
+                    {
+                        Id = book.BookId,
+                        Title = book.Title ?? "",
+                        Author = book.Author ?? "",
+                        ISBN = book.ISBN ?? "",
+                        PublicationYear = book.PublicationYear,
+                        Publisher = book.Publisher ?? "",
+                        Category = book.Category ?? "",
+                        Description = book.Description ?? "",
+                        AvailableCopies = book.AvailabilityStatus == "available" ? 1 : 0,
+                        TotalCopies = 1, // Default value or use reflection if available
+                        Ratings = new List<BookRatingModel>()
+                    };
+                    
+                    // Try to get cover image URL using reflection
+                    try
+                    {
+                        var coverImageProperty = typeof(DbBook).GetProperty("CoverImageUrl");
+                        if (coverImageProperty != null)
+                        {
+                            bookModel.CoverImageUrl = (coverImageProperty.GetValue(book) as string) ?? "";
+                        }
+                        else
+                        {
+                            // Default to a placeholder if property doesn't exist
+                            bookModel.CoverImageUrl = $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}";
+                        }
+                    }
+                    catch
+                    {
+                        bookModel.CoverImageUrl = "";
+                    }
+                    
+                    // Add statistics if available
+                    if (statsDict.TryGetValue(book.BookId, out var stats))
+                    {
+                        bookModel.LikesCount = stats.LikeCount;
+                        
+                        // Add rating average if available
+                        if (stats.RatingAverage != 0)
+                        {
+                            // Use the property directly since it's a decimal, not a nullable type
+                            bookModel.RatingAverage = stats.RatingAverage;
+                        }
+                    }
+                    
+                    bookModels.Add(bookModel);
+                }
+                
+                return bookModels;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching real books: {ex.Message}");
+                return new List<BookModel>();
+            }
+        }
+
         private async Task UpdateBookStatisticsAsync(string bookId, string statField, int increment)
         {
             try

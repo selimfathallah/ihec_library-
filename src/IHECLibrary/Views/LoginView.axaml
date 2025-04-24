@@ -61,14 +61,33 @@
         <TextBlock Text="Password" Margin="0,0,0,5"/>
         <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Height="40" Margin="0,0,0,5"/>
         
+        <!-- Add visible error message display -->
+        <TextBlock Text="{Binding ErrorMessage}" 
+                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+                   Foreground="Red" 
+                   TextWrapping="Wrap" 
+                   Margin="0,5,0,10"/>
+        
         <Button Content="Recover Password?" Command="{Binding ForgotPasswordCommand}" 
                 HorizontalAlignment="Right" Background="Transparent" Foreground="#2E74A8"
-                Padding="0" Margin="0,0,0,30"/>
+                Padding="0" Margin="0,0,0,20"/>
         
-        <Button Content="Sign In" Command="{Binding SignInCommand}" 
-                Background="#2E74A8" Foreground="White" 
-                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                Height="50" CornerRadius="4" Margin="0,0,0,20"/>
+        <!-- Sign In button with loading indicator -->
+        <Grid>
+            <Button Content="Sign In" Command="{Binding SignInCommand}" 
+                    Background="#2E74A8" Foreground="White" 
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Height="50" CornerRadius="4" Margin="0,0,0,20"
+                    IsEnabled="{Binding !IsLoading}"/>
+            
+            <!-- Loading indicator -->
+            <ProgressBar IsIndeterminate="True" 
+                         IsVisible="{Binding IsLoading}"
+                         HorizontalAlignment="Stretch"
+                         Height="5"
+                         Margin="0,0,0,20"
+                         VerticalAlignment="Bottom"/>
+        </Grid>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
           <TextBlock Text="Or continue with" VerticalAlignment="Center"/>

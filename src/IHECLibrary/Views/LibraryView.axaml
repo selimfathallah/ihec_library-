@@ -45,7 +45,32 @@
       
       <!-- Recherche et profil -->
       <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
-        <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" Margin="0,0,15,0"/>
+        <TextBox Text="{Binding SearchQuery}" 
+                Watermark="Search books..." 
+                Width="200" 
+                Margin="0,0,15,0"
+                Background="#EBF5FA"
+                Foreground="#333333"
+                FontWeight="Medium"
+                BorderBrush="#2E74A8"
+                BorderThickness="1.5"
+                CornerRadius="4"
+                Padding="8,6">
+          <TextBox.Styles>
+            <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+              <Setter Property="BorderBrush" Value="#0F5C94"/>
+              <Setter Property="BorderThickness" Value="2"/>
+              <Setter Property="Background" Value="White"/>
+            </Style>
+            <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+              <Setter Property="BorderBrush" Value="#0F5C94"/>
+            </Style>
+            <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
+              <Setter Property="Foreground" Value="#777777"/>
+              <Setter Property="FontStyle" Value="Italic"/>
+            </Style>
+          </TextBox.Styles>
+        </TextBox>
         <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
           <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
         </Border>
@@ -103,6 +128,7 @@
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <!-- En-tête avec titre et tri -->
@@ -128,57 +154,108 @@
         
         <!-- Grille de livres -->
         <ScrollViewer Grid.Row="1">
-          <ItemsControl ItemsSource="{Binding Books}">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" />
-              </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate x:DataType="vm:BookViewModel">
-                <Border Background="{Binding BackgroundColor}" Width="220" Height="250" CornerRadius="8" Padding="15" Margin="0,0,15,15">
-                  <Grid>
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <!-- Icône du livre -->
-                    <Image Grid.Row="0" Source="/Assets/book_icon.png" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                    
-                    <!-- Statut de disponibilité -->
-                    <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 
-                            HorizontalAlignment="Center" Padding="10,5" Margin="0,0,0,10">
-                      <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" FontSize="12"/>
-                    </Border>
-                    
-                    <!-- Titre du livre -->
-                    <TextBlock Grid.Row="2" Text="{Binding Title}" FontWeight="SemiBold" FontSize="16" 
-                               HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
-                    
-                    <!-- Auteur -->
-                    <TextBlock Grid.Row="3" Text="{Binding Author}" FontSize="14" 
-                               HorizontalAlignment="Center" Margin="0,5,0,5"/>
-                    
-                    <!-- Catégorie -->
-                    <TextBlock Grid.Row="4" Text="{Binding Category}" FontSize="12" Foreground="Gray" 
-                               HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                    
-                    <!-- Bouton d'action -->
-                    <Button Grid.Row="5" Content="{Binding ActionButtonText}" Command="{Binding ActionCommand}" 
-                            Background="{Binding ActionButtonBackground}" Foreground="White" 
-                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                            VerticalAlignment="Bottom" Height="40" CornerRadius="4"/>
-                  </Grid>
-                </Border>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
+          <Panel>
+            <ItemsControl ItemsSource="{Binding Books}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:BookViewModel">
+                  <Border Background="{Binding BackgroundColor}" Width="220" Height="250" CornerRadius="8" Padding="15" Margin="0,0,15,15">
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                      </Grid.RowDefinitions>
+                      
+                      <!-- Icône du livre - replaced with vector graphics -->
+                      <Canvas Grid.Row="0" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Border Canvas.Left="10" Canvas.Top="10" Width="50" Height="50" 
+                                Background="{Binding AvailabilityColor}" CornerRadius="3" />
+                        <Border Canvas.Left="12" Canvas.Top="12" Width="46" Height="46" 
+                                BorderBrush="White" BorderThickness="2" CornerRadius="3" />
+                        <Line Canvas.Left="0" StartPoint="20,18" EndPoint="52,18" Stroke="White" StrokeThickness="1.5" />
+                        <Line Canvas.Left="0" StartPoint="20,26" EndPoint="52,26" Stroke="White" StrokeThickness="1.5" />
+                        <Line Canvas.Left="0" StartPoint="20,34" EndPoint="52,34" Stroke="White" StrokeThickness="1.5" />
+                        <Line Canvas.Left="0" StartPoint="20,42" EndPoint="45,42" Stroke="White" StrokeThickness="1.5" />
+                        <Line Canvas.Left="0" StartPoint="20,50" EndPoint="45,50" Stroke="White" StrokeThickness="1.5" />
+                      </Canvas>
+                      
+                      <!-- Statut de disponibilité -->
+                      <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 
+                              HorizontalAlignment="Center" Padding="10,5" Margin="0,0,0,10">
+                        <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" FontSize="12"/>
+                      </Border>
+                      
+                      <!-- Titre du livre -->
+                      <TextBlock Grid.Row="2" Text="{Binding Title}" FontWeight="SemiBold" FontSize="16" 
+                                 HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                      
+                      <!-- Auteur -->
+                      <TextBlock Grid.Row="3" Text="{Binding Author}" FontSize="14" 
+                                 HorizontalAlignment="Center" Margin="0,5,0,5"/>
+                      
+                      <!-- Catégorie -->
+                      <TextBlock Grid.Row="4" Text="{Binding Category}" FontSize="12" Foreground="Gray" 
+                                 HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                      
+                      <!-- Bouton d'action -->
+                      <Button Grid.Row="5" Content="{Binding ActionButtonText}" Command="{Binding ActionCommand}" 
+                              Background="{Binding ActionButtonBackground}" Foreground="White" 
+                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                              VerticalAlignment="Bottom" Height="40" CornerRadius="4"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- Loading overlay -->
+            <Border Background="#80FFFFFF" IsVisible="{Binding IsLoading}">
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ProgressBar IsIndeterminate="True" Width="100" Height="4" Margin="0,0,0,10"/>
+                <TextBlock Text="Loading books..." FontSize="14" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+          </Panel>
         </ScrollViewer>
+        
+        <!-- Pagination controls -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+          <Button Content="&lt; Previous" 
+                 Command="{Binding PreviousPageCommand}" 
+                 IsEnabled="{Binding HasPreviousPage}"
+                 Background="#2E74A8" Foreground="White" 
+                 Padding="15,10" Margin="5,0" CornerRadius="20"/>
+          
+          <Border Background="#E6F2F8" CornerRadius="20" Padding="15,10" Margin="10,0">
+            <TextBlock Text="{Binding CurrentPage, StringFormat='Page {0} of {1}'}" VerticalAlignment="Center">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="Page {0} of {1}">
+                  <Binding Path="CurrentPage" />
+                  <Binding Path="TotalPages" />
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
+          </Border>
+          
+          <Button Content="Next &gt;" 
+                 Command="{Binding NextPageCommand}" 
+                 IsEnabled="{Binding HasNextPage}"
+                 Background="#2E74A8" Foreground="White" 
+                 Padding="15,10" Margin="5,0" CornerRadius="20"/>
+                 
+          <Button Content="⟳ Refresh" 
+                 Command="{Binding RefreshBooksCommand}" 
+                 Background="#5C9F24" Foreground="White" 
+                 Padding="15,10" Margin="15,0,5,0" CornerRadius="20"/>
+        </StackPanel>
       </Grid>
     </Grid>
   </Grid>
