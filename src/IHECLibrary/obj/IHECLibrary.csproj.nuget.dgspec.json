@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {}
+    "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {
+    "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
+        "projectUniqueName": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
         "projectName": "IHECLibrary",
-        "projectPath": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
+        "projectPath": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
         "packagesPath": "C:\\Users\\GIGABYTE\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\obj\\",
+        "outputPath": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

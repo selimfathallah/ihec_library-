@@ -241,5 +241,36 @@ namespace IHECLibrary.Tests
                 return false;
             }
         }
+        
+        public static void LogViewCreationError(Exception ex, string viewName)
+        {
+            LogException(ex, $"Erreur lors de la création de la vue: {viewName}");
+            
+            // Log additional details specific to view creation errors
+            if (ex.InnerException != null)
+            {
+                LogDebugInfo($"Inner Exception in view {viewName}: {ex.InnerException.Message}");
+                
+                // Recursively log nested inner exceptions which are common in reflection errors
+                Exception? currentEx = ex.InnerException;
+                int depth = 1;
+                while (currentEx?.InnerException != null)
+                {
+                    depth++;
+                    currentEx = currentEx.InnerException;
+                    LogDebugInfo($"Level {depth} Inner Exception in view {viewName}: {currentEx.Message}");
+                }
+            }
+            
+            // Log reflection-related information which is often the cause of "thrown by the target of an invocation" errors
+            if (ex.Message.Contains("invocation") || (ex.InnerException?.Message?.Contains("invocation") == true))
+            {
+                LogDebugInfo("This appears to be a reflection-related error. Check for:");
+                LogDebugInfo("1. Missing constructor parameters");
+                LogDebugInfo("2. Exceptions in constructor or InitializeComponent");
+                LogDebugInfo("3. View/ViewModel binding issues");
+                LogDebugInfo("4. Missing or incorrect dependency injections");
+            }
+        }
     }
 }

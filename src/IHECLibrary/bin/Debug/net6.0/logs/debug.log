@@ -18,3 +18,63 @@
 [2025-04-23 16:00:10.870] Application IHEC Library démarrée
 [2025-04-23 16:00:58.229] Application IHEC Library démarrée
 [2025-04-23 16:03:16.031] Application IHEC Library démarrée
+[2025-04-23 17:25:56.368] Application IHEC Library démarrée
+[2025-04-23 22:15:59.187] Application IHEC Library démarrée
+[2025-04-24 11:17:32.014] Application IHEC Library démarrée
+[2025-04-24 11:17:36.862] Creating MainWindow
+[2025-04-24 11:17:38.050] Setting up navigation service
+[2025-04-24 11:17:38.096] Application started successfully
+[2025-04-24 11:17:38.216] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 11:17:38.218] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 11:17:38.265] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 11:17:38.265] ViewLocator: Inner exception: The resource /Assets/student_books.png could not be found.
+[2025-04-24 11:17:38.301] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.LoginView.!XamlIlPopulate(IServiceProvider , LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 21
+   at IHECLibrary.Views.LoginView.!XamlIlPopulateTrampoline(LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 0
+   at IHECLibrary.Views.LoginView.InitializeComponent() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 15
+   at IHECLibrary.Views.LoginView..ctor() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:17:38.303] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.LoginView: Error in view initialization: The resource /Assets/student_books.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/student_books.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.LoginView.!XamlIlPopulate(IServiceProvider , LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 21
+   at IHECLibrary.Views.LoginView.!XamlIlPopulateTrampoline(LoginView ) in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/LoginView.axaml:line 0
+   at IHECLibrary.Views.LoginView.InitializeComponent() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 15
+   at IHECLibrary.Views.LoginView..ctor() in C:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\LoginView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:17:38.304] Inner Exception in view IHECLibrary.Views.LoginView: The resource /Assets/student_books.png could not be found.
+[2025-04-24 11:49:56.548] Application IHEC Library démarrée
+[2025-04-24 11:49:57.228] Creating MainWindow
+[2025-04-24 11:49:57.499] Setting up navigation service
+[2025-04-24 11:49:57.550] Application started successfully
+[2025-04-24 11:49:57.694] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-24 11:49:57.696] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-24 11:50:22.340] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-04-24 11:50:22.342] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-04-24 11:50:22.365] ViewLocator: TargetInvocationException occurred: Exception has been thrown by the target of an invocation.
+[2025-04-24 11:50:22.365] ViewLocator: Inner exception: The resource /Assets/student_with_books.png could not be found.
+[2025-04-24 11:50:22.449] ViewLocator: Inner exception stack trace:    at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:50:22.452] EXCEPTION dans Erreur lors de la création de la vue: IHECLibrary.Views.RegisterView: Error in view initialization: The resource /Assets/student_with_books.png could not be found.
+   at IHECLibrary.ViewLocator.Build(Object param) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\ViewLocator.cs:line 58
+Inner Exception: The resource /Assets/student_with_books.png could not be found.
+   at Avalonia.Platform.StandardAssetLoader.OpenAndGetAssembly(Uri uri, Uri baseUri)
+   at Avalonia.Platform.StandardAssetLoader.Open(Uri uri, Uri baseUri)
+   at Avalonia.Markup.Xaml.Converters.BitmapTypeConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulate(IServiceProvider , RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 22
+   at IHECLibrary.Views.RegisterView.!XamlIlPopulateTrampoline(RegisterView ) in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views/RegisterView.axaml:line 0
+   at IHECLibrary.Views.RegisterView.InitializeComponent() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 15
+   at IHECLibrary.Views.RegisterView..ctor() in c:\Users\GIGABYTE\Desktop\ihec_library-\ihec_library-\src\IHECLibrary\Views\RegisterView.axaml.cs:line 10
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[2025-04-24 11:50:22.453] Inner Exception in view IHECLibrary.Views.RegisterView: The resource /Assets/student_with_books.png could not be found.
