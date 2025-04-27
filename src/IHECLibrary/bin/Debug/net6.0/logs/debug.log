@@ -478,3 +478,15 @@ Inner Exception: The resource /Assets/send_icon.png could not be found.
 [2025-04-27 20:57:53.576] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
 [2025-04-27 20:58:51.468] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
 [2025-04-27 20:58:51.469] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-27 21:09:26.770] Application IHEC Library démarrée
+[2025-04-27 21:09:27.286] Creating MainWindow
+[2025-04-27 21:09:27.451] Setting up navigation service
+[2025-04-27 21:09:27.483] Application started successfully
+[2025-04-27 21:09:27.574] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-27 21:09:27.574] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-04-27 21:09:47.161] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-27 21:09:47.162] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-27 21:09:49.434] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-04-27 21:09:49.435] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-04-27 21:13:13.356] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-04-27 21:13:13.356] ViewLocator: Creating instance of IHECLibrary.Views.HomeView

@@ -123,7 +123,9 @@ namespace IHECLibrary.ViewModels
             IsLoading = true;
             try
             {
-                List<BookModel> books;
+                Console.WriteLine($"Loading books for page {CurrentPage}, pageSize: {PAGE_SIZE}");
+                
+                List<BookModel> books = new List<BookModel>();
                 string? categoryFilter = null;
                 string? searchFilter = null;
 
@@ -133,10 +135,12 @@ namespace IHECLibrary.ViewModels
                     SearchQuery = _initialFilters.SearchQuery;
                     searchFilter = SearchQuery;
                     PageTitle = $"Search Results: {SearchQuery}";
+                    Console.WriteLine($"Applying search filter: {searchFilter}");
                 }
                 else if (_initialFilters != null && !string.IsNullOrEmpty(_initialFilters.Category))
                 {
                     categoryFilter = _initialFilters.Category;
+                    Console.WriteLine($"Applying initial category filter: {categoryFilter}");
                 }
                 else
                 {
@@ -145,39 +149,89 @@ namespace IHECLibrary.ViewModels
                     if (selectedCategories.Count > 0)
                     {
                         categoryFilter = selectedCategories.First(); // Use first category for the filter
+                        Console.WriteLine($"Applying selected category filter: {categoryFilter}");
                     }
                 }
 
-                // Use the new GetRealBooksAsync method to fetch books with pagination
-                books = await _bookService.GetRealBooksAsync(
-                    page: CurrentPage,
-                    pageSize: PAGE_SIZE,
-                    category: categoryFilter,
-                    searchQuery: searchFilter
-                );
+                // Always get books even without filters
+                try 
+                {
+                    // Use the GetRealBooksAsync method to fetch books with pagination
+                    books = await _bookService.GetRealBooksAsync(
+                        page: CurrentPage,
+                        pageSize: PAGE_SIZE,
+                        category: categoryFilter,
+                        searchQuery: searchFilter
+                    );
+                    
+                    Console.WriteLine($"Retrieved {books.Count} books from service");
+                    
+                    // If no books from GetRealBooksAsync, fall back to older methods
+                    if (books.Count == 0)
+                    {
+                        Console.WriteLine("No books found with GetRealBooksAsync, trying fallbacks");
+                        
+                        if (!string.IsNullOrEmpty(searchFilter))
+                        {
+                            books = await _bookService.GetBooksBySearchAsync(searchFilter);
+                            Console.WriteLine($"Search fallback returned {books.Count} books");
+                        }
+                        else if (!string.IsNullOrEmpty(categoryFilter))
+                        {
+                            books = await _bookService.GetBooksByCategoryAsync(categoryFilter);
+                            Console.WriteLine($"Category fallback returned {books.Count} books");
+                        }
+                        else
+                        {
+                            // Use the recommended books if no specific filters are applied
+                            books = await _bookService.GetRecommendedBooksAsync();
+                            Console.WriteLine($"Recommendations fallback returned {books.Count} books");
+                            
+                            // If still no books, try to get all books with filters
+                            if (books.Count == 0)
+                            {
+                                var allCategories = Categories.Select(c => c.Name).ToList();
+                                books = await _bookService.GetBooksByFiltersAsync(allCategories, false, null);
+                                Console.WriteLine($"All categories fallback returned {books.Count} books");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine($"Error getting books: {ex.Message}");
+                    Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                    books = new List<BookModel>();
+                }
 
                 // Apply additional filtering if needed
                 if (IsAvailableOnly)
                 {
+                    var filteredCount = books.Count;
                     books = books.Where(b => b.AvailableCopies > 0).ToList();
+                    Console.WriteLine($"Available only filter: {filteredCount} -> {books.Count} books");
                 }
 
                 // Apply language filtering
                 var selectedLanguage = Languages.FirstOrDefault(l => l.IsSelected)?.Name;
                 if (!string.IsNullOrEmpty(selectedLanguage))
                 {
+                    var filteredCount = books.Count;
                     books = books.Where(b => 
                         string.IsNullOrEmpty(b.Language) || 
                         b.Language.Equals(selectedLanguage, StringComparison.OrdinalIgnoreCase)
                     ).ToList();
+                    Console.WriteLine($"Language filter '{selectedLanguage}': {filteredCount} -> {books.Count} books");
                 }
 
-                // Calculate pagination info
-                // Estimate total pages based on current results
-                // In a real world scenario, we'd want to get an actual count from the API
-                TotalPages = Math.Max(1, (int)Math.Ceiling(books.Count / (double)PAGE_SIZE));
-                HasNextPage = CurrentPage < TotalPages;
+                // Calculate pagination info - assuming we get page size items per request
+                // Adjust total pages dynamically based on results
+                int estimatedTotalBooks = books.Count == PAGE_SIZE ? PAGE_SIZE * 10 : books.Count; // Estimate if we got a full page
+                TotalPages = Math.Max(1, (int)Math.Ceiling(estimatedTotalBooks / (double)PAGE_SIZE));
+                HasNextPage = books.Count == PAGE_SIZE; // If we got a full page, assume there are more
                 HasPreviousPage = CurrentPage > 1;
+                
+                Console.WriteLine($"Pagination: Page {CurrentPage}/{TotalPages}, HasNext: {HasNextPage}, HasPrevious: {HasPreviousPage}");
 
                 // Apply sorting
                 books = SortBooks(books);
@@ -188,10 +242,13 @@ namespace IHECLibrary.ViewModels
                 {
                     Books.Add(new BookViewModel(book, _bookService));
                 }
+                
+                Console.WriteLine($"Added {Books.Count} books to the UI collection");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading books: {ex.Message}");
+                Console.WriteLine($"Error in LoadBooks: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 // You might want to add error handling UI here
             }
             finally
