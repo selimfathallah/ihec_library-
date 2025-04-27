@@ -7,7 +7,7 @@ using Postgrest.Attributes;
 using Postgrest.Models;
 using Postgrest;
 using Postgrest.Responses;
-using IHECLibrary.Services.Models;  // Add this line
+using IHECLibrary.Services.Models;  // This ensures the DbBook class from Models is used
 
 namespace IHECLibrary.Services.Implementations
 {
@@ -26,50 +26,97 @@ namespace IHECLibrary.Services.Implementations
         {
             try
             {
+                Console.WriteLine("Début de la récupération des livres recommandés...");
+
                 var currentUser = await _userService.GetCurrentUserAsync();
                 if (currentUser == null)
-                    return new List<BookModel>();
-
-                // Obtenir les statistiques des livres pour le tri par popularité
-                var bookStats = await _supabaseClient.From<DbBookStatistics>().Get();
-                var statsDict = bookStats.Models
-                    .Where(s => s.BookId != null)
-                    .ToDictionary(s => s.BookId!, s => s);
-
-                // Obtenir des recommandations basées sur le domaine d'études de l'utilisateur
-                var books = await _supabaseClient.From<DbBook>().Get();
-                var fieldBooks = books.Models
-                    .Where(b => b.Category != null && currentUser.FieldOfStudy != null && 
-                           b.Category.Equals(currentUser.FieldOfStudy, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-
-                // Trier par nombre de likes (en utilisant les statistiques)
-                var sortedBooks = fieldBooks
-                    .Where(b => b.BookId != null && statsDict.ContainsKey(b.BookId))
-                    .OrderByDescending(b => statsDict[b.BookId!].LikeCount)
-                    .Take(4)
-                    .ToList();
-
-                // Si pas assez de livres trouvés, compléter avec des livres populaires
-                if (sortedBooks.Count < 4)
                 {
-                    var additionalBooks = books.Models
-                        .Where(b => !fieldBooks.Contains(b))
-                        .ToList();
-
-                    var remainingBooks = additionalBooks
-                        .Where(b => b.BookId != null && statsDict.ContainsKey(b.BookId))
-                        .OrderByDescending(b => statsDict[b.BookId!].LikeCount)
-                        .Take(4 - sortedBooks.Count)
-                        .ToList();
-
-                    sortedBooks.AddRange(remainingBooks);
+                    Console.WriteLine("Utilisateur actuel non trouvé");
+                    return await GetFallbackBooksAsync(); // Utiliser la méthode de secours
                 }
 
-                return ConvertToBookModels(sortedBooks);
+                Console.WriteLine($"Utilisateur trouvé: {currentUser.FirstName} {currentUser.LastName}");
+                Console.WriteLine($"Domaine d'études: {currentUser.FieldOfStudy ?? "Non défini"}");
+
+                // Obtenir tous les livres d'abord
+                var books = await _supabaseClient.From<DbBook>().Get();
+                Console.WriteLine($"Nombre total de livres récupérés: {books.Models.Count}");
+                
+                if (books.Models.Count == 0)
+                {
+                    return await GetFallbackBooksAsync(); // Utiliser la méthode de secours si aucun livre trouvé
+                }
+
+                // Afficher les 3 premiers livres pour le débogage
+                for (int i = 0; i < Math.Min(3, books.Models.Count); i++)
+                {
+                    var book = books.Models[i];
+                    Console.WriteLine($"  Livre {i+1}: {book.Title} / {book.Author} / {book.Category} / Status: {book.AvailabilityStatus}");
+                }
+
+                // Obtenir des recommandations basées sur le domaine d'études de l'utilisateur
+                List<DbBook> selectedBooks = new List<DbBook>();
+                
+                if (!string.IsNullOrEmpty(currentUser.FieldOfStudy))
+                {
+                    Console.WriteLine($"Recherche de livres dans la catégorie: {currentUser.FieldOfStudy}");
+                    var fieldBooks = books.Models
+                        .Where(b => b.Category != null && 
+                               b.Category.Equals(currentUser.FieldOfStudy, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                        
+                    Console.WriteLine($"Nombre de livres dans la catégorie {currentUser.FieldOfStudy}: {fieldBooks.Count}");
+                    selectedBooks.AddRange(fieldBooks);
+                }
+
+                // Si pas assez de livres trouvés par catégorie, ajouter des livres aléatoires
+                if (selectedBooks.Count < 4)
+                {
+                    Console.WriteLine($"Pas assez de livres dans la catégorie, ajout de livres supplémentaires");
+                    var remainingCount = 4 - selectedBooks.Count;
+                    var additionalBooks = books.Models
+                        .Where(b => !selectedBooks.Contains(b))
+                        .Take(remainingCount)
+                        .ToList();
+                        
+                    Console.WriteLine($"Ajout de {additionalBooks.Count} livres supplémentaires");
+                    selectedBooks.AddRange(additionalBooks);
+                }
+
+                var bookModels = ConvertToBookModels(selectedBooks);
+                Console.WriteLine($"Nombre final de livres recommandés: {bookModels.Count}");
+                
+                return bookModels;
             }
-            catch
+            catch (Exception ex)
             {
+                // Journaliser l'erreur
+                Console.WriteLine($"Erreur dans GetRecommendedBooksAsync: {ex.Message}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                
+                // Utiliser la méthode de secours pour éviter un échec complet
+                return await GetFallbackBooksAsync();
+            }
+        }
+
+        // Méthode de secours pour garantir l'affichage de livres même en cas d'erreur
+        private async Task<List<BookModel>> GetFallbackBooksAsync()
+        {
+            try
+            {
+                Console.WriteLine("Utilisation de la méthode de secours pour obtenir des livres");
+                
+                // Simplement récupérer les 4 premiers livres sans aucun filtrage
+                var books = await _supabaseClient.From<DbBook>().Get();
+                var selectedBooks = books.Models.Take(4).ToList();
+                
+                Console.WriteLine($"Méthode de secours: {selectedBooks.Count} livres trouvés");
+                
+                return ConvertToBookModels(selectedBooks);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur même dans la méthode de secours: {ex.Message}");
                 return new List<BookModel>();
             }
         }
@@ -134,7 +181,7 @@ namespace IHECLibrary.Services.Implementations
                 if (availableOnly)
                 {
                     filteredBooks = filteredBooks.Where(b => 
-                        b.AvailabilityStatus != null && b.AvailabilityStatus == "available"
+                        b.AvailabilityStatus != null && b.AvailabilityStatus.Equals("Available", StringComparison.OrdinalIgnoreCase)
                     ).ToList();
                 }
                 
@@ -170,15 +217,18 @@ namespace IHECLibrary.Services.Implementations
                     Publisher = book.Publisher ?? "",
                     Category = book.Category ?? "",
                     Description = book.Description ?? "",
-                    CoverImageUrl = "", // Not in database schema
-                    AvailableCopies = book.AvailabilityStatus == "available" ? 1 : 0,
+                    CoverImageUrl = !string.IsNullOrEmpty(book.CoverImageUrl) 
+                        ? book.CoverImageUrl 
+                        : $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}",
+                    // Correction: Vérification insensible à la casse pour le statut
+                    AvailableCopies = book.AvailabilityStatus?.Equals("Available", StringComparison.OrdinalIgnoreCase) == true ? 1 : 0,
                     TotalCopies = 1 // Default value
                 };
 
                 // Ajouter les statistiques si disponibles
                 if (bookStats != null)
                 {
-                    bookModel.LikesCount = bookStats.LikeCount;
+                    bookModel.LikesCount = bookStats.TotalLikes;
                 }
 
                 // Vérifier si l'utilisateur actuel a aimé ce livre
@@ -232,7 +282,7 @@ namespace IHECLibrary.Services.Implementations
                     bookModel.Ratings.Add(new BookRatingModel
                     {
                         Id = rating.Id.ToString(),
-                        UserId = rating.UserId ?? "",  // Add null coalescing operator
+                        UserId = rating.UserId ?? "",
                         UserName = user != null ? $"{user.FirstName} {user.LastName}" : "Utilisateur inconnu",
                         UserProfilePictureUrl = user?.ProfilePictureUrl ?? "",
                         Rating = rating.Rating,
@@ -261,7 +311,7 @@ namespace IHECLibrary.Services.Implementations
                 var booksResult = await _supabaseClient.From<DbBook>().Get();
                 var book = booksResult.Models.FirstOrDefault(b => b.BookId == bookId);
 
-                if (book == null || book.AvailabilityStatus != "available")
+                if (book == null || !book.AvailabilityStatus?.Equals("Available", StringComparison.OrdinalIgnoreCase) == true)
                     return false;
 
                 // Créer un nouvel emprunt
@@ -277,7 +327,7 @@ namespace IHECLibrary.Services.Implementations
                 await _supabaseClient.From<DbBookBorrowing>().Insert(borrowing);
 
                 // Mettre à jour le statut de disponibilité
-                book.AvailabilityStatus = "borrowed";
+                book.AvailabilityStatus = "Borrowed";
                 await _supabaseClient.From<DbBook>().Update(book);
 
                 // Mettre à jour les statistiques
@@ -339,9 +389,9 @@ namespace IHECLibrary.Services.Implementations
                 var reservationsResult = await _supabaseClient.From<DbBookReservation>().Get();
                 var reservation = reservationsResult.Models.FirstOrDefault(r => r.ReservationId == reservationId);
 
-                if (reservation == null)
+                if (reservation == null || reservation.BookId == null)
                 {
-                    return false; // Reservation not found
+                    return false; // Reservation not found or BookId is null
                 }
 
                 // Delete the reservation
@@ -353,7 +403,7 @@ namespace IHECLibrary.Services.Implementations
 
                 if (book != null)
                 {
-                    book.AvailabilityStatus = "available";
+                    book.AvailabilityStatus = "Available";
                     await _supabaseClient.From<DbBook>().Update(book);
                 }
 
@@ -394,7 +444,7 @@ namespace IHECLibrary.Services.Implementations
                     
                 if (book != null)
                 {
-                    book.AvailabilityStatus = "available";
+                    book.AvailabilityStatus = "Available";
                     await _supabaseClient.From<DbBook>().Update(book);
                 }
 
@@ -566,16 +616,15 @@ namespace IHECLibrary.Services.Implementations
                 // Adjust pagination values
                 page = Math.Max(1, page);
                 pageSize = Math.Clamp(pageSize, 5, 50);
-                int rangeStart = (page - 1) * pageSize;
-                int rangeEnd = rangeStart + pageSize - 1;
                 
-                // Get all books and filter in memory instead of trying to cast
-                var booksResult = await _supabaseClient.From<DbBook>().Get();
-                var allBooks = booksResult.Models;
+                // Fetch books from database with proper filters
+                var query = _supabaseClient.From<DbBook>();
                 
-                // Apply filters on the client side
-                var filteredBooks = allBooks.AsEnumerable();
+                // Get all books first and then filter in memory
+                var booksResult = await query.Get();
+                var filteredBooks = booksResult.Models.AsEnumerable();
                 
+                // Apply category filter if provided
                 if (!string.IsNullOrEmpty(category))
                 {
                     filteredBooks = filteredBooks.Where(b => 
@@ -583,6 +632,7 @@ namespace IHECLibrary.Services.Implementations
                     );
                 }
                 
+                // Apply search query filter if provided
                 if (!string.IsNullOrEmpty(searchQuery))
                 {
                     filteredBooks = filteredBooks.Where(b => 
@@ -593,13 +643,16 @@ namespace IHECLibrary.Services.Implementations
                     );
                 }
                 
-                // Apply pagination after filtering
+                // Count total before pagination (only needed for accurate pagination info)
+                int totalBooks = filteredBooks.Count();
+                
+                // Apply pagination
                 var pagedBooks = filteredBooks
-                    .Skip(rangeStart)
+                    .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
                 
-                if (pagedBooks.Count == 0)
+                if (!pagedBooks.Any())
                 {
                     return new List<BookModel>();
                 }
@@ -607,7 +660,7 @@ namespace IHECLibrary.Services.Implementations
                 // Get book IDs for batch fetching statistics
                 var bookIds = pagedBooks.Where(b => b.BookId != null).Select(b => b.BookId!).ToList();
                 
-                // Fetch book statistics in a single query
+                // Fetch book statistics in a batch query
                 var bookStatsResult = await _supabaseClient.From<DbBookStatistics>()
                     .Filter("book_id", Postgrest.Constants.Operator.In, bookIds)
                     .Get();
@@ -616,13 +669,34 @@ namespace IHECLibrary.Services.Implementations
                     .Where(s => s.BookId != null)
                     .ToDictionary(s => s.BookId!, s => s);
                 
-                // Create book models with enhanced data
+                // Fetch book likes - to check if current user has liked any books
+                var currentUser = await _userService.GetCurrentUserAsync();
+                Dictionary<string, bool> userLikes = new Dictionary<string, bool>();
+                
+                if (currentUser != null)
+                {
+                    var likesResult = await _supabaseClient.From<DbBookLike>()
+                        .Filter("user_id", Postgrest.Constants.Operator.Equals, currentUser.Id)
+                        .Filter("book_id", Postgrest.Constants.Operator.In, bookIds)
+                        .Get();
+                    
+                    foreach (var like in likesResult.Models)
+                    {
+                        if (like.BookId != null)
+                        {
+                            userLikes[like.BookId] = true;
+                        }
+                    }
+                }
+                
+                // Map database books to view models with enhanced properties
                 var bookModels = new List<BookModel>();
                 
                 foreach (var book in pagedBooks)
                 {
                     if (book?.BookId == null) continue;
                     
+                    // Create BookModel with properties from the database
                     var bookModel = new BookModel
                     {
                         Id = book.BookId,
@@ -633,41 +707,28 @@ namespace IHECLibrary.Services.Implementations
                         Publisher = book.Publisher ?? "",
                         Category = book.Category ?? "",
                         Description = book.Description ?? "",
-                        AvailableCopies = book.AvailabilityStatus == "available" ? 1 : 0,
-                        TotalCopies = 1, // Default value or use reflection if available
-                        Ratings = new List<BookRatingModel>()
+                        // Use the actual cover image URL from database
+                        CoverImageUrl = !string.IsNullOrEmpty(book.CoverImageUrl) 
+                            ? book.CoverImageUrl 
+                            : $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}",
+                        // Add language from database, defaulting to English if not specified
+                        Language = !string.IsNullOrEmpty(book.Language) ? book.Language : "English",
+                        // Correction: Vérification insensible à la casse pour le statut
+                        AvailableCopies = book.AvailabilityStatus?.Equals("Available", StringComparison.OrdinalIgnoreCase) == true ? 1 : 0,
+                        TotalCopies = 1
                     };
-                    
-                    // Try to get cover image URL using reflection
-                    try
-                    {
-                        var coverImageProperty = typeof(DbBook).GetProperty("CoverImageUrl");
-                        if (coverImageProperty != null)
-                        {
-                            bookModel.CoverImageUrl = (coverImageProperty.GetValue(book) as string) ?? "";
-                        }
-                        else
-                        {
-                            // Default to a placeholder if property doesn't exist
-                            bookModel.CoverImageUrl = $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}";
-                        }
-                    }
-                    catch
-                    {
-                        bookModel.CoverImageUrl = "";
-                    }
                     
                     // Add statistics if available
                     if (statsDict.TryGetValue(book.BookId, out var stats))
                     {
-                        bookModel.LikesCount = stats.LikeCount;
-                        
-                        // Add rating average if available
-                        if (stats.RatingAverage != 0)
-                        {
-                            // Use the property directly since it's a decimal, not a nullable type
-                            bookModel.RatingAverage = stats.RatingAverage;
-                        }
+                        bookModel.LikesCount = stats.TotalLikes;
+                        bookModel.RatingAverage = stats.AverageRating;
+                    }
+                    
+                    // Set if the current user has liked this book
+                    if (currentUser != null && userLikes.ContainsKey(book.BookId))
+                    {
+                        bookModel.IsLikedByCurrentUser = true;
                     }
                     
                     bookModels.Add(bookModel);
@@ -702,16 +763,16 @@ namespace IHECLibrary.Services.Implementations
                     switch (statField)
                     {
                         case "borrow_count":
-                            newStats.BorrowCount = increment;
+                            newStats.TotalBorrows = increment;
                             break;
                         case "view_count":
-                            newStats.ViewCount = increment;
+                            // Cette colonne n'existe plus dans le schéma, ignorer cette mise à jour
                             break;
                         case "comment_count":
-                            newStats.CommentCount = increment;
+                            // Cette colonne n'existe plus dans le schéma, ignorer cette mise à jour
                             break;
                         case "like_count":
-                            newStats.LikeCount = increment;
+                            newStats.TotalLikes = increment;
                             break;
                     }
 
@@ -723,16 +784,16 @@ namespace IHECLibrary.Services.Implementations
                     switch (statField)
                     {
                         case "borrow_count":
-                            stats.BorrowCount = Math.Max(0, stats.BorrowCount + increment);
+                            stats.TotalBorrows = Math.Max(0, stats.TotalBorrows + increment);
                             break;
                         case "view_count":
-                            stats.ViewCount = Math.Max(0, stats.ViewCount + increment);
+                            // Cette colonne n'existe plus dans le schéma, ignorer cette mise à jour
                             break;
                         case "comment_count":
-                            stats.CommentCount = Math.Max(0, stats.CommentCount + increment);
+                            // Cette colonne n'existe plus dans le schéma, ignorer cette mise à jour
                             break;
                         case "like_count":
-                            stats.LikeCount = Math.Max(0, stats.LikeCount + increment);
+                            stats.TotalLikes = Math.Max(0, stats.TotalLikes + increment);
                             break;
                     }
 
@@ -768,14 +829,14 @@ namespace IHECLibrary.Services.Implementations
                         var newStats = new DbBookStatistics
                         {
                             BookId = bookId,
-                            RatingAverage = average
+                            AverageRating = average
                         };
 
                         await _supabaseClient.From<DbBookStatistics>().Insert(newStats);
                     }
                     else
                     {
-                        stats.RatingAverage = average;
+                        stats.AverageRating = average;
                         await _supabaseClient.From<DbBookStatistics>().Update(stats);
                     }
                 }
@@ -803,8 +864,14 @@ namespace IHECLibrary.Services.Implementations
                         Publisher = book.Publisher ?? "",
                         Category = book.Category ?? "",
                         Description = book.Description ?? "",
-                        CoverImageUrl = "", // Not in schema
-                        AvailableCopies = book.AvailabilityStatus == "available" ? 1 : 0,
+                        // Use the actual cover image URL from database
+                        CoverImageUrl = !string.IsNullOrEmpty(book.CoverImageUrl) 
+                            ? book.CoverImageUrl 
+                            : $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}",
+                        // Add language from database, defaulting to English if not specified
+                        Language = !string.IsNullOrEmpty(book.Language) ? book.Language : "English",
+                        // Correction: Vérification insensible à la casse pour le statut
+                        AvailableCopies = book.AvailabilityStatus?.Equals("Available", StringComparison.OrdinalIgnoreCase) == true ? 1 : 0,
                         TotalCopies = 1
                     });
                 }

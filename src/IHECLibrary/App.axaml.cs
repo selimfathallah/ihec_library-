@@ -216,8 +216,9 @@ namespace IHECLibrary
             services.AddSingleton<IUserService>(provider => 
                 new SupabaseUserService(supabaseClient, provider.GetRequiredService<IAuthService>()));
             
-            // Use MockBookService instead of SupabaseBookService
-            services.AddSingleton<IBookService, Services.Implementations.Mock.MockBookService>();
+            // Utiliser SupabaseBookService au lieu de MockBookService pour n'afficher que les livres de la base de données
+            services.AddSingleton<IBookService>(provider => 
+                new SupabaseBookService(supabaseClient, provider.GetRequiredService<IUserService>()));
             
             services.AddSingleton<IChatbotService>(provider => 
                 new GeminiChatbotService("AIzaSyAHGzJNWYMGDDsSzpAUFn92XjETHFjQ07c", provider.GetRequiredService<IBookService>()));

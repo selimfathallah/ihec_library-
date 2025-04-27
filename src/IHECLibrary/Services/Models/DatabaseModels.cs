@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
 namespace IHECLibrary.Services.Models
 {
-    [Table("Books")]
+    // Book-related models
+    [Table("books")]
     public class DbBook : BaseModel
     {
-        [PrimaryKey("book_id", shouldInsert: false)]
+        [PrimaryKey("book_id")]
         public string? BookId { get; set; }
 
         [Column("title")]
@@ -27,71 +29,59 @@ namespace IHECLibrary.Services.Models
 
         [Column("description")]
         public string? Description { get; set; }
-
-        [Column("category")]
-        public string? Category { get; set; }
-
-        [Column("availability_status")]
-        public string? AvailabilityStatus { get; set; }
-
-        [Column("added_by")]
-        public string? AddedBy { get; set; }
-
-        [Column("book_id")]
-        public string? Id { get; set; }
-
+        
         [Column("cover_image_url")]
         public string? CoverImageUrl { get; set; }
-
-        [Column("available_copies")]
-        public int AvailableCopies { get; set; }
-
-        [Column("total_copies")]
-        public int TotalCopies { get; set; }
-
-        [Column("likes_count")]
-        public int LikesCount { get; set; }
-
+        
+        [Column("page_count")]
+        public int? PageCount { get; set; }
+        
         [Column("language")]
         public string? Language { get; set; }
 
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
+        [Column("category")]
+        public string? Category { get; set; }
+        
+        [Column("tags")]
+        public string[]? Tags { get; set; }
 
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        [Column("availability_status")]
+        public string? AvailabilityStatus { get; set; }
+        
+        [Column("added_at")]
+        public DateTime? AddedAt { get; set; }
+        
+        [Column("added_by")]
+        public string? AddedBy { get; set; }
     }
 
-    [Table("BookStatistics")]
+    [Table("book_statistics")]
     public class DbBookStatistics : BaseModel
     {
         [PrimaryKey("book_id")]
         public string? BookId { get; set; }
 
-        [Column("borrow_count")]
-        public int BorrowCount { get; set; }
+        [Column("total_borrows")]
+        public int TotalBorrows { get; set; }
 
-        [Column("view_count")]
-        public int ViewCount { get; set; }
+        [Column("total_reservations")]
+        public int TotalReservations { get; set; }
 
-        [Column("rating_average")]
-        public decimal RatingAverage { get; set; }
+        [Column("average_rating")]
+        public decimal AverageRating { get; set; }
 
-        [Column("comment_count")]
-        public int CommentCount { get; set; }
+        [Column("total_ratings")]
+        public int TotalRatings { get; set; }
 
-        [Column("like_count")]
-        public int LikeCount { get; set; }
-
-        [Column("last_updated")]
-        public DateTime LastUpdated { get; set; }
+        [Column("total_likes")]
+        public int TotalLikes { get; set; }
     }
 
-    [Table("BookBorrowings")]
+    [Table("book_borrowings")]
     public class DbBookBorrowing : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public long Id { get; set; }
+        [PrimaryKey("borrowing_id")]
+        public string? Id { get; set; }
 
         [Column("book_id")]
         public string? BookId { get; set; }
@@ -110,16 +100,19 @@ namespace IHECLibrary.Services.Models
 
         [Column("return_date")]
         public DateTime? ReturnDate { get; set; }
-
+        
+        [Column("reminder_sent")]
+        public bool ReminderSent { get; set; }
+        
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
     }
 
-    [Table("BookRatings")]
+    [Table("book_ratings")]
     public class DbBookRating : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public long Id { get; set; }
+        [PrimaryKey("rating_id")]
+        public string? Id { get; set; }
 
         [Column("book_id")]
         public string? BookId { get; set; }
@@ -129,19 +122,16 @@ namespace IHECLibrary.Services.Models
 
         [Column("rating")]
         public int Rating { get; set; }
-
+        
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
-
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
     }
 
-    [Table("BookComments")]
+    [Table("book_comments")]
     public class DbBookComment : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public long Id { get; set; }
+        [PrimaryKey("comment_id")]
+        public string? Id { get; set; }
 
         [Column("book_id")]
         public string? BookId { get; set; }
@@ -154,47 +144,47 @@ namespace IHECLibrary.Services.Models
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
-
+        
         [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 
-    [Table("BookLikes")]
+    [Table("book_likes")]
     public class DbBookLike : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public long Id { get; set; }
+        [PrimaryKey("like_id")]
+        public string? Id { get; set; }
 
         [Column("book_id")]
         public string? BookId { get; set; }
 
         [Column("user_id")]
         public string? UserId { get; set; }
-
+        
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
     }
 
-    [Table("BooksOfInterest")]
+    [Table("books_of_interest")]
     public class DbBookOfInterest : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public long Id { get; set; }
+        [PrimaryKey("interest_id")]
+        public string? Id { get; set; }
 
         [Column("user_id")]
         public string? UserId { get; set; }
 
         [Column("book_id")]
         public string? BookId { get; set; }
-
+        
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
     }
 
-    [Table("Borrowings")]
+    [Table("book_borrowing_details")]
     public class DbBookBorrowingDetails : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
+        [PrimaryKey("borrowing_id")]
         public string? Id { get; set; }
 
         [Column("book_id")]
@@ -214,43 +204,12 @@ namespace IHECLibrary.Services.Models
 
         [Column("return_date")]
         public DateTime? ReturnDate { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        [Column("notes")]
-        public string? Notes { get; set; }
-        
-        [Column("extended_count")]
-        public int ExtendedCount { get; set; }
     }
 
-    [Table("Reservations")]
-    public class DbReservation : BaseModel
-    {
-        [PrimaryKey("id", shouldInsert: false)]
-        public string? Id { get; set; }
-
-        [Column("book_id")]
-        public string? BookId { get; set; }
-
-        [Column("user_id")]
-        public string? UserId { get; set; }
-
-        [Column("reservation_date")]
-        public DateTime ReservationDate { get; set; }
-
-        [Column("status")]
-        public string? Status { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-    }
-
-    [Table("BookReservations")]
+    [Table("book_reservations")]
     public class DbBookReservation : BaseModel
     {
-        [PrimaryKey("reservation_id", shouldInsert: false)]
+        [PrimaryKey("reservation_id")]
         public string? ReservationId { get; set; }
 
         [Column("book_id")]
@@ -264,38 +223,26 @@ namespace IHECLibrary.Services.Models
 
         [Column("status")]
         public string? Status { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        [Column("expiration_date")]
-        public DateTime? ExpirationDate { get; set; }
+        
+        [Column("notification_sent")]
+        public bool NotificationSent { get; set; }
+        
+        [Column("is_active")]
+        public bool IsActive { get; set; }
     }
 
-    [Table("Activities")]
-    public class Activity : BaseModel
+    // User-related models
+    [Table("users")]
+    public class DbUser : BaseModel
     {
-        [PrimaryKey("id", shouldInsert: false)]
-        public string? Id { get; set; }
+        [PrimaryKey("user_id")]
+        public string? UserId { get; set; }
 
-        [Column("title")]
-        public string? Title { get; set; }
+        [Column("email")]
+        public string? Email { get; set; }
 
-        [Column("description")]
-        public string? Description { get; set; }
-
-        [Column("type")]
-        public string? Type { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-    }
-
-    [Table("UserProfiles")]
-    public class UserProfile : BaseModel
-    {
-        [PrimaryKey("id")]
-        public string? Id { get; set; }
+        [Column("password_hash")]
+        public string? PasswordHash { get; set; }
 
         [Column("first_name")]
         public string? FirstName { get; set; }
@@ -305,61 +252,166 @@ namespace IHECLibrary.Services.Models
 
         [Column("phone_number")]
         public string? PhoneNumber { get; set; }
+
+        [Column("profile_picture_url")]
+        public string? ProfilePictureUrl { get; set; }
+        
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column("last_login")]
+        public DateTime? LastLogin { get; set; }
+        
+        [Column("is_active")]
+        public bool IsActive { get; set; }
+    }
+
+    [Table("student_profiles")]
+    public class DbStudentProfile : BaseModel
+    {
+        [PrimaryKey("student_id")]
+        public string? StudentId { get; set; }
 
         [Column("level_of_study")]
         public string? LevelOfStudy { get; set; }
 
         [Column("field_of_study")]
         public string? FieldOfStudy { get; set; }
-
-        [Column("profile_picture_url")]
-        public string? ProfilePictureUrl { get; set; }
-
-        [Column("is_admin")]
-        public bool IsAdmin { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
+        
+        [Column("books_borrowed")]
+        public int BooksBorrowed { get; set; }
+        
+        [Column("books_reserved")]
+        public int BooksReserved { get; set; }
+        
+        [Column("ranking")]
+        public string? Ranking { get; set; }
     }
 
-    [Table("AdminProfiles")]
+    [Table("admin_profiles")]
+    public class DbAdminProfile : BaseModel
+    {
+        [PrimaryKey("admin_id")]
+        public string? AdminId { get; set; }
+
+        [Column("job_title")]
+        public string? JobTitle { get; set; }
+
+        [Column("is_approved")]
+        public bool IsApproved { get; set; }
+
+        [Column("approved_by")]
+        public string? ApprovedBy { get; set; }
+    }
+
+    // Added missing model classes
+
+    // This class replaces the missing AdminProfile class
+    [Table("admin_profiles")]
     public class AdminProfile : BaseModel
     {
         [PrimaryKey("admin_id")]
         public string? AdminId { get; set; }
 
-        [Column("first_name")]
-        public string? FirstName { get; set; }
-
-        [Column("last_name")]
-        public string? LastName { get; set; }
-
-        [Column("phone_number")]
-        public string? PhoneNumber { get; set; }
-
         [Column("job_title")]
         public string? JobTitle { get; set; }
-
-        [Column("profile_picture_url")]
-        public string? ProfilePictureUrl { get; set; }
 
         [Column("is_approved")]
         public bool IsApproved { get; set; }
 
-        [Column("created_at")]
+        [Column("approved_by")]
+        public string? ApprovedBy { get; set; }
+        
+        // Extra properties from UserProfile that are used in the code
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? ProfilePictureUrl { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 
-    [Table("Users")]
-    public class User : BaseModel
+    // This class replaces the missing UserProfile class
+    [Table("users")]
+    public class UserProfile : BaseModel
     {
-        [PrimaryKey("id")]
+        [PrimaryKey("user_id")]
         public string? Id { get; set; }
-
+        
         [Column("email")]
         public string? Email { get; set; }
-
+        
+        [Column("first_name")]
+        public string? FirstName { get; set; }
+        
+        [Column("last_name")]
+        public string? LastName { get; set; }
+        
+        [Column("phone_number")]
+        public string? PhoneNumber { get; set; }
+        
+        [Column("profile_picture_url")]
+        public string? ProfilePictureUrl { get; set; }
+        
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
+        
+        // Additional properties that are used in the code
+        public string? LevelOfStudy { get; set; }
+        public string? FieldOfStudy { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+
+    // This class replaces the missing DbReservation class
+    [Table("book_reservations")]
+    public class DbReservation : BaseModel
+    {
+        [PrimaryKey("reservation_id")]
+        public string? Id { get; set; }
+        
+        [Column("book_id")]
+        public string? BookId { get; set; }
+        
+        [Column("user_id")]
+        public string? UserId { get; set; }
+        
+        [Column("reservation_date")]
+        public DateTime ReservationDate { get; set; }
+        
+        [Column("status")]
+        public string? Status { get; set; }
+    }
+
+    // This class replaces the missing Activity class
+    [Table("activitylogs")]
+    public class Activity : BaseModel
+    {
+        [PrimaryKey("log_id")]
+        public string? Id { get; set; }
+        
+        [Column("user_id")]
+        public string? UserId { get; set; }
+        
+        [Column("activity_type")]
+        public string? Type { get; set; }
+        
+        [Column("activity_description")]
+        public string? Description { get; set; }
+        
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+        
+        // Additional property used in the code that's not in the DB schema
+        public string? Title { get; set; }
+    }
+
+    // This class replaces the missing User class
+    [Table("users")]
+    public class User : BaseModel
+    {
+        [PrimaryKey("user_id")]
+        public string? Id { get; set; }
+        
+        [Column("email")]
+        public string? Email { get; set; }
     }
 }
