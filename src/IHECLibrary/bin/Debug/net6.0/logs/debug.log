@@ -490,3 +490,9 @@ Inner Exception: The resource /Assets/send_icon.png could not be found.
 [2025-04-27 21:09:49.435] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
 [2025-04-27 21:13:13.356] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
 [2025-04-27 21:13:13.356] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-04-27 23:49:14.440] Application IHEC Library démarrée
+[2025-04-27 23:49:14.797] Creating MainWindow
+[2025-04-27 23:49:14.926] Setting up navigation service
+[2025-04-27 23:49:14.950] Application started successfully
+[2025-04-27 23:49:15.020] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-04-27 23:49:15.021] ViewLocator: Creating instance of IHECLibrary.Views.LoginView

@@ -423,8 +423,7 @@
       },
       "Microsoft.Extensions.DependencyInjection/6.0.1": {
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.DependencyInjection.dll": {
@@ -734,8 +733,6 @@
           }
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Threading.Channels/5.0.0": {},
       "Tmds.DBus.Protocol/0.20.0": {
         "dependencies": {
           "System.IO.Pipelines": "8.0.0"
@@ -749,8 +746,7 @@
       },
       "Websocket.Client/4.6.1": {
         "dependencies": {
-          "System.Reactive": "5.0.0",
-          "System.Threading.Channels": "5.0.0"
+          "System.Reactive": "5.0.0"
         },
         "runtime": {
           "lib/net6.0/Websocket.Client.dll": {
@@ -1165,20 +1161,6 @@
       "sha512": "sha512-erBZjkQHWL9jpasCE/0qKAryzVBJFxGHVBAvgRN1bzM0q2s1S4oYREEEL0Vb+1kA/6BKb5FjUZMp5VXmy+gzkQ==",
       "path": "system.reactive/5.0.0",
       "hashPath": "system.reactive.5.0.0.nupkg.sha512"
-    },
-    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
-      "path": "system.runtime.compilerservices.unsafe/6.0.0",
-      "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
-    },
-    "System.Threading.Channels/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-RLBIxntLaG9pRmmuVDwY1kc8Bvp/FQzSxPU+19VekkScKkWtVP9r8bLhm28ama3usc816UBrmkg3vv3jUea/hw==",
-      "path": "system.threading.channels/5.0.0",
-      "hashPath": "system.threading.channels.5.0.0.nupkg.sha512"
     },
     "Tmds.DBus.Protocol/0.20.0": {
       "type": "package",
