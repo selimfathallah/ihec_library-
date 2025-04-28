@@ -25,6 +25,12 @@ namespace IHECLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<ChatMessageViewModel> _messages = new();
 
+        [ObservableProperty]
+        private string _errorMessage = string.Empty;
+
+        [ObservableProperty]
+        private bool _hasError = false;
+
         private readonly INavigationService _navigationService;
         private readonly IUserService _userService;
         private readonly IChatbotService _chatbotService;
@@ -32,115 +38,193 @@ namespace IHECLibrary.ViewModels
 
         public ChatbotViewModel(INavigationService navigationService, IUserService userService, IChatbotService chatbotService, IBookService bookService)
         {
-            _navigationService = navigationService;
-            _userService = userService;
-            _chatbotService = chatbotService;
-            _bookService = bookService;
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _chatbotService = chatbotService ?? throw new ArgumentNullException(nameof(chatbotService));
+            _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
 
-            LoadUserData();
-            InitializeChat();
+            try
+            {
+                LoadUserData();
+                InitializeChat();
+            }
+            catch (Exception ex)
+            {
+                // Log the error and show it to the user
+                Console.WriteLine($"Error initializing ChatbotViewModel: {ex.Message}");
+                ErrorMessage = $"Une erreur s'est produite lors de l'initialisation du chatbot: {ex.Message}";
+                HasError = true;
+            }
         }
 
         private async void LoadUserData()
         {
-            var user = await _userService.GetCurrentUserAsync();
-            if (user != null)
+            try
             {
-                UserFullName = $"{user.FirstName} {user.LastName}";
-                UserProfilePicture = user.ProfilePictureUrl ?? "/Assets/default_profile.png";
+                var user = await _userService.GetCurrentUserAsync();
+                if (user != null)
+                {
+                    UserFullName = $"{user.FirstName} {user.LastName}";
+                    UserProfilePicture = user.ProfilePictureUrl ?? "/Assets/default_profile.png";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading user data: {ex.Message}");
+                // Don't fail the entire view for user data loading issue
+                UserFullName = "Utilisateur";
+                UserProfilePicture = "/Assets/default_profile.png";
             }
         }
 
         private void InitializeChat()
         {
-            // Message de bienvenue initial
-            Messages.Add(new ChatMessageViewModel
+            try
             {
-                SenderName = "HEC 1.0",
-                Content = "Bonjour ! Je suis HEC 1.0, votre assistant de bibliothèque. Comment puis-je vous aider aujourd'hui ?",
-                IsFromBot = true,
-                MessageBackground = "#E6F2F8",
-                MessageAlignment = "Left",
-                Suggestions = new ObservableCollection<string>
+                // Ajouter un message de bienvenue du chatbot
+                var welcomeMessage = new ChatMessageViewModel
+                {
+                    SenderName = "HEC 1.0",
+                    Content = "Bonjour ! Je suis HEC 1.0, l'assistant virtuel de la bibliothèque IHEC Carthage. Comment puis-je vous aider aujourd'hui ?",
+                    IsFromBot = true,
+                    MessageBackground = "#E6F2F8",
+                    MessageAlignment = "Left"
+                };
+
+                // Ajouter des suggestions par défaut
+                welcomeMessage.Suggestions = new ObservableCollection<string>
                 {
                     "Recommande-moi des livres",
                     "Comment emprunter un livre ?",
                     "Quels sont les horaires de la bibliothèque ?",
                     "Aide-moi avec ma recherche"
-                }
-            });
+                };
+
+                Messages.Add(welcomeMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error initializing chat: {ex.Message}");
+                throw; // Rethrow to be caught by the constructor
+            }
         }
 
         [RelayCommand]
         private async Task SendMessage()
         {
-            if (string.IsNullOrWhiteSpace(CurrentMessage))
-                return;
-
-            // Ajouter le message de l'utilisateur
-            Messages.Add(new ChatMessageViewModel
+            try
             {
-                SenderName = UserFullName,
-                Content = CurrentMessage,
-                IsFromBot = false,
-                MessageBackground = "#DCF8C6",
-                MessageAlignment = "Right"
-            });
+                // Ignorer les messages vides
+                if (string.IsNullOrWhiteSpace(CurrentMessage))
+                    return;
 
-            string userMessage = CurrentMessage;
-            CurrentMessage = string.Empty;
-
-            // Simuler la réponse du chatbot (à remplacer par l'intégration réelle avec Gemini)
-            await Task.Delay(1000); // Simuler un délai de traitement
-
-            // Exemple de réponse du chatbot
-            var botResponse = await _chatbotService.GetResponseAsync(userMessage);
-            
-            var botMessage = new ChatMessageViewModel
-            {
-                SenderName = "HEC 1.0",
-                Content = botResponse.Message,
-                IsFromBot = true,
-                MessageBackground = "#E6F2F8",
-                MessageAlignment = "Left"
-            };
-
-            // Ajouter des suggestions si disponibles
-            if (botResponse.Suggestions != null && botResponse.Suggestions.Count > 0)
-            {
-                botMessage.Suggestions = new ObservableCollection<string>(botResponse.Suggestions);
-            }
-
-            // Ajouter des résultats de recherche si disponibles
-            if (botResponse.BookRecommendations != null && botResponse.BookRecommendations.Count > 0)
-            {
-                botMessage.SearchResults = new ObservableCollection<BookSearchResultViewModel>();
-                foreach (var book in botResponse.BookRecommendations)
+                // Ajouter le message de l'utilisateur à la conversation
+                var userMessage = new ChatMessageViewModel
                 {
-                    botMessage.SearchResults.Add(new BookSearchResultViewModel(book, _navigationService));
-                }
-            }
+                    SenderName = UserFullName,
+                    Content = CurrentMessage,
+                    IsFromBot = false,
+                    MessageBackground = "#FFFFFF",
+                    MessageAlignment = "Right"
+                };
 
-            Messages.Add(botMessage);
+                Messages.Add(userMessage);
+
+                // Sauvegarder et effacer le message courant
+                var messageToSend = CurrentMessage;
+                CurrentMessage = string.Empty;
+
+                // Obtenir la réponse du chatbot
+                var botResponse = await _chatbotService.GetResponseAsync(messageToSend);
+
+                // Créer le message du chatbot
+                var botMessage = new ChatMessageViewModel
+                {
+                    SenderName = "HEC 1.0",
+                    Content = botResponse.Message,
+                    IsFromBot = true,
+                    MessageBackground = "#E6F2F8",
+                    MessageAlignment = "Left"
+                };
+
+                // Ajouter des suggestions si disponibles
+                if (botResponse.Suggestions != null && botResponse.Suggestions.Count > 0)
+                {
+                    botMessage.Suggestions = new ObservableCollection<string>(botResponse.Suggestions);
+                }
+
+                // Ajouter des résultats de recherche si disponibles
+                if (botResponse.BookRecommendations != null && botResponse.BookRecommendations.Count > 0)
+                {
+                    botMessage.SearchResults = new ObservableCollection<BookSearchResultViewModel>();
+                    foreach (var book in botResponse.BookRecommendations)
+                    {
+                        botMessage.SearchResults.Add(new BookSearchResultViewModel(book, _navigationService));
+                    }
+                }
+
+                Messages.Add(botMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending message: {ex.Message}");
+                
+                // Add error message to chat
+                var errorMessage = new ChatMessageViewModel
+                {
+                    SenderName = "HEC 1.0",
+                    Content = "Je suis désolé, une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.",
+                    IsFromBot = true,
+                    MessageBackground = "#E6F2F8",
+                    MessageAlignment = "Left"
+                };
+                
+                Messages.Add(errorMessage);
+            }
         }
 
         [RelayCommand]
         private void UseSuggestion(string suggestion)
         {
-            CurrentMessage = suggestion;
-            SendMessageCommand.Execute(null);
+            try
+            {
+                CurrentMessage = suggestion;
+                SendMessageCommand.Execute(null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error using suggestion: {ex.Message}");
+            }
         }
 
         [RelayCommand]
         private async Task NavigateToHome()
         {
-            await _navigationService.NavigateToAsync("Home");
+            try
+            {
+                await _navigationService.NavigateToAsync("Home");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error navigating to Home: {ex.Message}");
+                ErrorMessage = $"Erreur de navigation: {ex.Message}";
+                HasError = true;
+            }
         }
 
         [RelayCommand]
         private async Task NavigateToLibrary()
         {
-            await _navigationService.NavigateToAsync("Library");
+            try
+            {
+                await _navigationService.NavigateToAsync("Library");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error navigating to Library: {ex.Message}");
+                ErrorMessage = $"Erreur de navigation: {ex.Message}";
+                HasError = true;
+            }
         }
 
         [RelayCommand]
@@ -153,16 +237,34 @@ namespace IHECLibrary.ViewModels
         [RelayCommand]
         private async Task NavigateToProfile()
         {
-            await _navigationService.NavigateToAsync("Profile");
+            try
+            {
+                await _navigationService.NavigateToAsync("Profile");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error navigating to Profile: {ex.Message}");
+                ErrorMessage = $"Erreur de navigation: {ex.Message}";
+                HasError = true;
+            }
         }
 
         [RelayCommand]
         private async Task Search()
         {
-            if (!string.IsNullOrWhiteSpace(SearchQuery))
+            try
             {
-                await _navigationService.NavigateToAsync("Library", new LibraryFilterOptions { SearchQuery = SearchQuery });
-                SearchQuery = string.Empty;
+                if (!string.IsNullOrWhiteSpace(SearchQuery))
+                {
+                    await _navigationService.NavigateToAsync("Library", new LibraryFilterOptions { SearchQuery = SearchQuery });
+                    SearchQuery = string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error searching: {ex.Message}");
+                ErrorMessage = $"Erreur de recherche: {ex.Message}";
+                HasError = true;
             }
         }
     }
@@ -179,19 +281,19 @@ namespace IHECLibrary.ViewModels
         private bool _isFromBot;
 
         [ObservableProperty]
-        private string _messageBackground = string.Empty;
+        private string _messageBackground = "#FFFFFF";
 
         [ObservableProperty]
-        private string _messageAlignment = string.Empty;
+        private string _messageAlignment = "Right";
 
         [ObservableProperty]
-        private ObservableCollection<string> _suggestions = new();
+        private ObservableCollection<string>? _suggestions;
 
         [ObservableProperty]
-        private ObservableCollection<BookSearchResultViewModel> _searchResults = new();
+        private ObservableCollection<BookSearchResultViewModel>? _searchResults;
 
-        public bool HasSuggestions => Suggestions.Count > 0;
-        public bool HasSearchResults => SearchResults.Count > 0;
+        public bool HasSuggestions => Suggestions != null && Suggestions.Count > 0;
+        public bool HasSearchResults => SearchResults != null && SearchResults.Count > 0;
     }
 
     public partial class BookSearchResultViewModel : ViewModelBase
@@ -213,7 +315,14 @@ namespace IHECLibrary.ViewModels
         [RelayCommand]
         private async Task ViewBook()
         {
-            await _navigationService.NavigateToAsync("BookDetails", Id);
+            try
+            {
+                await _navigationService.NavigateToAsync("BookDetails", Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error viewing book: {ex.Message}");
+            }
         }
     }
 }

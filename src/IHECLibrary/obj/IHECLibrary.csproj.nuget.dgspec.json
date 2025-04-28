@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {}
+    "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {}
   },
   "projects": {
-    "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {
+    "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
         "projectName": "IHECLibrary",
-        "projectPath": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
+        "projectPath": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\src\\IHECLibrary\\IHECLibrary.csproj",
         "packagesPath": "C:\\Users\\GIGABYTE\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\ihec_library-\\src\\IHECLibrary\\obj\\",
+        "outputPath": "C:\\Users\\GIGABYTE\\Desktop\\ihec_library-\\src\\IHECLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -136,7 +136,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -53,7 +53,7 @@
     </Grid>
     
     <!-- Contenu principal -->
-    <ScrollViewer Grid.Row="1" Padding="20">
+    <ScrollViewer Grid.Row="1" Padding="20" Background="#eff4ff">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="300"/>
@@ -66,21 +66,21 @@
             <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
           </Border>
           
-          <TextBlock Text="{Binding UserFullName}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-          <TextBlock Text="{Binding UserEmail}" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+          <TextBlock Text="{Binding UserFullName}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5" Foreground="#2e74a8"/>
+          <TextBlock Text="{Binding UserEmail}" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="#2e74a8"/>
           
           <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,0,0,20">
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Phone:" FontWeight="SemiBold" Margin="0,0,10,5"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserPhone}" Margin="0,0,0,5"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Phone:" FontWeight="SemiBold" Margin="0,0,10,5" Foreground="#2e74a8"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserPhone}" Margin="0,0,0,5" Foreground="#2e74a8"/>
             
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Level:" FontWeight="SemiBold" Margin="0,0,10,5"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserLevel}" Margin="0,0,0,5"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Level:" FontWeight="SemiBold" Margin="0,0,10,5" Foreground="#2e74a8"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserLevel}" Margin="0,0,0,5" Foreground="#2e74a8"/>
             
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Field:" FontWeight="SemiBold" Margin="0,0,10,5"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding UserField}" Margin="0,0,0,5"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Field:" FontWeight="SemiBold" Margin="0,0,10,5" Foreground="#2e74a8"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding UserField}" Margin="0,0,0,5" Foreground="#2e74a8"/>
             
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Rank:" FontWeight="SemiBold" Margin="0,0,10,5"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding UserRank}" Foreground="{Binding UserRankColor}" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Rank:" FontWeight="SemiBold" Margin="0,0,10,5" Foreground="#2e74a8"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding UserRank}" Foreground="#2e74a8" FontWeight="Bold" Margin="0,0,0,5"/>
           </Grid>
           
           <Button Content="Edit Profile" Command="{Binding EditProfileCommand}" 
@@ -99,8 +99,8 @@
           <!-- Système de classement -->
           <Border Background="#F8F9FA" CornerRadius="8" Padding="20" Margin="0,0,0,20">
             <StackPanel>
-              <TextBlock Text="Reader Ranking System" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
-              <TextBlock Text="Progress through ranks by borrowing more books from the library" FontSize="14" Margin="0,0,0,20"/>
+              <TextBlock Text="Reader Ranking System" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="#2e74a8"/>
+              <TextBlock Text="Progress through ranks by borrowing more books from the library" FontSize="14" Margin="0,0,0,20" Foreground="#2e74a8"/>
               
               <Grid ColumnDefinitions="*,*,*,*">
                 <!-- Bronze - Vector-based badge instead of image -->
@@ -112,9 +112,9 @@
                           Fill="White" Stroke="#966023" StrokeThickness="1" />
                   </Canvas>
                   <Border Background="#CD7F32" CornerRadius="15" Padding="10,5" Margin="0,10,0,5">
-                    <TextBlock Text="Bronze" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Bronze" Foreground="#333333" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center"/>
                   </Border>
-                  <TextBlock Text="&lt; 2 books" FontSize="12" HorizontalAlignment="Center"/>
+                  <TextBlock Text="&lt; 2 books" FontSize="12" HorizontalAlignment="Center" Foreground="#333333" FontWeight="SemiBold"/>
                 </StackPanel>
                 
                 <!-- Silver - Vector-based badge instead of image -->
@@ -126,9 +126,9 @@
                           Fill="White" Stroke="#A0A0A0" StrokeThickness="1" />
                   </Canvas>
                   <Border Background="#C0C0C0" CornerRadius="15" Padding="10,5" Margin="0,10,0,5">
-                    <TextBlock Text="Silver" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Silver" Foreground="#333333" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center"/>
                   </Border>
-                  <TextBlock Text="2-4 books" FontSize="12" HorizontalAlignment="Center"/>
+                  <TextBlock Text="2-4 books" FontSize="12" HorizontalAlignment="Center" Foreground="#333333" FontWeight="SemiBold"/>
                 </StackPanel>
                 
                 <!-- Gold - Vector-based badge instead of image -->
@@ -140,9 +140,9 @@
                           Fill="White" Stroke="#DAA520" StrokeThickness="1" />
                   </Canvas>
                   <Border Background="#FFD700" CornerRadius="15" Padding="10,5" Margin="0,10,0,5">
-                    <TextBlock Text="Gold" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Gold" Foreground="#333333" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center"/>
                   </Border>
-                  <TextBlock Text="5-10 books" FontSize="12" HorizontalAlignment="Center"/>
+                  <TextBlock Text="5-10 books" FontSize="12" HorizontalAlignment="Center" Foreground="#333333" FontWeight="SemiBold"/>
                 </StackPanel>
                 
                 <!-- Master - Vector-based badge instead of image -->
@@ -155,21 +155,21 @@
                     <Ellipse Canvas.Left="20" Canvas.Top="20" Width="20" Height="20" Fill="#9932CC" Stroke="White" StrokeThickness="1" />
                   </Canvas>
                   <Border Background="#9932CC" CornerRadius="15" Padding="10,5" Margin="0,10,0,5">
-                    <TextBlock Text="Master" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Master" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center"/>
                   </Border>
-                  <TextBlock Text="&gt; 10 books" FontSize="12" HorizontalAlignment="Center"/>
+                  <TextBlock Text="&gt; 10 books" FontSize="12" HorizontalAlignment="Center" Foreground="#333333" FontWeight="SemiBold"/>
                 </StackPanel>
               </Grid>
               
               <StackPanel Margin="0,20,0,0">
-                <TextBlock Text="Your Current Progress" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <TextBlock Text="Your Current Progress" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="#2e74a8"/>
                 <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto,Auto">
                   <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding ProgressValue}" Maximum="100" Height="10" Margin="0,0,0,5"/>
                   
-                  <TextBlock Grid.Row="1" Grid.Column="0" Text="Bronze" FontSize="12" HorizontalAlignment="Left"/>
-                  <TextBlock Grid.Row="1" Grid.Column="1" Text="Silver" FontSize="12" HorizontalAlignment="Center"/>
-                  <TextBlock Grid.Row="1" Grid.Column="2" Text="Gold" FontSize="12" HorizontalAlignment="Center"/>
-                  <TextBlock Grid.Row="1" Grid.Column="3" Text="Master" FontSize="12" HorizontalAlignment="Right"/>
+                  <TextBlock Grid.Row="1" Grid.Column="0" Text="Bronze" FontSize="12" HorizontalAlignment="Left" Foreground="#2e74a8"/>
+                  <TextBlock Grid.Row="1" Grid.Column="1" Text="Silver" FontSize="12" HorizontalAlignment="Center" Foreground="#2e74a8"/>
+                  <TextBlock Grid.Row="1" Grid.Column="2" Text="Gold" FontSize="12" HorizontalAlignment="Center" Foreground="#2e74a8"/>
+                  <TextBlock Grid.Row="1" Grid.Column="3" Text="Master" FontSize="12" HorizontalAlignment="Right" Foreground="#2e74a8"/>
                 </Grid>
               </StackPanel>
             </StackPanel>

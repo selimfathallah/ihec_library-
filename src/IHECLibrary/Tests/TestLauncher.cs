@@ -7,11 +7,16 @@ namespace IHECLibrary.Tests
 {
     public static class TestLauncher
     {
-        public static async Task LaunchTests(IServiceProvider serviceProvider)
+        public static async Task LaunchTests(IServiceProvider serviceProvider, int iterations = 1)
         {
             try
             {
                 Console.WriteLine("=== Lancement des tests de l'application IHEC Library ===");
+                
+                if (iterations > 1)
+                {
+                    Console.WriteLine($"Mode itératif activé: {iterations} itérations");
+                }
                 
                 // Exécuter les tests système
                 Console.WriteLine("1. Exécution des tests système...");
@@ -21,12 +26,12 @@ namespace IHECLibrary.Tests
                 var applicationTester = new ApplicationTester(supabaseClient, geminiApiKey);
                 await applicationTester.RunSystemTests();
                 
-                // Exécuter les tests fonctionnels
+                // Exécuter les tests fonctionnels avec itérations
                 Console.WriteLine("2. Exécution des tests fonctionnels...");
-                await TestManager.RunTests(serviceProvider);
+                await TestManager.RunTests(serviceProvider, iterations);
                 
                 // Générer un rapport de test consolidé
-                GenerateConsolidatedReport();
+                GenerateConsolidatedReport(iterations > 1);
                 
                 Console.WriteLine("=== Tests terminés ===");
                 Console.WriteLine($"Rapports disponibles dans: {Path.Combine(AppDomain.CurrentDomain.BaseDirectory)}");
@@ -38,13 +43,14 @@ namespace IHECLibrary.Tests
             }
         }
         
-        private static void GenerateConsolidatedReport()
+        private static void GenerateConsolidatedReport(bool isIterative = false)
         {
             try
             {
-                var reportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test_consolidated_report.html");
+                var reportPrefix = isIterative ? "iterative_" : "";
+                var reportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{reportPrefix}test_consolidated_report.html");
                 var systemReportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test_report.html");
-                var functionalReportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test_results.log");
+                var functionalReportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{reportPrefix}test_results.log");
                 
                 string systemReportContent = File.Exists(systemReportPath) ? File.ReadAllText(systemReportPath) : "Rapport système non disponible";
                 string functionalReportContent = File.Exists(functionalReportPath) ? File.ReadAllText(functionalReportPath) : "Rapport fonctionnel non disponible";
@@ -79,17 +85,18 @@ namespace IHECLibrary.Tests
         .test-value {{ }}
         .timestamp {{ color: #666; font-style: italic; margin-top: 30px; }}
         .functional-report {{ background-color: #F8F9FA; padding: 15px; border-radius: 5px; white-space: pre-wrap; }}
+        .iterative {{ background-color: #E6F7FF; border-left: 4px solid #1890FF; padding-left: 15px; }}
     </style>
 </head>
 <body>
-    <h1>Rapport de test consolidé - IHEC Library</h1>
+    <h1>Rapport de test consolidé - IHEC Library {(isIterative ? "(Mode Itératif)" : "")}</h1>
     <p>Date et heure: {DateTime.Now}</p>
     
     <h2>Tests système</h2>
     {systemBodyContent}
     
-    <h2>Tests fonctionnels</h2>
-    <div class=""functional-report"">
+    <h2>Tests fonctionnels{(isIterative ? " (Itératifs)" : "")}</h2>
+    <div class=""functional-report{(isIterative ? " iterative" : "")}"">
 {functionalReportContent}
     </div>
     
@@ -104,6 +111,18 @@ namespace IHECLibrary.Tests
             {
                 DebugHelper.LogException(ex, "Génération du rapport consolidé");
             }
+        }
+        
+        public static async Task ContinueToIterate(IServiceProvider serviceProvider, int iterations = 3)
+        {
+            if (iterations <= 0)
+            {
+                Console.WriteLine("Le nombre d'itérations doit être supérieur à 0");
+                return;
+            }
+            
+            Console.WriteLine($"=== Lancement des tests itératifs ({iterations} itérations) ===");
+            await LaunchTests(serviceProvider, iterations);
         }
     }
 }

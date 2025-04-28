@@ -440,8 +440,11 @@ namespace IHECLibrary.Services.Implementations
                 int existingAvailableCopies = 0;
                 try {
                     var availableCopiesProperty = typeof(DbBook).GetProperty("AvailableCopies");
-                    if (availableCopiesProperty != null)
-                        existingAvailableCopies = (int)(availableCopiesProperty.GetValue(existingBook) ?? 0);
+                    if (availableCopiesProperty != null) {
+                        var value = availableCopiesProperty.GetValue(existingBook);
+                        if (value != null)
+                            existingAvailableCopies = Convert.ToInt32(value);
+                    }
                 } 
                 catch (Exception ex) {
                     Console.WriteLine($"Error getting AvailableCopies: {ex.Message}");

@@ -22,6 +22,17 @@ namespace IHECLibrary
         public bool IsLikedByCurrentUser { get; set; }
         public string Language { get; set; } = string.Empty;
         public decimal RatingAverage { get; set; } = 0;
+        public string AvailabilityStatus { get; set; } = "Available";
+        
+        // Helper method to determine if the book is available
+        public bool IsAvailable()
+        {
+            return AvailabilityStatus.Equals("Available", StringComparison.OrdinalIgnoreCase) || 
+                   (AvailableCopies > 0);
+        }
+        
+        // Display text for UI
+        public string AvailabilityDisplayText => IsAvailable() ? "Available" : "Unavailable";
     }
 
     public class BookRatingModel

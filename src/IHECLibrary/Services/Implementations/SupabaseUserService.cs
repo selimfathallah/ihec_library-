@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Postgrest.Attributes;
 using Postgrest.Models;
 using Postgrest.Responses;
+using IHECLibrary.Services.Models; // Import the correct models namespace
 
 namespace IHECLibrary.Services.Implementations
 {
@@ -338,7 +339,9 @@ namespace IHECLibrary.Services.Implementations
         }
     }
 
-    // Classes pour la correspondance avec les tables Supabase
+    // Only keep the user-specific model classes here
+    // All book-related database models are now defined in DatabaseModels.cs
+
     [Table("users")]
     public class DbUser : BaseModel
     {
@@ -391,90 +394,5 @@ namespace IHECLibrary.Services.Implementations
 
         [Column("approved_by")]
         public string? ApprovedBy { get; set; }
-    }
-
-    [Table("books")]
-    public class DbBook : BaseModel
-    {
-        [PrimaryKey("book_id")]
-        public string? BookId { get; set; }
-
-        [Column("title")]
-        public string? Title { get; set; }
-
-        [Column("author")]
-        public string? Author { get; set; }
-
-        [Column("publication_year")]
-        public int PublicationYear { get; set; }
-
-        [Column("publisher")]
-        public string? Publisher { get; set; }
-
-        [Column("isbn")]
-        public string? ISBN { get; set; }
-
-        [Column("description")]
-        public string? Description { get; set; }
-
-        [Column("category")]
-        public string? Category { get; set; }
-
-        [Column("availability_status")]
-        public string? AvailabilityStatus { get; set; }
-
-        [Column("added_by")]
-        public string? AddedBy { get; set; }
-    }
-
-    [Table("book_borrowings")]
-    public class DbBookBorrowing : BaseModel
-    {
-        [PrimaryKey("id")]
-        public int Id { get; set; }
-
-        [Column("book_id")]
-        public string? BookId { get; set; }
-
-        [Column("user_id")]
-        public string? UserId { get; set; }
-
-        [Column("borrow_date")]
-        public DateTime BorrowDate { get; set; }
-
-        [Column("due_date")]
-        public DateTime DueDate { get; set; }
-
-        [Column("return_date")]
-        public DateTime? ReturnDate { get; set; }
-
-        [Column("is_returned")]
-        public bool IsReturned { get; set; }
-    }
-
-    [Table("books_of_interest")]
-    public class DbBookOfInterest : BaseModel
-    {
-        [PrimaryKey("id")]
-        public int Id { get; set; }
-
-        [Column("user_id")]
-        public string? UserId { get; set; }
-
-        [Column("book_id")]
-        public string? BookId { get; set; }
-    }
-
-    [Table("book_likes")]
-    public class DbBookLike : BaseModel
-    {
-        [PrimaryKey("id")]
-        public int Id { get; set; }
-
-        [Column("book_id")]
-        public string? BookId { get; set; }
-
-        [Column("user_id")]
-        public string? UserId { get; set; }
     }
 }
