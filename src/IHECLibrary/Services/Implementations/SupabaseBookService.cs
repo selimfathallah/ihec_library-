@@ -281,7 +281,7 @@ namespace IHECLibrary.Services.Implementations
 
                     bookModel.Ratings.Add(new BookRatingModel
                     {
-                        Id = rating.Id.ToString(),
+                        Id = rating.Id?.ToString() ?? Guid.NewGuid().ToString(),
                         UserId = rating.UserId ?? "",
                         UserName = user != null ? $"{user.FirstName} {user.LastName}" : "Utilisateur inconnu",
                         UserProfilePictureUrl = user?.ProfilePictureUrl ?? "",
@@ -311,7 +311,7 @@ namespace IHECLibrary.Services.Implementations
                 var booksResult = await _supabaseClient.From<DbBook>().Get();
                 var book = booksResult.Models.FirstOrDefault(b => b.BookId == bookId);
 
-                if (book == null || !book.AvailabilityStatus?.Equals("Available", StringComparison.OrdinalIgnoreCase) == true)
+                if (book == null || book.AvailabilityStatus == null || !book.AvailabilityStatus.Equals("Available", StringComparison.OrdinalIgnoreCase))
                     return false;
 
                 // Créer un nouvel emprunt

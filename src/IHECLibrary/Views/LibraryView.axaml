@@ -79,7 +79,7 @@
     </Grid>
     
     <!-- Contenu principal -->
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1" Background="#eff4ff">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="250"/>
         <ColumnDefinition Width="*"/>
@@ -88,29 +88,29 @@
       <!-- Filtres -->
       <Border Grid.Column="0" Background="#F8F9FA" Padding="20">
         <StackPanel>
-          <TextBlock Text="Filters" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,20"/>
+          <TextBlock Text="Filters" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,20" Foreground="#2e74a8"/>
           
           <!-- Catégories -->
-          <TextBlock Text="Categories" FontWeight="SemiBold" Margin="0,0,0,10"/>
+          <TextBlock Text="Categories" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="#2e74a8"/>
           <ItemsControl ItemsSource="{Binding Categories}">
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:CategoryViewModel">
-                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,5,0,5"/>
+                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,5,0,5" Foreground="#2e74a8"/>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
           
           <!-- Disponibilité -->
-          <TextBlock Text="Availability" FontWeight="SemiBold" Margin="0,20,0,10"/>
-          <RadioButton Content="Available" IsChecked="{Binding IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5"/>
-          <RadioButton Content="All" IsChecked="{Binding !IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5"/>
+          <TextBlock Text="Availability" FontWeight="SemiBold" Margin="0,20,0,10" Foreground="#2e74a8"/>
+          <RadioButton Content="Available" IsChecked="{Binding IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5" Foreground="#2e74a8"/>
+          <RadioButton Content="All" IsChecked="{Binding !IsAvailableOnly}" GroupName="Availability" Margin="0,5,0,5" Foreground="#2e74a8"/>
           
           <!-- Langue -->
-          <TextBlock Text="Language" FontWeight="SemiBold" Margin="0,20,0,10"/>
+          <TextBlock Text="Language" FontWeight="SemiBold" Margin="0,20,0,10" Foreground="#2e74a8"/>
           <ItemsControl ItemsSource="{Binding Languages}">
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:LanguageViewModel">
-                <RadioButton Content="{Binding Name}" IsChecked="{Binding IsSelected}" GroupName="Language" Margin="0,5,0,5"/>
+                <RadioButton Content="{Binding Name}" IsChecked="{Binding IsSelected}" GroupName="Language" Margin="0,5,0,5" Foreground="#2e74a8"/>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
@@ -174,18 +174,11 @@
                         <RowDefinition Height="*"/>
                       </Grid.RowDefinitions>
                       
-                      <!-- Icône du livre - replaced with vector graphics -->
-                      <Canvas Grid.Row="0" Width="70" Height="70" HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <Border Canvas.Left="10" Canvas.Top="10" Width="50" Height="50" 
-                                Background="{Binding AvailabilityColor}" CornerRadius="3" />
-                        <Border Canvas.Left="12" Canvas.Top="12" Width="46" Height="46" 
-                                BorderBrush="White" BorderThickness="2" CornerRadius="3" />
-                        <Line Canvas.Left="0" StartPoint="20,18" EndPoint="52,18" Stroke="White" StrokeThickness="1.5" />
-                        <Line Canvas.Left="0" StartPoint="20,26" EndPoint="52,26" Stroke="White" StrokeThickness="1.5" />
-                        <Line Canvas.Left="0" StartPoint="20,34" EndPoint="52,34" Stroke="White" StrokeThickness="1.5" />
-                        <Line Canvas.Left="0" StartPoint="20,42" EndPoint="45,42" Stroke="White" StrokeThickness="1.5" />
-                        <Line Canvas.Left="0" StartPoint="20,50" EndPoint="45,50" Stroke="White" StrokeThickness="1.5" />
-                      </Canvas>
+                      <!-- Book cover image -->
+                      <Border Grid.Row="0" Width="90" Height="120" CornerRadius="4" 
+                              ClipToBounds="True" HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Image Source="{Binding CoverImageUrl}" Stretch="UniformToFill"/>
+                      </Border>
                       
                       <!-- Statut de disponibilité -->
                       <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 

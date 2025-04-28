@@ -53,8 +53,19 @@
       </StackPanel>
     </Grid>
     
+    <!-- Error message display -->
+    <Border Grid.Row="1" Background="#FFEBEE" Padding="20" IsVisible="{Binding HasError}" Margin="20">
+      <StackPanel>
+        <TextBlock Text="Une erreur s'est produite" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Foreground="#D32F2F"/>
+        <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#D32F2F"/>
+        <Button Content="Retourner à l'accueil" Command="{Binding NavigateToHomeCommand}" 
+                Background="#2E74A8" Foreground="White" 
+                Padding="15,10" Margin="0,20,0,0" CornerRadius="4"/>
+      </StackPanel>
+    </Border>
+    
     <!-- Contenu principal -->
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1" IsVisible="{Binding !HasError}">
       <Grid.RowDefinitions>
         <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
@@ -75,7 +86,12 @@
                   <!-- Avatar -->
                   <Border Grid.Column="0" CornerRadius="20" Width="40" Height="40" ClipToBounds="True" Margin="0,0,15,0"
                           IsVisible="{Binding IsFromBot}">
-                    <Image Source="/Assets/hec_bot_avatar.png" Stretch="UniformToFill"/>
+                    <Panel Background="#2E74A8">
+                      <!-- Use send_icon.png as a fallback since the avatar image is missing -->
+                      <Image Source="/Assets/send_icon.png" Stretch="Uniform" Margin="8"/>
+                      <TextBlock Text="HEC" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Foreground="White" FontWeight="Bold" FontSize="16"/>
+                    </Panel>
                   </Border>
                   
                   <!-- Message -->

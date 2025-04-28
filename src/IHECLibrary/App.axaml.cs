@@ -95,7 +95,9 @@ namespace IHECLibrary
                         {
                             desktop.Startup += async (sender, e) =>
                             {
-                                await TestManager.RunTests(_serviceProvider);
+                                // Create a TestManager instance and run tests
+                                var testManager = new TestManager();
+                                await testManager.RunTests();
                             };
                         }
                     }
