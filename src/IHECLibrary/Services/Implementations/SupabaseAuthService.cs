@@ -346,6 +346,22 @@ namespace IHECLibrary.Services.Implementations
             }
         }
 
+        public bool IsAuthenticated()
+        {
+            try
+            {
+                var currentUser = _supabaseClient.Auth.CurrentUser;
+                var isAuth = currentUser != null;
+                Console.WriteLine($"IsAuthenticated check: {isAuth}, CurrentUser ID: {currentUser?.Id ?? "null"}");
+                return isAuth;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in IsAuthenticated: {ex.Message}");
+                return false;
+            }
+        }
+
         private async Task<UserModel?> GetUserFromSessionAsync(Session session)
         {
             try

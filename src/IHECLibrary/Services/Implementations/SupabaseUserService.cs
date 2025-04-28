@@ -26,16 +26,25 @@ namespace IHECLibrary.Services.Implementations
             try
             {
                 if (_supabaseClient.Auth.CurrentUser == null)
+                {
+                    Console.WriteLine("GetCurrentUserAsync: CurrentUser is null");
                     return null;
+                }
 
                 var userId = _supabaseClient.Auth.CurrentUser.Id;
                 if (string.IsNullOrEmpty(userId))
+                {
+                    Console.WriteLine("GetCurrentUserAsync: CurrentUser.Id is null or empty");
                     return null;
+                }
 
+                Console.WriteLine($"GetCurrentUserAsync: Looking up user with ID: {userId}");
                 return await GetUserByIdAsync(userId);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"GetCurrentUserAsync Exception: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return null;
             }
         }
@@ -44,25 +53,67 @@ namespace IHECLibrary.Services.Implementations
         {
             try
             {
-                // Récupérer les informations de base de l'utilisateur
-                var user = await _supabaseClient.From<DbUser>()
+                Console.WriteLine($"GetUserByIdAsync: Starting lookup for user with ID {userId}");
+
+                // Try to get user data using standard ORM query
+                var usersResponse = await _supabaseClient.From<DbUser>()
                     .Where(p => p.UserId == userId)
-                    .Single();
-
-                if (user == null)
+                    .Get();
+                
+                // Better handling of query results
+                if (usersResponse.Models.Count == 0)
+                {
+                    Console.WriteLine($"GetUserByIdAsync: No user found with ID {userId} in database");
+                    
+                    // Try lookup by email instead
+                    if (_supabaseClient.Auth.CurrentUser?.Email != null)
+                    {
+                        var emailQuery = await _supabaseClient.From<DbUser>()
+                            .Where(p => p.Email == _supabaseClient.Auth.CurrentUser.Email)
+                            .Get();
+                        
+                        if (emailQuery.Models.Count > 0)
+                        {
+                            var emailUser = emailQuery.Models.First();
+                            Console.WriteLine($"GetUserByIdAsync: Found user by email: {emailUser.Email} with name: {emailUser.FirstName} {emailUser.LastName}");
+                            
+                            // Create user model from user found by email
+                            var emailUserModel = new UserModel
+                            {
+                                Id = userId,
+                                Email = emailUser.Email ?? "",
+                                FirstName = emailUser.FirstName ?? "",
+                                LastName = emailUser.LastName ?? "",
+                                PhoneNumber = emailUser.PhoneNumber ?? "",
+                                ProfilePictureUrl = emailUser.ProfilePictureUrl ?? "/Assets/default_profile.png"
+                            };
+                            
+                            return emailUserModel;
+                        }
+                    }
+                    
+                    // Failed to find user by either ID or email
+                    Console.WriteLine($"GetUserByIdAsync: Failed to find user by ID or email");
                     return null;
+                }
+                
+                // Get the first user from the response
+                var user = usersResponse.Models.FirstOrDefault();
+                
+                if (user == null)
+                {
+                    Console.WriteLine($"GetUserByIdAsync: User is null despite query returning results");
+                    return null;
+                }
 
-                // Vérifier si l'utilisateur est un étudiant
-                var studentProfile = await _supabaseClient.From<DbStudentProfile>()
-                    .Where(p => p.StudentId == userId)
-                    .Single();
+                // DEBUG: Log values to help diagnose the issue
+                Console.WriteLine($"GetUserByIdAsync: Found user with these values:");
+                Console.WriteLine($"  - UserId: {user.UserId}");
+                Console.WriteLine($"  - Email: {user.Email}");
+                Console.WriteLine($"  - FirstName: '{user.FirstName}'");
+                Console.WriteLine($"  - LastName: '{user.LastName}'");
 
-                // Vérifier si l'utilisateur est un administrateur
-                var adminProfile = await _supabaseClient.From<DbAdminProfile>()
-                    .Where(p => p.AdminId == userId)
-                    .Single();
-
-                // Créer le modèle utilisateur avec les informations disponibles
+                // Create user model with available information
                 var userModel = new UserModel
                 {
                     Id = user.UserId ?? "",
@@ -70,23 +121,65 @@ namespace IHECLibrary.Services.Implementations
                     FirstName = user.FirstName ?? "",
                     LastName = user.LastName ?? "",
                     PhoneNumber = user.PhoneNumber ?? "",
-                    ProfilePictureUrl = user.ProfilePictureUrl,
-                    IsAdmin = adminProfile != null && adminProfile.IsApproved
+                    ProfilePictureUrl = !string.IsNullOrEmpty(user.ProfilePictureUrl) ? 
+                        user.ProfilePictureUrl : 
+                        "/Assets/default_profile.png"
                 };
-
-                // Ajouter les informations spécifiques aux étudiants si disponibles
-                if (studentProfile != null)
+                
+                try 
                 {
-                    userModel.LevelOfStudy = studentProfile.LevelOfStudy;
-                    userModel.FieldOfStudy = studentProfile.FieldOfStudy;
+                    // Attempt to get student profile (non-critical data)
+                    var studentProfileResponse = await _supabaseClient.From<DbStudentProfile>()
+                        .Where(p => p.StudentId == userId)
+                        .Get();
+                    
+                    var studentProfile = studentProfileResponse.Models.FirstOrDefault();
+                    
+                    if (studentProfile != null)
+                    {
+                        userModel.LevelOfStudy = studentProfile.LevelOfStudy;
+                        userModel.FieldOfStudy = studentProfile.FieldOfStudy;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log but continue - this is non-critical data
+                    Console.WriteLine($"GetUserByIdAsync: Error getting student profile: {ex.Message}");
+                }
+                
+                try
+                {
+                    // Attempt to get admin profile (non-critical data)
+                    var adminProfileResponse = await _supabaseClient.From<DbAdminProfile>()
+                        .Where(p => p.AdminId == userId)
+                        .Get();
+                    
+                    var adminProfile = adminProfileResponse.Models.FirstOrDefault();
+                    userModel.IsAdmin = adminProfile != null && adminProfile.IsApproved;
+                }
+                catch (Exception ex)
+                {
+                    // Log but continue - this is non-critical data
+                    Console.WriteLine($"GetUserByIdAsync: Error getting admin profile: {ex.Message}");
                 }
 
                 return userModel;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"GetUserByIdAsync: Exception: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return null;
             }
+        }
+        
+        // Helper method to capitalize first letter of a string
+        private string CapitalizeFirstLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+                
+            return char.ToUpper(input[0]) + (input.Length > 1 ? input.Substring(1) : "");
         }
 
         public async Task<List<UserModel>> SearchUsersAsync(string searchQuery)

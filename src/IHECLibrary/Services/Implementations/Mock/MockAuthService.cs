@@ -98,5 +98,11 @@ namespace IHECLibrary.Services.Implementations.Mock
         {
             return Task.FromResult(true);
         }
+
+        public bool IsAuthenticated()
+        {
+            // For mock service, always return true as if the user is authenticated
+            return true;
+        }
     }
 }

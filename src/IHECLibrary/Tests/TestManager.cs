@@ -23,6 +23,7 @@ namespace IHECLibrary.Tests
         public Task<bool> SignOutAsync() => Task.FromResult(true);
         public Task<bool> ResetPasswordAsync(string email) => Task.FromResult(true);
         public Task<bool> ChangePasswordAsync(string currentPassword, string newPassword) => Task.FromResult(true);
+        public bool IsAuthenticated() => true; // Added implementation for IsAuthenticated
     }
 
     internal class SimpleMockUserService : IUserService
