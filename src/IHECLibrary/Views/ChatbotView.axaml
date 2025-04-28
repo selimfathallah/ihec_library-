@@ -45,11 +45,23 @@
       
       <!-- Recherche et profil -->
       <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
-        <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" Margin="0,0,15,0"/>
-        <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
-          <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+        <Border CornerRadius="15" Padding="10,7,10,7" Background="#F0F2F5" Margin="0,0,10,0">
+          <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" 
+                 BorderThickness="0" Background="Transparent"/>
         </Border>
-        <TextBlock Text="{Binding UserFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <Grid Margin="5,0,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          
+          <Border Grid.Column="0" CornerRadius="50" Width="32" Height="32" ClipToBounds="True" 
+                  Margin="0,0,8,0" Background="#F0F2F5">
+            <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+          </Border>
+          <TextBlock Grid.Column="1" Text="{Binding UserFullName}" VerticalAlignment="Center" 
+                     FontSize="13" FontWeight="SemiBold"/>
+        </Grid>
       </StackPanel>
     </Grid>
     

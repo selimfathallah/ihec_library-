@@ -3,131 +3,167 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:IHECLibrary.ViewModels"
+             xmlns:converters="using:IHECLibrary.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="IHECLibrary.Views.LoginView"
              x:DataType="vm:LoginViewModel">
 
+  <UserControl.Resources>
+    <converters:BoolToColorConverter x:Key="LocalBoolToColorConverter"/>
+  </UserControl.Resources>
+
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="400" />
+      <ColumnDefinition Width="35*" />
+      <ColumnDefinition Width="65*" />
     </Grid.ColumnDefinitions>
 
-    <!-- Partie gauche avec logo et illustration -->
-    <Grid Grid.Column="0" Background="#E6F2F8">
-      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="IHEC" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center"/>
-        <TextBlock Text="Library" FontSize="60" FontWeight="Bold" Foreground="#2E74A8" HorizontalAlignment="Center" Margin="0,-20,0,0"/>
+    <!-- Left side with login form -->
+    <Grid Grid.Column="0" Background="White">
+      <StackPanel Margin="30,20" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+          <TextBlock Text="📚" FontSize="24" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <TextBlock Text="IHEC Library" FontSize="24" FontWeight="SemiBold" Foreground="#1a4b8a"/>
+        </StackPanel>
         
-        <!-- Vector-based book illustration -->
-        <Canvas Width="300" Height="300" Margin="0,20,0,0">
-          <!-- Book stack illustration -->
-          <Border Canvas.Left="50" Canvas.Top="100" Width="200" Height="150" 
-                  Background="#2E74A8" CornerRadius="5" BorderThickness="2" 
-                  BorderBrush="#1A5480"/>
-          <Border Canvas.Left="70" Canvas.Top="70" Width="180" Height="140" 
-                  Background="#4390C9" CornerRadius="5" BorderThickness="2" 
-                  BorderBrush="#2E74A8"/>
-          <Border Canvas.Left="90" Canvas.Top="40" Width="160" Height="130" 
-                  Background="#7AADD6" CornerRadius="5" BorderThickness="2" 
-                  BorderBrush="#4390C9"/>
-                  
-          <!-- Student silhouette -->
-          <Ellipse Canvas.Left="160" Canvas.Top="30" Width="50" Height="50" 
-                   Fill="#2E74A8"/>
-          <Path Canvas.Left="120" Canvas.Top="80" 
-                Data="M 50,0 L 80,150 L 20,150 Z" 
-                Fill="#2E74A8"/>
+        <TextBlock Text="Access the library resources of IHEC College" 
+                 FontSize="14" TextAlignment="Center" 
+                 Foreground="#666666" Margin="0,0,0,20"/>
+                 
+        <!-- Tabs for Login/Register -->
+        <Grid Margin="0,0,0,20">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
           
-          <!-- Reading glasses -->
-          <Ellipse Canvas.Left="150" Canvas.Top="40" Width="20" Height="15" 
-                   Stroke="#7AADD6" StrokeThickness="2" Fill="Transparent"/>
-          <Ellipse Canvas.Left="180" Canvas.Top="40" Width="20" Height="15" 
-                   Stroke="#7AADD6" StrokeThickness="2" Fill="Transparent"/>
-          <Line Canvas.Left="170" Canvas.Top="45" StartPoint="0,0" EndPoint="10,0" 
-                Stroke="#7AADD6" StrokeThickness="2"/>
-        </Canvas>
-      </StackPanel>
-    </Grid>
-
-    <!-- Partie droite avec formulaire de connexion -->
-    <Border Grid.Column="1" Background="White" Padding="30">
-      <StackPanel VerticalAlignment="Center">
-        <TextBlock Text="Login to your account" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,30"/>
+          <Border Grid.Column="0" BorderThickness="0,0,0,2" 
+                  BorderBrush="{Binding IsLoginTab, Converter={StaticResource LocalBoolToColorConverter}, ConverterParameter='#1a4b8a,#e0e0e0'}">
+            <Button Content="Login" Command="{Binding SwitchToLoginCommand}"
+                    Background="Transparent" 
+                    Foreground="{Binding IsLoginTab, Converter={StaticResource LocalBoolToColorConverter}, ConverterParameter='#1a4b8a,#666666'}"
+                    HorizontalAlignment="Center" Padding="10,5,10,5"/>
+          </Border>
+          
+          <Border Grid.Column="1" BorderThickness="0,0,0,2"
+                  BorderBrush="{Binding !IsLoginTab, Converter={StaticResource LocalBoolToColorConverter}, ConverterParameter='#1a4b8a,#e0e0e0'}">
+            <Button Content="Register" Command="{Binding GoToRegisterCommand}"
+                    Background="Transparent"
+                    Foreground="{Binding !IsLoginTab, Converter={StaticResource LocalBoolToColorConverter}, ConverterParameter='#1a4b8a,#666666'}"
+                    HorizontalAlignment="Center" Padding="10,5,10,5"/>
+          </Border>
+        </Grid>
         
-        <TextBlock Text="Email" Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Email}" Watermark="Enter Email" Height="40" Margin="0,0,0,15"/>
+        <!-- Login Form -->
+        <TextBlock Text="Email" FontWeight="SemiBold" Margin="0,0,0,5"/>
+        <TextBox Text="{Binding Email}" Watermark="email@ihec.tn" Margin="0,0,0,15"/>
         
-        <TextBlock Text="Password" Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Height="40" Margin="0,0,0,5"/>
+        <TextBlock Text="Password" FontWeight="SemiBold" Margin="0,0,0,5"/>
+        <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Margin="0,0,0,20"/>
         
-        <!-- Add visible error message display -->
+        <!-- Error message -->
         <TextBlock Text="{Binding ErrorMessage}" 
                    IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
                    Foreground="Red" 
                    TextWrapping="Wrap" 
-                   Margin="0,5,0,10"/>
+                   Margin="0,0,0,10"/>
         
-        <Button Content="Recover Password?" Command="{Binding ForgotPasswordCommand}" 
-                HorizontalAlignment="Right" Background="Transparent" Foreground="#2E74A8"
-                Padding="0" Margin="0,0,0,20"/>
+        <!-- Login button -->
+        <Button Content="Login" Command="{Binding SignInCommand}" 
+                Background="#1a4b8a" Foreground="White" 
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Height="40" CornerRadius="4" Margin="0,0,0,15"
+                IsEnabled="{Binding !IsLoading}"/>
         
-        <!-- Sign In button with loading indicator -->
-        <Grid>
-            <Button Content="Sign In" Command="{Binding SignInCommand}" 
-                    Background="#2E74A8" Foreground="White" 
-                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                    Height="50" CornerRadius="4" Margin="0,0,0,20"
-                    IsEnabled="{Binding !IsLoading}"/>
-            
-            <!-- Loading indicator -->
-            <ProgressBar IsIndeterminate="True" 
-                         IsVisible="{Binding IsLoading}"
-                         HorizontalAlignment="Stretch"
-                         Height="5"
-                         Margin="0,0,0,20"
-                         VerticalAlignment="Bottom"/>
+        <!-- Loading indicator -->
+        <ProgressBar IsIndeterminate="True" 
+                     IsVisible="{Binding IsLoading}"
+                     HorizontalAlignment="Stretch"
+                     Height="3"
+                     Margin="0,-15,0,15"/>
+        
+        <!-- Additional buttons for Register and Admin Login -->
+        <StackPanel Spacing="10" Margin="0,10,0,0">
+          <Button Content="Register New Account" 
+                  Command="{Binding GoToRegisterCommand}" 
+                  Background="#4a7dbe" 
+                  Foreground="White"
+                  HorizontalAlignment="Stretch" 
+                  HorizontalContentAlignment="Center"
+                  Height="40" 
+                  CornerRadius="4"/>
+                  
+          <Button Content="Login as Administrator" 
+                  Command="{Binding GoToAdminLoginCommand}" 
+                  Background="Transparent" 
+                  BorderBrush="#1a4b8a"
+                  BorderThickness="1"
+                  Foreground="#1a4b8a"
+                  HorizontalAlignment="Stretch" 
+                  HorizontalContentAlignment="Center"
+                  Height="40" 
+                  CornerRadius="4"/>
+        </StackPanel>
+        
+        <!-- Terms text -->
+        <TextBlock Text="By logging in or registering, you agree to the IHEC Library's terms and conditions." 
+                   TextWrapping="Wrap" TextAlignment="Center"
+                   FontSize="12" Foreground="#888888" Margin="0,15,0,0"/>
+      </StackPanel>
+    </Grid>
+    
+    <!-- Right side with welcome banner -->
+    <Grid Grid.Column="1" Background="#1a4b8a">
+      <StackPanel VerticalAlignment="Center" Margin="40,20">
+        <TextBlock Text="Welcome to IHEC Library" 
+                   FontSize="28" FontWeight="SemiBold" 
+                   Foreground="White" TextAlignment="Center"
+                   Margin="0,0,0,15"/>
+                   
+        <TextBlock Text="Access thousands of academic resources, reserve books online, and discover new knowledge." 
+                   FontSize="16" TextWrapping="Wrap" TextAlignment="Center"
+                   Foreground="White" Margin="0,0,0,40"/>
+        
+        <!-- First row of stats -->
+        <Grid Margin="0,0,0,30">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          
+          <!-- Books stat -->
+          <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+            <TextBlock Text="10k+" FontSize="32" FontWeight="Bold" Foreground="White" TextAlignment="Center"/>
+            <TextBlock Text="Books" FontSize="14" Foreground="White" TextAlignment="Center"/>
+          </StackPanel>
+          
+          <!-- Digital Resources stat -->
+          <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+            <TextBlock Text="500+" FontSize="32" FontWeight="Bold" Foreground="White" TextAlignment="Center"/>
+            <TextBlock Text="Digital Resources" FontSize="14" Foreground="White" TextAlignment="Center"/>
+          </StackPanel>
         </Grid>
         
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-          <TextBlock Text="Or continue with" VerticalAlignment="Center"/>
-        </StackPanel>
-        
-        <!-- Google styled button -->
-        <Button Command="{Binding GoogleSignInCommand}" 
-                HorizontalAlignment="Center" Background="White" 
-                BorderBrush="#DDDDDD" BorderThickness="1"
-                Padding="15,8" CornerRadius="4" Margin="0,0,0,20">
-          <StackPanel Orientation="Horizontal" Spacing="10">
-            <!-- Google G logo colors -->
-            <Canvas Width="20" Height="20">
-              <Ellipse Canvas.Left="0" Canvas.Top="0" Width="20" Height="20" 
-                       StrokeThickness="0" Fill="Transparent"/>
-              <Path Data="M 10,0 A 10,10 0 1,0 10,20 A 10,10 0 1,0 10,0 M 10,2 A 8,8 0 1,0 10,18 A 8,8 0 1,0 10,2"
-                    Fill="#FFFFFF" StrokeThickness="0"/>
-              <Path Data="M 10,0 A 10,10 0 0,1 20,10 L 10,10 Z" 
-                    Fill="#4285F4" StrokeThickness="0"/>
-              <Path Data="M 20,10 A 10,10 0 0,1 10,20 L 10,10 Z" 
-                    Fill="#34A853" StrokeThickness="0"/>
-              <Path Data="M 10,20 A 10,10 0 0,1 0,10 L 10,10 Z" 
-                    Fill="#FBBC05" StrokeThickness="0"/>
-              <Path Data="M 0,10 A 10,10 0 0,1 10,0 L 10,10 Z" 
-                    Fill="#EA4335" StrokeThickness="0"/>
-            </Canvas>
-            <TextBlock Text="Sign in with Google" VerticalAlignment="Center"/>
+        <!-- Second row of stats -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          
+          <!-- Online Access stat -->
+          <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+            <TextBlock Text="24/7" FontSize="32" FontWeight="Bold" Foreground="White" TextAlignment="Center"/>
+            <TextBlock Text="Online Access" FontSize="14" Foreground="White" TextAlignment="Center"/>
           </StackPanel>
-        </Button>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-          <TextBlock Text="Don't have an account? " VerticalAlignment="Center"/>
-          <Button Content="Register" Command="{Binding GoToRegisterCommand}" 
-                  Background="Transparent" Foreground="#2E74A8" Padding="0"/>
-        </StackPanel>
-        
-        <Button Content="Login as Administrator" Command="{Binding GoToAdminLoginCommand}" 
-                HorizontalAlignment="Center" Background="Transparent" Foreground="#2E74A8"
-                Padding="0" Margin="0,10,0,0"/>
+          
+          <!-- Active Users stat -->
+          <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+            <TextBlock Text="5k+" FontSize="32" FontWeight="Bold" Foreground="White" TextAlignment="Center"/>
+            <TextBlock Text="Active Users" FontSize="14" Foreground="White" TextAlignment="Center"/>
+          </StackPanel>
+        </Grid>
       </StackPanel>
-    </Border>
+    </Grid>
   </Grid>
 </UserControl>

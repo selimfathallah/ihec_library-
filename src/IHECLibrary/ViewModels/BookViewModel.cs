@@ -1,3 +1,4 @@
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IHECLibrary.Services;
@@ -25,6 +26,9 @@ namespace IHECLibrary.ViewModels
         private string _coverImageUrl = string.Empty;
 
         [ObservableProperty]
+        private bool _isAvailable;
+
+        [ObservableProperty]
         private string _availabilityStatus = string.Empty;
 
         [ObservableProperty]
@@ -32,6 +36,9 @@ namespace IHECLibrary.ViewModels
 
         [ObservableProperty]
         private string _backgroundColor = "#FFFFFF"; // Default background color
+        
+        [ObservableProperty]
+        private Color _cardColor;
 
         [ObservableProperty]
         private bool _isLiked = false;
@@ -42,10 +49,24 @@ namespace IHECLibrary.ViewModels
         [ObservableProperty]
         private string _actionButtonBackground = "#2E74A8"; // Default blue color for action button
 
-        public ICommand ActionCommand => ViewDetailsCommand;
-
-        private readonly IBookService _bookService;
-        private readonly INavigationService? _navigationService;
+        // Common card background colors to rotate through
+        private static readonly Color[] CardColors = new[]
+        {
+            Color.Parse("#e3f2fd"), // Light Blue
+            Color.Parse("#f3e5f5"), // Light Purple
+            Color.Parse("#e8f5e9"), // Light Green 
+            Color.Parse("#fff3e0"), // Light Orange
+            Color.Parse("#ffebee")  // Light Red
+        };
+        
+        // Static counter to rotate through colors for consecutive books
+        private static int colorIndex = 0;
+        
+        // Static constructor to initialize the color index with a more random starting point
+        static BookViewModel()
+        {
+            colorIndex = DateTime.Now.Second % CardColors.Length;
+        }
 
         public BookViewModel(BookModel book, IBookService bookService, INavigationService? navigationService = null)
         {
@@ -69,20 +90,28 @@ namespace IHECLibrary.ViewModels
                 CoverImageUrl = $"https://placehold.co/200x300/e8e8e8/4a4a4a?text={encodedTitle}";
             }
             
-            // Set availability status and color
-            bool isAvailable = book.IsAvailable();
-            AvailabilityStatus = isAvailable ? "Available" : "Unavailable";
-            AvailabilityColor = isAvailable ? "#4CAF50" : "#F44336"; // Green for available, red for unavailable
+            // Set availability status and properties
+            IsAvailable = book.IsAvailable();
+            AvailabilityStatus = IsAvailable ? "Available" : "Unavailable";
+            AvailabilityColor = IsAvailable ? "#4CAF50" : "#F44336"; // Green for available, red for unavailable
             
-            // Set background color (optional light styling)
-            BackgroundColor = "#FFFFFF"; // White background for all books
+            // Assign a background color from our rotation - CRITICAL for UI display
+            CardColor = CardColors[colorIndex];
+            colorIndex = (colorIndex + 1) % CardColors.Length;
             
             IsLiked = book.IsLikedByCurrentUser;
 
             // Set action button properties based on availability
-            ActionButtonText = isAvailable ? "Borrow" : "View Details";
-            ActionButtonBackground = isAvailable ? "#2E74A8" : "#9E9E9E"; // Blue if available, gray if not
+            ActionButtonText = IsAvailable ? "Borrow" : "Reserve";
+            ActionButtonBackground = IsAvailable ? "#2E74A8" : "#9E9E9E"; 
+            
+            Console.WriteLine($"Created BookViewModel: {Title}, IsAvailable: {IsAvailable}, CardColor: {CardColor}");
         }
+
+        public ICommand ActionCommand => ViewDetailsCommand;
+
+        private readonly IBookService _bookService;
+        private readonly INavigationService? _navigationService;
 
         [RelayCommand]
         private void ViewDetails()

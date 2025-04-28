@@ -19,6 +19,9 @@ namespace IHECLibrary.ViewModels
 
         [ObservableProperty]
         private string _errorMessage = string.Empty;
+        
+        [ObservableProperty]
+        private bool _isLoginTab = true;
 
         private readonly INavigationService _navigationService;
         private readonly IAuthService _authService;
@@ -27,6 +30,12 @@ namespace IHECLibrary.ViewModels
         {
             _navigationService = navigationService;
             _authService = authService;
+        }
+        
+        [RelayCommand]
+        private void SwitchToLogin()
+        {
+            IsLoginTab = true;
         }
 
         [RelayCommand]

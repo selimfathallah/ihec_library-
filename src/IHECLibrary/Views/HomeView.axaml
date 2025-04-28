@@ -44,11 +44,23 @@
       
       <!-- Recherche et profil -->
       <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
-        <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" Margin="0,0,15,0"/>
-        <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
-          <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+        <Border CornerRadius="15" Padding="10,7,10,7" Background="#F0F2F5" Margin="0,0,10,0">
+          <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" 
+                 BorderThickness="0" Background="Transparent"/>
         </Border>
-        <TextBlock Text="{Binding UserFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <Grid Margin="5,0,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          
+          <Border Grid.Column="0" CornerRadius="50" Width="32" Height="32" ClipToBounds="True" 
+                  Margin="0,0,8,0" Background="#F0F2F5">
+            <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+          </Border>
+          <TextBlock Grid.Column="1" Text="{Binding UserFullName}" VerticalAlignment="Center" 
+                     FontSize="13" FontWeight="SemiBold"/>
+        </Grid>
       </StackPanel>
     </Grid>
     
@@ -80,10 +92,13 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="vm:BookViewModel">
-              <Border Background="{Binding BackgroundColor}" Width="220" Height="250" CornerRadius="8" Padding="15" Margin="0,0,15,15">
-                <Grid>
+              <Border Width="240" Height="260" Margin="0,0,20,20" CornerRadius="10">
+                <Border.Background>
+                  <SolidColorBrush Color="{Binding CardColor}" />
+                </Border.Background>
+                <Grid Margin="15">
                   <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="100"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -91,35 +106,68 @@
                     <RowDefinition Height="*"/>
                   </Grid.RowDefinitions>
                   
-                  <!-- Book cover image -->
-                  <Border Grid.Row="0" Width="90" Height="120" CornerRadius="4" 
-                          ClipToBounds="True" HorizontalAlignment="Center" Margin="0,0,0,10">
-                    <Image Source="{Binding CoverImageUrl}" Stretch="UniformToFill"/>
+                  <!-- Book Icon -->
+                  <Border Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Panel>
+                      <!-- Book icon with orange color -->
+                      <Border Width="70" Height="80" CornerRadius="3" Background="#FF8370" BorderThickness="2" BorderBrush="#000000">
+                        <!-- Book Cover Label -->
+                        <Border Width="40" Height="20" VerticalAlignment="Top" Margin="0,12,0,0" 
+                                Background="#FFF8E1" BorderBrush="#000000" BorderThickness="1" 
+                                HorizontalAlignment="Center" CornerRadius="2" />
+                      </Border>
+                      <!-- Book bottom part -->
+                      <Border Width="70" Height="10" VerticalAlignment="Bottom" Background="#FFF8E1" 
+                              BorderBrush="#000000" BorderThickness="1,0,1,1" CornerRadius="0,0,3,3" 
+                              Margin="0,70,0,0" />
+                    </Panel>
                   </Border>
                   
-                  <!-- Availability status -->
-                  <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 
-                          HorizontalAlignment="Center" Padding="10,5" Margin="0,0,0,10">
-                    <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" FontSize="12"/>
+                  <!-- Availability Badge -->
+                  <Border Grid.Row="1" Background="{Binding IsAvailable, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4CAF50,#F44336'}"
+                          CornerRadius="15" HorizontalAlignment="Center" Padding="12,4" Margin="0,10,0,15">
+                    <TextBlock Text="{Binding IsAvailable, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Available,Unavailable'}" 
+                               Foreground="White" FontSize="12" FontWeight="SemiBold"/>
                   </Border>
                   
-                  <!-- Book title -->
-                  <TextBlock Grid.Row="2" Text="{Binding Title}" FontWeight="SemiBold" FontSize="16" 
-                             HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                  <!-- Book Title -->
+                  <TextBlock Grid.Row="2" Text="{Binding Title}" 
+                             FontWeight="SemiBold" FontSize="16" 
+                             HorizontalAlignment="Left" TextWrapping="Wrap" 
+                             MaxHeight="45" TextTrimming="CharacterEllipsis"/>
                   
                   <!-- Author -->
-                  <TextBlock Grid.Row="3" Text="{Binding Author}" FontSize="14" 
-                             HorizontalAlignment="Center" Margin="0,5,0,5"/>
+                  <TextBlock Grid.Row="3" Text="{Binding Author}" 
+                             FontSize="14" 
+                             HorizontalAlignment="Left" Margin="0,5,0,0"/>
                   
                   <!-- Category -->
-                  <TextBlock Grid.Row="4" Text="{Binding Category}" FontSize="12" Foreground="Gray" 
-                             HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                  <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,5,0,10">
+                    <TextBlock Text="Category: " FontSize="12" Opacity="0.7"/>
+                    <TextBlock Text="{Binding Category}" FontSize="12" FontWeight="Medium"/>
+                  </StackPanel>
                   
-                  <!-- Action button -->
-                  <Button Grid.Row="5" Content="{Binding ActionButtonText}" Command="{Binding ActionCommand}" 
-                          Background="{Binding ActionButtonBackground}" Foreground="White" 
-                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                          VerticalAlignment="Bottom" Height="40" CornerRadius="4"/>
+                  <!-- Action Button -->
+                  <Button Grid.Row="5" Command="{Binding ActionCommand}" 
+                          Height="38" CornerRadius="20" 
+                          VerticalAlignment="Bottom" 
+                          VerticalContentAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Center">
+                    <Button.Background>
+                      <SolidColorBrush Color="{Binding IsAvailable, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#4169E1,White'}" />
+                    </Button.Background>
+                    <Button.Foreground>
+                      <SolidColorBrush Color="{Binding IsAvailable, Converter={StaticResource BoolToColorConverter}, ConverterParameter='White,#4169E1'}" />
+                    </Button.Foreground>
+                    <Button.BorderBrush>
+                      <SolidColorBrush Color="{Binding IsAvailable, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Transparent,#4169E1'}" />
+                    </Button.BorderBrush>
+                    <Button.BorderThickness>
+                      <Thickness>1</Thickness>
+                    </Button.BorderThickness>
+                    <TextBlock Text="{Binding IsAvailable, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Borrow,Reserve'}"/>
+                  </Button>
                 </Grid>
               </Border>
             </DataTemplate>
