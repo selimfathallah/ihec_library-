@@ -137,8 +137,28 @@ namespace IHECLibrary.Services.Implementations
                     
                     if (studentProfile != null)
                     {
+                        // Log retrieved student profile data to help diagnose issues
+                        Console.WriteLine($"GetUserByIdAsync: Found student profile data:");
+                        Console.WriteLine($"  - Level of Study: '{studentProfile.LevelOfStudy}'");
+                        Console.WriteLine($"  - Field of Study: '{studentProfile.FieldOfStudy}'");
+                        Console.WriteLine($"  - Books Borrowed: {studentProfile.BooksBorrowed}");
+                        Console.WriteLine($"  - Books Reserved: {studentProfile.BooksReserved}");
+                        Console.WriteLine($"  - Profile Ranking: {studentProfile.Ranking ?? "Not set"}");
+                        
+                        // Assign to user model
                         userModel.LevelOfStudy = studentProfile.LevelOfStudy;
                         userModel.FieldOfStudy = studentProfile.FieldOfStudy;
+                        
+                        // You might want to use the ranking from the profile if available
+                        if (!string.IsNullOrEmpty(studentProfile.Ranking))
+                        {
+                            // This will be used later in GetUserStatisticsAsync
+                            Console.WriteLine($"GetUserByIdAsync: Using ranking from student profile: {studentProfile.Ranking}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("GetUserByIdAsync: No student profile found for this user");
                     }
                 }
                 catch (Exception ex)
@@ -471,6 +491,15 @@ namespace IHECLibrary.Services.Implementations
 
         [Column("field_of_study")]
         public string? FieldOfStudy { get; set; }
+        
+        [Column("books_borrowed")]
+        public int BooksBorrowed { get; set; }
+        
+        [Column("books_reserved")]
+        public int BooksReserved { get; set; }
+        
+        [Column("ranking")]
+        public string? Ranking { get; set; }
     }
 
     [Table("admin_profiles")]

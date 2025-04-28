@@ -135,7 +135,23 @@ namespace IHECLibrary.ViewModels
                 
                 UserEmail = user.Email ?? "";
                 UserPhone = user.PhoneNumber ?? "";
-                UserLevel = user.LevelOfStudy ?? "N/A";
+                
+                // Format the level of study from the database
+                Console.WriteLine($"ProfileViewModel: Raw level_of_study from DB: '{user.LevelOfStudy}'");
+                
+                // Display the level directly as it is in the database (2, M1, 3, etc.)
+                UserLevel = !string.IsNullOrEmpty(user.LevelOfStudy) 
+                    ? user.LevelOfStudy 
+                    : "N/A";
+                
+                // You might want to format the level to be more user-friendly
+                // Uncomment and modify this if you want formatted level names instead
+                /*
+                UserLevel = !string.IsNullOrEmpty(user.LevelOfStudy)
+                    ? FormatStudyLevel(user.LevelOfStudy)
+                    : "N/A";
+                */
+                
                 UserField = user.FieldOfStudy ?? "N/A";
                 UserProfilePicture = !string.IsNullOrEmpty(user.ProfilePictureUrl)
                     ? user.ProfilePictureUrl
@@ -203,6 +219,20 @@ namespace IHECLibrary.ViewModels
             {
                 IsLoading = false;
             }
+        }
+        
+        // Helper method to format study levels if needed
+        private string FormatStudyLevel(string level)
+        {
+            return level switch
+            {
+                "1" => "1st Year",
+                "2" => "2nd Year",
+                "3" => "3rd Year",
+                "M1" => "Master 1",
+                "M2" => "Master 2",
+                _ => level  // Keep the original value if it doesn't match any case
+            };
         }
 
         // Refresh the profile data
