@@ -61,6 +61,7 @@ namespace IHECLibrary
         public string? JobTitle { get; set; }
         public bool IsApproved { get; set; }
         public bool IsBlocked { get; set; }
+        public bool IsStudent { get; set; }
     }
 
     public class UserProfileModel

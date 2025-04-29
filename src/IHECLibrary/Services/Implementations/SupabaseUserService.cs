@@ -85,7 +85,10 @@ namespace IHECLibrary.Services.Implementations
                                 FirstName = emailUser.FirstName ?? "",
                                 LastName = emailUser.LastName ?? "",
                                 PhoneNumber = emailUser.PhoneNumber ?? "",
-                                ProfilePictureUrl = emailUser.ProfilePictureUrl ?? "/Assets/default_profile.png"
+                                ProfilePictureUrl = emailUser.ProfilePictureUrl ?? "/Assets/default_profile.png",
+                                LevelOfStudy = emailUser.LevelOfStudy ?? "",
+                                FieldOfStudy = emailUser.FieldOfStudy ?? "",
+                                IsStudent = emailUser.IsStudent
                             };
                             
                             return emailUserModel;
@@ -112,8 +115,14 @@ namespace IHECLibrary.Services.Implementations
                 Console.WriteLine($"  - Email: {user.Email}");
                 Console.WriteLine($"  - FirstName: '{user.FirstName}'");
                 Console.WriteLine($"  - LastName: '{user.LastName}'");
+                Console.WriteLine($"  - Level of Study: '{user.LevelOfStudy}'");
+                Console.WriteLine($"  - Field of Study: '{user.FieldOfStudy}'");
+                Console.WriteLine($"  - Books Borrowed: {user.BooksBorrowed}");
+                Console.WriteLine($"  - Books Reserved: {user.BooksReserved}");
+                Console.WriteLine($"  - Ranking: '{user.Ranking}'");
+                Console.WriteLine($"  - Is Student: {user.IsStudent}");
 
-                // Create user model with available information
+                // Create user model with available information directly from user table
                 var userModel = new UserModel
                 {
                     Id = user.UserId ?? "",
@@ -123,49 +132,11 @@ namespace IHECLibrary.Services.Implementations
                     PhoneNumber = user.PhoneNumber ?? "",
                     ProfilePictureUrl = !string.IsNullOrEmpty(user.ProfilePictureUrl) ? 
                         user.ProfilePictureUrl : 
-                        "/Assets/default_profile.png"
+                        "/Assets/default_profile.png",
+                    LevelOfStudy = user.LevelOfStudy ?? "",
+                    FieldOfStudy = user.FieldOfStudy ?? "",
+                    IsStudent = user.IsStudent
                 };
-                
-                try 
-                {
-                    // Attempt to get student profile (non-critical data)
-                    var studentProfileResponse = await _supabaseClient.From<DbStudentProfile>()
-                        .Where(p => p.StudentId == userId)
-                        .Get();
-                    
-                    var studentProfile = studentProfileResponse.Models.FirstOrDefault();
-                    
-                    if (studentProfile != null)
-                    {
-                        // Log retrieved student profile data to help diagnose issues
-                        Console.WriteLine($"GetUserByIdAsync: Found student profile data:");
-                        Console.WriteLine($"  - Level of Study: '{studentProfile.LevelOfStudy}'");
-                        Console.WriteLine($"  - Field of Study: '{studentProfile.FieldOfStudy}'");
-                        Console.WriteLine($"  - Books Borrowed: {studentProfile.BooksBorrowed}");
-                        Console.WriteLine($"  - Books Reserved: {studentProfile.BooksReserved}");
-                        Console.WriteLine($"  - Profile Ranking: {studentProfile.Ranking ?? "Not set"}");
-                        
-                        // Assign to user model
-                        userModel.LevelOfStudy = studentProfile.LevelOfStudy;
-                        userModel.FieldOfStudy = studentProfile.FieldOfStudy;
-                        
-                        // You might want to use the ranking from the profile if available
-                        if (!string.IsNullOrEmpty(studentProfile.Ranking))
-                        {
-                            // This will be used later in GetUserStatisticsAsync
-                            Console.WriteLine($"GetUserByIdAsync: Using ranking from student profile: {studentProfile.Ranking}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("GetUserByIdAsync: No student profile found for this user");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log but continue - this is non-critical data
-                    Console.WriteLine($"GetUserByIdAsync: Error getting student profile: {ex.Message}");
-                }
                 
                 try
                 {
@@ -212,7 +183,7 @@ namespace IHECLibrary.Services.Implementations
 
                 Console.WriteLine($"GetCurrentUserProfileAsync: Looking up profile for user with ID: {userId}");
                 
-                // Get basic user information
+                // Get user information with all profile data now included in the users table
                 var usersResponse = await _supabaseClient.From<DbUser>()
                     .Where(p => p.UserId == userId)
                     .Get();
@@ -225,7 +196,14 @@ namespace IHECLibrary.Services.Implementations
                 
                 var user = usersResponse.Models.First();
                 
-                // Create the profile model with basic user information
+                Console.WriteLine($"GetCurrentUserProfileAsync: Found user profile data:");
+                Console.WriteLine($"  - Level of Study: '{user.LevelOfStudy}'");
+                Console.WriteLine($"  - Field of Study: '{user.FieldOfStudy}'");
+                Console.WriteLine($"  - Books Borrowed: {user.BooksBorrowed}");
+                Console.WriteLine($"  - Books Reserved: {user.BooksReserved}");
+                Console.WriteLine($"  - Ranking: '{user.Ranking}'");
+                
+                // Create the profile model with all user information from users table
                 var profileModel = new UserProfileModel
                 {
                     UserId = Guid.Parse(userId),
@@ -234,68 +212,14 @@ namespace IHECLibrary.Services.Implementations
                     Email = user.Email ?? string.Empty,
                     PhoneNumber = user.PhoneNumber ?? string.Empty,
                     ProfilePictureUrl = user.ProfilePictureUrl ?? string.Empty,
-                    CreatedAt = DateTime.Now // Default value, will be overwritten if we have actual data
+                    LevelOfStudy = user.LevelOfStudy ?? string.Empty,
+                    FieldOfStudy = user.FieldOfStudy ?? string.Empty,
+                    BooksBorrowed = user.BooksBorrowed,
+                    BooksReserved = user.BooksReserved,
+                    Ranking = user.Ranking ?? "Bronze",
+                    CreatedAt = user.CreatedAt ?? DateTime.UtcNow,
+                    LastLogin = user.LastLogin ?? DateTime.UtcNow
                 };
-                
-                try
-                {
-                    // Get student profile information
-                    var studentProfileResponse = await _supabaseClient.From<DbStudentProfile>()
-                        .Where(p => p.StudentId == userId)
-                        .Get();
-                    
-                    var studentProfile = studentProfileResponse.Models.FirstOrDefault();
-                    
-                    if (studentProfile != null)
-                    {
-                        profileModel.LevelOfStudy = studentProfile.LevelOfStudy ?? string.Empty;
-                        profileModel.FieldOfStudy = studentProfile.FieldOfStudy ?? string.Empty;
-                        profileModel.BooksBorrowed = studentProfile.BooksBorrowed;
-                        profileModel.BooksReserved = studentProfile.BooksReserved;
-                        profileModel.Ranking = studentProfile.Ranking ?? "Bronze";
-                    }
-                    else
-                    {
-                        // Set default values if no student profile exists
-                        profileModel.LevelOfStudy = string.Empty;
-                        profileModel.FieldOfStudy = string.Empty;
-                        profileModel.BooksBorrowed = 0;
-                        profileModel.BooksReserved = 0;
-                        profileModel.Ranking = "Bronze";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log but continue - this is non-critical data
-                    Console.WriteLine($"GetCurrentUserProfileAsync: Error getting student profile: {ex.Message}");
-                    
-                    // Set default values
-                    profileModel.LevelOfStudy = string.Empty;
-                    profileModel.FieldOfStudy = string.Empty;
-                    profileModel.BooksBorrowed = 0;
-                    profileModel.BooksReserved = 0;
-                    profileModel.Ranking = "Bronze";
-                }
-                
-                // Try to get last login information
-                try
-                {
-                    // Use a simple approach that doesn't rely on reflection or complex access patterns
-                    // Instead, just use the current time since this is not critical data
-                    profileModel.LastLogin = DateTime.UtcNow;
-                    
-                    // Note: In a real implementation, you would need to add a LastLogin property to DbUser
-                    // and map it to the last_login column in the database
-                    
-                    // For example:
-                    // [Column("last_login")]
-                    // public DateTime? LastLogin { get; set; }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"GetCurrentUserProfileAsync: Error getting last login: {ex.Message}");
-                    profileModel.LastLogin = DateTime.UtcNow;
-                }
                 
                 return profileModel;
             }
@@ -330,12 +254,7 @@ namespace IHECLibrary.Services.Implementations
                 {
                     if (user == null || user.UserId == null)
                         continue;
-
-                    // Vérifier si l'utilisateur est un étudiant
-                    var studentProfile = await _supabaseClient.From<DbStudentProfile>()
-                        .Where(p => p.StudentId == user.UserId)
-                        .Single();
-
+                    
                     // Vérifier si l'utilisateur est un administrateur
                     var adminProfile = await _supabaseClient.From<DbAdminProfile>()
                         .Where(p => p.AdminId == user.UserId)
@@ -349,15 +268,11 @@ namespace IHECLibrary.Services.Implementations
                         LastName = user.LastName ?? "",
                         PhoneNumber = user.PhoneNumber ?? "",
                         ProfilePictureUrl = user.ProfilePictureUrl,
+                        LevelOfStudy = user.LevelOfStudy ?? "",
+                        FieldOfStudy = user.FieldOfStudy ?? "",
+                        IsStudent = user.IsStudent,
                         IsAdmin = adminProfile != null && adminProfile.IsApproved
                     };
-
-                    // Ajouter les informations spécifiques aux étudiants si disponibles
-                    if (studentProfile != null)
-                    {
-                        userModel.LevelOfStudy = studentProfile.LevelOfStudy;
-                        userModel.FieldOfStudy = studentProfile.FieldOfStudy;
-                    }
 
                     userModels.Add(userModel);
                 }
@@ -394,10 +309,15 @@ namespace IHECLibrary.Services.Implementations
                 user.LastName = model.LastName ?? "";
                 user.PhoneNumber = model.PhoneNumber ?? "";
                 
+                // Now we can directly update the level and field of study as they're in the users table
+                if (!string.IsNullOrEmpty(model.LevelOfStudy))
+                    user.LevelOfStudy = model.LevelOfStudy;
+                
+                if (!string.IsNullOrEmpty(model.FieldOfStudy))
+                    user.FieldOfStudy = model.FieldOfStudy;
+                
                 if (!string.IsNullOrEmpty(model.ProfilePictureUrl))
-                {
                     user.ProfilePictureUrl = model.ProfilePictureUrl;
-                }
                 
                 // Save the changes
                 await _supabaseClient.From<DbUser>()
@@ -405,8 +325,10 @@ namespace IHECLibrary.Services.Implementations
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"UpdateUserProfileAsync Exception: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return false;
             }
         }
@@ -443,6 +365,19 @@ namespace IHECLibrary.Services.Implementations
             try
             {
                 var statistics = new UserStatisticsModel();
+                
+                // Get user data to retrieve books_borrowed, books_reserved, and ranking
+                var user = await _supabaseClient.From<DbUser>()
+                    .Where(u => u.UserId == userId)
+                    .Single();
+                
+                if (user != null)
+                {
+                    // Use the values directly from the users table
+                    statistics.BorrowedBooksCount = user.BooksBorrowed;
+                    statistics.ReservedBooksCount = user.BooksReserved;
+                    statistics.Ranking = user.Ranking ?? "Bronze";
+                }
 
                 // Obtenir les emprunts actifs
                 var activeBorrowings = await _supabaseClient.From<DbBookBorrowing>()
@@ -459,10 +394,21 @@ namespace IHECLibrary.Services.Implementations
                     .Where(l => l.UserId == userId)
                     .Get();
 
-                statistics.BorrowedBooksCount = activeBorrowings.Models.Count;
-                statistics.ReservedBooksCount = booksOfInterest.Models.Count;
                 statistics.LikedBooksCount = likedBooks.Models.Count;
-                statistics.Ranking = await GetUserRankingAsync(userId);
+                
+                // Make sure the count matches the active borrowings
+                if (statistics.BorrowedBooksCount != activeBorrowings.Models.Count)
+                {
+                    Console.WriteLine($"Warning: User has {activeBorrowings.Models.Count} active borrowings but books_borrowed is {statistics.BorrowedBooksCount}");
+                    statistics.BorrowedBooksCount = activeBorrowings.Models.Count;
+                }
+                
+                // Make sure the count matches the books of interest
+                if (statistics.ReservedBooksCount != booksOfInterest.Models.Count)
+                {
+                    Console.WriteLine($"Warning: User has {booksOfInterest.Models.Count} books of interest but books_reserved is {statistics.ReservedBooksCount}");
+                    statistics.ReservedBooksCount = booksOfInterest.Models.Count;
+                }
 
                 // Récupérer les détails des livres empruntés
                 foreach (var borrowing in activeBorrowings.Models)
@@ -556,8 +502,10 @@ namespace IHECLibrary.Services.Implementations
 
                 return statistics;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"GetUserStatisticsAsync Exception: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return new UserStatisticsModel
                 {
                     Ranking = "Bronze" // Rang par défaut en cas d'erreur
@@ -592,6 +540,33 @@ namespace IHECLibrary.Services.Implementations
 
         [Column("profile_picture_url")]
         public string? ProfilePictureUrl { get; set; }
+        
+        [Column("created_at")]
+        public DateTime? CreatedAt { get; set; }
+        
+        [Column("last_login")]
+        public DateTime? LastLogin { get; set; }
+        
+        [Column("is_active")]
+        public bool IsActive { get; set; }
+        
+        [Column("level_of_study")]
+        public string? LevelOfStudy { get; set; }
+        
+        [Column("field_of_study")]
+        public string? FieldOfStudy { get; set; }
+        
+        [Column("books_borrowed")]
+        public int BooksBorrowed { get; set; }
+        
+        [Column("books_reserved")]
+        public int BooksReserved { get; set; }
+        
+        [Column("ranking")]
+        public string? Ranking { get; set; }
+        
+        [Column("is_student")]
+        public bool IsStudent { get; set; }
     }
 
     [Table("student_profiles")]

@@ -51,6 +51,14 @@ namespace IHECLibrary.Services.Implementations
                 _ => throw new ArgumentException($"Vue non reconnue: {viewName}")
             };
 
+            // Special case: If we're navigating to the Profile view, ensure it reloads data
+            // This is especially important when coming back from EditProfile
+            if (viewName == "Profile" && viewModel is ProfileViewModel profileViewModel)
+            {
+                System.Diagnostics.Debug.WriteLine("NavigationService: Navigating to Profile, forcing data refresh");
+                profileViewModel.RefreshData();
+            }
+
             // Passer le paramètre au ViewModel si nécessaire
             if (parameter != null && viewModel is IParameterizedViewModel parameterizedViewModel)
             {

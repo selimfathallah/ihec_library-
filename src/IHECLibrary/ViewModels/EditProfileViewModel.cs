@@ -189,6 +189,9 @@ namespace IHECLibrary.ViewModels
                     updateModel.ProfilePictureUrl = SelectedImagePath;
                 }
                 
+                System.Diagnostics.Debug.WriteLine("Saving profile changes to database...");
+                Console.WriteLine($"Updating profile: {FirstName} {LastName}, Phone: {PhoneNumber}, Level: {LevelOfStudy}, Field: {FieldOfStudy}");
+                
                 // Update profile
                 var result = await _userService.UpdateUserProfileAsync(updateModel);
                 
@@ -197,17 +200,45 @@ namespace IHECLibrary.ViewModels
                     // Log this activity
                     LogProfileUpdateActivity();
                     
-                    // Success - navigate back to profile page
-                    await _navigationService.NavigateToAsync("Profile");
+                    System.Diagnostics.Debug.WriteLine("Profile updated successfully, attempting to navigate back to profile page");
+                    
+                    try
+                    {
+                        // Force navigation directly to profile page
+                        await _navigationService.NavigateToAsync("Profile");
+                        System.Diagnostics.Debug.WriteLine("Navigation to Profile page completed successfully");
+                    }
+                    catch (Exception navEx)
+                    {
+                        // Log navigation error but don't show to user
+                        System.Diagnostics.Debug.WriteLine($"Navigation error: {navEx.Message}");
+                        Console.WriteLine($"Navigation error: {navEx.Message}");
+                        
+                        // Try again with a different approach
+                        try 
+                        {
+                            await Task.Delay(100); // Small delay
+                            await _navigationService.NavigateToAsync("Profile");
+                            System.Diagnostics.Debug.WriteLine("Second navigation attempt succeeded");
+                        }
+                        catch (Exception secondEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Second navigation attempt failed: {secondEx.Message}");
+                            // We don't want to set ErrorMessage here as the profile update was successful
+                        }
+                    }
                 }
                 else
                 {
                     ErrorMessage = "Failed to update profile. Please try again.";
+                    System.Diagnostics.Debug.WriteLine("Failed to update profile in database");
                 }
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"Error saving profile: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine($"Exception when saving profile: {ex.Message}");
+                Console.WriteLine($"Exception when saving profile: {ex.Message}");
             }
             finally
             {

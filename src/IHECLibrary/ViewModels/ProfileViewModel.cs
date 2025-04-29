@@ -275,6 +275,13 @@ namespace IHECLibrary.ViewModels
             await _navigationService.NavigateToAsync("EditProfile");
         }
 
+        // Add this method to allow the navigation service to force a refresh when needed
+        public void RefreshData()
+        {
+            System.Diagnostics.Debug.WriteLine("ProfileViewModel: RefreshData called - reloading user data");
+            LoadUserDataAsync();
+        }
+
         [RelayCommand]
         private async Task SignOut()
         {
