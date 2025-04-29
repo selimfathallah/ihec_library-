@@ -1,7 +1,9 @@
-Date: 28/04/2025 10:26:50 PM
-Exception: Vue non reconnue: EditProfile
-Stack Trace:    at IHECLibrary.Services.Implementations.NavigationService.NavigateToAsync(String viewName, Object parameter) in C:\Users\GIGABYTE\Desktop\ihec_library-\src\IHECLibrary\Services\Implementations\NavigationService.cs:line 50
-   at IHECLibrary.ViewModels.ProfileViewModel.EditProfile() in C:\Users\GIGABYTE\Desktop\ihec_library-\src\IHECLibrary\ViewModels\ProfileViewModel.cs:line 226
+Date: 29/04/2025 2:27:12 AM
+Exception: No service for type 'IHECLibrary.ViewModels.EditProfileViewModel' has been registered.
+Stack Trace:    at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at IHECLibrary.Services.Implementations.NavigationService.NavigateToAsync(String viewName, Object parameter) in C:\Users\GIGABYTE\Desktop\ihec_library-\src\IHECLibrary\Services\Implementations\NavigationService.cs:line 48
+   at IHECLibrary.ViewModels.ProfileViewModel.EditProfile() in C:\Users\GIGABYTE\Desktop\ihec_library-\src\IHECLibrary\ViewModels\ProfileViewModel.cs:line 275
    at CommunityToolkit.Mvvm.Input.AsyncRelayCommand.AwaitAndThrowIfFailed(Task executionTask)
    at System.Threading.Tasks.Task.<>c.<ThrowAsync>b__128_0(Object state)
    at Avalonia.Threading.SendOrPostCallbackDispatcherOperation.InvokeCore()

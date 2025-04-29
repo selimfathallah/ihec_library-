@@ -63,6 +63,23 @@ namespace IHECLibrary
         public bool IsBlocked { get; set; }
     }
 
+    public class UserProfileModel
+    {
+        public Guid UserId { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string LevelOfStudy { get; set; } = string.Empty;
+        public string FieldOfStudy { get; set; } = string.Empty;
+        public string ProfilePictureUrl { get; set; } = string.Empty;
+        public string Ranking { get; set; } = string.Empty; 
+        public int BooksBorrowed { get; set; }
+        public int BooksReserved { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? LastLogin { get; set; }
+    }
+
     public class UserProfileUpdateModel
     {
         public string FirstName { get; set; } = string.Empty;

@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:IHECLibrary.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="IHECLibrary.Views.EditProfileView"
+             x:DataType="vm:EditProfileViewModel">
+
+    <Design.DataContext>
+        <vm:EditProfileViewModel />
+    </Design.DataContext>
+
+    <ScrollViewer>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock Text="Edit Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Update your personal information" FontSize="14" Foreground="#666" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Form Content -->
+            <Grid Grid.Row="1" MaxWidth="500" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Loading Indicator -->
+                <Border Grid.ColumnSpan="2" Grid.RowSpan="6" 
+                        Background="#80000000" 
+                        IsVisible="{Binding IsLoading}">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <ProgressBar IsIndeterminate="True" Width="200" Height="4"/>
+                        <TextBlock Text="Loading..." Foreground="White" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Error Message -->
+                <Border Grid.Row="0" Grid.ColumnSpan="2" 
+                        Background="#FFEBEE" BorderBrush="#EF5350" BorderThickness="1" 
+                        CornerRadius="4" Padding="10" Margin="0,0,0,15"
+                        IsVisible="{Binding HasError}">
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="#B71C1C" TextWrapping="Wrap"/>
+                </Border>
+
+                <!-- First Name -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,10,15">
+                    <TextBlock Text="First Name *" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding FirstName}" Watermark="Enter your first name" />
+                </StackPanel>
+
+                <!-- Last Name -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,0,0,15">
+                    <TextBlock Text="Last Name *" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding LastName}" Watermark="Enter your last name" />
+                </StackPanel>
+
+                <!-- Phone Number -->
+                <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,15">
+                    <TextBlock Text="Phone Number" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding PhoneNumber}" Watermark="Enter your phone number" />
+                </StackPanel>
+
+                <!-- Study Level -->
+                <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,10,15">
+                    <TextBlock Text="Level of Study" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding LevelOfStudy}" Watermark="Enter level of study" />
+                </StackPanel>
+
+                <!-- Field of Study -->
+                <StackPanel Grid.Row="3" Grid.Column="1" Margin="10,0,0,15">
+                    <TextBlock Text="Field of Study" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding FieldOfStudy}" Watermark="Enter field of study" />
+                </StackPanel>
+
+                <!-- Note -->
+                <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="* Required fields" FontStyle="Italic" Foreground="#666" Margin="0,0,0,20"/>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,0,10,0" />
+                    <Button Content="Save" Command="{Binding SaveProfileCommand}" Background="#4CAF50" Foreground="White" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Footer -->
+            <TextBlock Grid.Row="2" Text="Your data is secure with us" 
+                       FontSize="12" Foreground="#999" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

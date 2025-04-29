@@ -55,6 +55,29 @@ namespace IHECLibrary.Services.Implementations.Mock
             return Task.FromResult<UserModel?>(_currentUser);
         }
 
+        public Task<UserProfileModel?> GetCurrentUserProfileAsync()
+        {
+            // Create a UserProfileModel from the current user information
+            var profile = new UserProfileModel
+            {
+                UserId = Guid.Parse("mock-user-id"),
+                FirstName = _currentUser.FirstName,
+                LastName = _currentUser.LastName,
+                Email = _currentUser.Email,
+                PhoneNumber = _currentUser.PhoneNumber ?? string.Empty,
+                LevelOfStudy = _currentUser.LevelOfStudy ?? string.Empty,
+                FieldOfStudy = _currentUser.FieldOfStudy ?? string.Empty,
+                ProfilePictureUrl = _currentUser.ProfilePictureUrl ?? string.Empty,
+                Ranking = "Gold",
+                BooksBorrowed = 5,
+                BooksReserved = 2,
+                CreatedAt = DateTime.Now.AddDays(-30),
+                LastLogin = DateTime.Now
+            };
+            
+            return Task.FromResult<UserProfileModel?>(profile);
+        }
+
         public Task<UserModel?> GetUserByIdAsync(string userId)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);

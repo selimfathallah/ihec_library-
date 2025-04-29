@@ -30,6 +30,23 @@ namespace IHECLibrary.Tests
     {
         public Task<UserModel?> GetCurrentUserAsync() => 
             Task.FromResult<UserModel?>(new UserModel { Id = "test-user", Email = "test@example.com" });
+        public Task<UserProfileModel?> GetCurrentUserProfileAsync() =>
+            Task.FromResult<UserProfileModel?>(new UserProfileModel
+            {
+                UserId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                FirstName = "Test",
+                LastName = "User",
+                Email = "test@example.com",
+                PhoneNumber = "123-456-7890",
+                LevelOfStudy = "Bachelor",
+                FieldOfStudy = "Computer Science",
+                ProfilePictureUrl = "",
+                Ranking = "Gold",
+                BooksBorrowed = 3,
+                BooksReserved = 2,
+                CreatedAt = DateTime.Now.AddDays(-30),
+                LastLogin = DateTime.Now
+            });
         public Task<UserModel?> GetUserByIdAsync(string userId) => 
             Task.FromResult<UserModel?>(new UserModel { Id = userId, Email = "user@example.com" });
         public Task<List<UserModel>> SearchUsersAsync(string searchQuery) => 

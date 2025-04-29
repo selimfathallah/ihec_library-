@@ -45,6 +45,7 @@ namespace IHECLibrary.Services.Implementations
                 "Home" => _serviceProvider.GetRequiredService<HomeViewModel>(),
                 "Library" => _serviceProvider.GetRequiredService<LibraryViewModel>(),
                 "Profile" => _serviceProvider.GetRequiredService<ProfileViewModel>(),
+                "EditProfile" => _serviceProvider.GetRequiredService<EditProfileViewModel>(),
                 "Chatbot" => _serviceProvider.GetRequiredService<ChatbotViewModel>(),
                 "AdminDashboard" => _serviceProvider.GetRequiredService<AdminDashboardViewModel>(),
                 _ => throw new ArgumentException($"Vue non reconnue: {viewName}")

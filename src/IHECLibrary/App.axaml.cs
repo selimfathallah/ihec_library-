@@ -283,6 +283,12 @@ namespace IHECLibrary
                 provider.GetRequiredService<IAuthService>()
             ));
             
+            // Add EditProfileViewModel registration
+            services.AddTransient<EditProfileViewModel>(provider => new EditProfileViewModel(
+                provider.GetRequiredService<IUserService>(),
+                provider.GetRequiredService<INavigationService>()
+            ));
+            
             // Register MainWindowViewModel with explicit dependencies
             services.AddSingleton<MainWindowViewModel>(provider => new MainWindowViewModel(
                 provider.GetRequiredService<INavigationService>(),

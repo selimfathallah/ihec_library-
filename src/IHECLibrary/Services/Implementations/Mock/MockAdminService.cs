@@ -184,7 +184,7 @@ namespace IHECLibrary.Services.Implementations.Mock
             _currentAdmin.LastName = model.LastName ?? _currentAdmin.LastName;
             _currentAdmin.PhoneNumber = model.PhoneNumber ?? _currentAdmin.PhoneNumber;
             _currentAdmin.JobTitle = model.JobTitle ?? _currentAdmin.JobTitle;
-            _currentAdmin.ProfilePictureUrl = model.ProfilePictureUrl;
+            _currentAdmin.ProfilePictureUrl = model.ProfilePictureUrl ?? _currentAdmin.ProfilePictureUrl;
             
             return Task.FromResult(true);
         }
@@ -274,7 +274,7 @@ namespace IHECLibrary.Services.Implementations.Mock
                 Publisher = model.Publisher,
                 Category = model.Category,
                 Description = model.Description,
-                CoverImageUrl = model.CoverImageUrl,
+                CoverImageUrl = model.CoverImageUrl ?? "",
                 TotalCopies = model.TotalCopies,
                 AvailableCopies = model.TotalCopies
             };
