@@ -9,161 +9,209 @@
              x:DataType="vm:ChatbotViewModel">
 
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+    <!-- Background Image -->
+    <Image Source="/Assets/86e75388-ca74-4247-8493-b54c288ba351.png" 
+           Stretch="UniformToFill" 
+           Opacity="1"/>
+           
+    <!-- Semi-transparent overlay for better readability -->
+    <Rectangle Fill="#60FFFFFF"/>
     
-    <!-- Barre de navigation -->
-    <Grid Grid.Row="0" Background="White" Height="70">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
-      
-      <!-- Logo et titre -->
-      <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
-        <TextBlock Text="IHEC Library" FontSize="24" FontWeight="Bold" Foreground="#2E74A8"/>
-      </StackPanel>
-      
-      <!-- Menu de navigation -->
-      <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Content="Home" Command="{Binding NavigateToHomeCommand}" 
-                Background="Transparent" Foreground="#2E74A8" 
-                Padding="15,10" Margin="5,0" CornerRadius="20"/>
-        <Button Content="Library" Command="{Binding NavigateToLibraryCommand}" 
-                Background="Transparent" Foreground="#2E74A8" 
-                Padding="15,10" Margin="5,0" CornerRadius="20"/>
-        <Button Content="HEC 1.0" Command="{Binding NavigateToChatbotCommand}" 
-                Background="#E6F2F8" Foreground="#2E74A8" 
-                Padding="15,10" Margin="5,0" CornerRadius="20"/>
-        <Button Content="Profile" Command="{Binding NavigateToProfileCommand}" 
-                Background="Transparent" Foreground="#2E74A8" 
-                Padding="15,10" Margin="5,0" CornerRadius="20"/>
-      </StackPanel>
-      
-      <!-- Recherche et profil -->
-      <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
-        <TextBox Text="{Binding SearchQuery}" Watermark="Search books..." Width="200" Margin="0,0,15,0"/>
-        <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True">
-          <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
-        </Border>
-        <TextBlock Text="{Binding UserFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
-      </StackPanel>
-    </Grid>
-    
-    <!-- Error message display -->
-    <Border Grid.Row="1" Background="#FFEBEE" Padding="20" IsVisible="{Binding HasError}" Margin="20">
-      <StackPanel>
-        <TextBlock Text="Une erreur s'est produite" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Foreground="#D32F2F"/>
-        <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#D32F2F"/>
-        <Button Content="Retourner à l'accueil" Command="{Binding NavigateToHomeCommand}" 
-                Background="#2E74A8" Foreground="White" 
-                Padding="15,10" Margin="0,20,0,0" CornerRadius="4"/>
-      </StackPanel>
-    </Border>
-    
-    <!-- Contenu principal -->
-    <Grid Grid.Row="1" IsVisible="{Binding !HasError}">
+    <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
       
-      <!-- Zone de chat -->
-      <Border Grid.Row="0" Background="#F8F9FA" Margin="20">
-        <ScrollViewer Name="ChatScrollViewer">
-          <ItemsControl ItemsSource="{Binding Messages}" Margin="20">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate x:DataType="vm:ChatMessageViewModel">
-                <Grid Margin="0,10,0,10">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                  </Grid.ColumnDefinitions>
-                  
-                  <!-- Avatar -->
-                  <Border Grid.Column="0" CornerRadius="20" Width="40" Height="40" ClipToBounds="True" Margin="0,0,15,0"
-                          IsVisible="{Binding IsFromBot}">
-                    <Panel Background="#2E74A8">
-                      <!-- Use send_icon.png as a fallback since the avatar image is missing -->
-                      <Image Source="/Assets/send_icon.png" Stretch="Uniform" Margin="8"/>
-                      <TextBlock Text="HEC" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                               Foreground="White" FontWeight="Bold" FontSize="16"/>
-                    </Panel>
-                  </Border>
-                  
-                  <!-- Message -->
-                  <Border Grid.Column="1" Background="{Binding MessageBackground}" CornerRadius="8" Padding="15"
-                          HorizontalAlignment="{Binding MessageAlignment}" MaxWidth="600">
-                    <StackPanel>
-                      <TextBlock Text="{Binding SenderName}" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                      <TextBlock Text="{Binding Content}" TextWrapping="Wrap"/>
-                      
-                      <!-- Suggestions (uniquement pour les messages du bot) -->
-                      <ItemsControl ItemsSource="{Binding Suggestions}" Margin="0,10,0,0" IsVisible="{Binding HasSuggestions}">
-                        <ItemsControl.ItemsPanel>
-                          <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" />
-                          </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                          <DataTemplate x:DataType="sys:String">
-                            <Button Content="{Binding}" 
-                                    Command="{Binding $parent[UserControl].((vm:ChatbotViewModel)DataContext).UseSuggestionCommand}" 
-                                    CommandParameter="{Binding}"
-                                    Background="#E6F2F8" Foreground="#2E74A8" 
-                                    Padding="10,5" Margin="0,0,10,10" CornerRadius="15"/>
-                          </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                      </ItemsControl>
-                      
-                      <!-- Résultats de recherche (uniquement pour les messages du bot) -->
-                      <ItemsControl ItemsSource="{Binding SearchResults}" Margin="0,10,0,0" IsVisible="{Binding HasSearchResults}">
-                        <ItemsControl.ItemTemplate>
-                          <DataTemplate x:DataType="vm:BookSearchResultViewModel">
-                            <Border Background="White" CornerRadius="8" Padding="10" Margin="0,5,0,5">
-                              <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Image Grid.Column="0" Source="/Assets/book_icon.png" Width="40" Height="40" Margin="0,0,10,0"/>
-                                
-                                <StackPanel Grid.Column="1">
-                                  <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
-                                  <TextBlock Text="{Binding Author}" FontSize="12"/>
-                                </StackPanel>
-                                
-                                <Button Grid.Column="2" Content="View" Command="{Binding ViewBookCommand}" 
-                                        Background="#2E74A8" Foreground="White" 
-                                        VerticalAlignment="Center" Padding="10,5" CornerRadius="4"/>
-                              </Grid>
-                            </Border>
-                          </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                      </ItemsControl>
-                    </StackPanel>
-                  </Border>
-                </Grid>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </ScrollViewer>
+      <!-- Navigation bar -->
+      <Border Grid.Row="0" Background="#DDFFFFFF" Height="60" BorderBrush="#88E0E0E0" BorderThickness="0,0,0,1">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          
+          <!-- Logo and title -->
+          <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+            <TextBlock Text="IHEC Library" FontSize="20" FontWeight="Bold" Foreground="#007BFF"/>
+          </StackPanel>
+          
+          <!-- Navigation menu -->
+          <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Home" Command="{Binding NavigateToHomeCommand}" 
+                    Background="Transparent" Foreground="#555555"
+                    Padding="15,10" Margin="5,0" CornerRadius="20"/>
+            <Button Content="Library" Command="{Binding NavigateToLibraryCommand}" 
+                    Background="Transparent" Foreground="#555555" 
+                    Padding="15,10" Margin="5,0" CornerRadius="20"/>
+            <Button Content="HEC 1.0" Command="{Binding NavigateToChatbotCommand}" 
+                    Background="#E6F2F8" Foreground="#007BFF" 
+                    Padding="15,10" Margin="5,0" CornerRadius="20"/>
+            <Button Content="Profile" Command="{Binding NavigateToProfileCommand}" 
+                    Background="Transparent" Foreground="#555555" 
+                    Padding="15,10" Margin="5,0" CornerRadius="20"/>
+          </StackPanel>
+          
+          <!-- Search and profile -->
+          <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+            <Border CornerRadius="20" BorderBrush="#88E0E0E0" BorderThickness="1" Padding="10,5" Margin="0,0,15,0" Background="#33FFFFFF">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding SearchQuery}" 
+                         Watermark="Search books..." 
+                         Width="200" 
+                         BorderThickness="0"
+                         Background="Transparent"
+                         Padding="5,5">
+                  <TextBox.Styles>
+                    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+                      <Setter Property="BorderBrush" Value="Transparent"/>
+                      <Setter Property="BorderThickness" Value="0"/>
+                      <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                  </TextBox.Styles>
+                </TextBox>
+              </Grid>
+            </Border>
+            <Border CornerRadius="20" Width="40" Height="40" ClipToBounds="True" BoxShadow="0 1 3 #20000000">
+              <Image Source="{Binding UserProfilePicture}" Stretch="UniformToFill"/>
+            </Border>
+            <TextBlock Text="{Binding UserFullName}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+          </StackPanel>
+        </Grid>
       </Border>
       
-      <!-- Zone de saisie -->
-      <Grid Grid.Row="1" Margin="20,0,20,20">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+      <!-- Error message display -->
+      <Border Grid.Row="1" Background="#FFEBEE" Padding="20" IsVisible="{Binding HasError}" Margin="20">
+        <StackPanel>
+          <TextBlock Text="An error occurred" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Foreground="#D32F2F"/>
+          <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#D32F2F"/>
+          <Button Content="Return to Home" Command="{Binding NavigateToHomeCommand}" 
+                  Background="#007BFF" Foreground="White" 
+                  Padding="15,10" Margin="0,20,0,0" CornerRadius="4"/>
+        </StackPanel>
+      </Border>
+      
+      <!-- Main content -->
+      <Grid Grid.Row="1" IsVisible="{Binding !HasError}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         
-        <TextBox Grid.Column="0" Text="{Binding CurrentMessage}" Watermark="Ask HEC 1.0 anything about books, research, or the library..." 
-                 Height="50" VerticalContentAlignment="Center"/>
+        <!-- Chat area -->
+        <Border Grid.Row="0" Background="#AAFFFFFF" Margin="20" CornerRadius="10" BorderBrush="#88DDDDDD" BorderThickness="1" BoxShadow="0 2 10 #20000000">
+          <ScrollViewer Name="ChatScrollViewer">
+            <ItemsControl ItemsSource="{Binding Messages}" Margin="20">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ChatMessageViewModel">
+                  <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Avatar -->
+                    <Border Grid.Column="0" CornerRadius="20" Width="40" Height="40" ClipToBounds="True" Margin="0,0,15,0"
+                            IsVisible="{Binding IsFromBot}" BoxShadow="0 2 4 #20000000">
+                      <Panel Background="#007BFF">
+                        <TextBlock Text="HEC" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                 Foreground="White" FontWeight="Bold" FontSize="16"/>
+                      </Panel>
+                    </Border>
+                    
+                    <!-- Message -->
+                    <Border Grid.Column="1" Background="{Binding MessageBackground}" CornerRadius="8" Padding="15"
+                            HorizontalAlignment="{Binding MessageAlignment}" MaxWidth="600"
+                            BorderBrush="#E0E0E0" BorderThickness="1" BoxShadow="0 1 3 #15000000">
+                      <StackPanel>
+                        <TextBlock Text="{Binding SenderName}" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding Content}" TextWrapping="Wrap"/>
+                        
+                        <!-- Suggestions (for bot messages only) -->
+                        <ItemsControl ItemsSource="{Binding Suggestions}" Margin="0,10,0,0" IsVisible="{Binding HasSuggestions}">
+                          <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                              <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                          </ItemsControl.ItemsPanel>
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="sys:String">
+                              <Button Content="{Binding}" 
+                                      Command="{Binding $parent[UserControl].((vm:ChatbotViewModel)DataContext).UseSuggestionCommand}" 
+                                      CommandParameter="{Binding}"
+                                      Background="#E6F2F8" Foreground="#007BFF" 
+                                      Padding="10,5" Margin="0,0,10,10" CornerRadius="15"/>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <!-- Search results (for bot messages only) -->
+                        <ItemsControl ItemsSource="{Binding SearchResults}" Margin="0,10,0,0" IsVisible="{Binding HasSearchResults}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:BookSearchResultViewModel">
+                              <Border Background="#F8FFFFFF" CornerRadius="8" Padding="10" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                  <Image Grid.Column="0" Source="/Assets/books.png" Width="40" Height="40" Margin="0,0,10,0"/>
+                                  
+                                  <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Author}" FontSize="12"/>
+                                  </StackPanel>
+                                  
+                                  <Button Grid.Column="2" Content="View" Command="{Binding ViewBookCommand}" 
+                                          Background="#007BFF" Foreground="White" 
+                                          VerticalAlignment="Center" Padding="10,5" CornerRadius="4"/>
+                                </Grid>
+                              </Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </StackPanel>
+                    </Border>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </Border>
         
-        <Button Grid.Column="1" Command="{Binding SendMessageCommand}" 
-                Background="#2E74A8" Foreground="White" 
-                Width="50" Height="50" Margin="10,0,0,0" CornerRadius="25">
-          <Image Source="/Assets/send_icon.png" Width="20" Height="20"/>
-        </Button>
+        <!-- Input area -->
+        <Grid Grid.Row="1" Margin="20,0,20,20">
+          <Border Background="#BBFFFFFF" CornerRadius="25" BorderBrush="#88E0E0E0" BorderThickness="1" BoxShadow="0 2 8 #20000000">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              
+              <TextBox Grid.Column="0" Text="{Binding CurrentMessage}" 
+                      Watermark="Ask HEC 1.0 anything about books, research, or the library..." 
+                      Height="50" VerticalContentAlignment="Center"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Margin="15,0,0,0">
+                <TextBox.Styles>
+                  <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                  </Style>
+                </TextBox.Styles>
+              </TextBox>
+              
+              <Button Grid.Column="1" Command="{Binding SendMessageCommand}" 
+                     Background="#007BFF" Foreground="White" 
+                     Width="40" Height="40" Margin="10" CornerRadius="20">
+                <Image Source="/Assets/send_icon.png" Width="18" Height="18"/>
+              </Button>
+            </Grid>
+          </Border>
+        </Grid>
       </Grid>
     </Grid>
   </Grid>

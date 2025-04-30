@@ -8,121 +8,47 @@
              x:DataType="vm:AdminLoginViewModel">
 
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="400" />
-    </Grid.ColumnDefinitions>
+    <!-- Background Image -->
+    <Image Source="/Assets/admin.PNG" Stretch="UniformToFill"/>
 
-    <!-- Partie gauche avec logo et illustration -->
-    <Grid Grid.Column="0" Background="#E6F2F8">
-      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="IHEC" FontSize="60" FontWeight="Bold" Foreground="#9C27B0" HorizontalAlignment="Center"/>
-        <TextBlock Text="Library" FontSize="60" FontWeight="Bold" Foreground="#9C27B0" HorizontalAlignment="Center" Margin="0,-20,0,0"/>
-        
-        <!-- Vector-based admin/librarian illustration -->
-        <Canvas Width="300" Height="300" Margin="0,20,0,0">
-          <!-- Bookshelf -->
-          <Rectangle Canvas.Left="50" Canvas.Top="40" Width="200" Height="200" 
-                     Fill="#9C27B0" RadiusX="5" RadiusY="5"/>
+    <!-- Main Content -->
+    <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0">
+      <!-- Login form -->
+      <Border Background="White" CornerRadius="5" Padding="20" BoxShadow="0 4 8 0 #33000000" Width="350">
+        <StackPanel>
+          <TextBlock Text="Admin Login" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,20" HorizontalAlignment="Left"/>
           
-          <!-- Shelf lines -->
-          <Rectangle Canvas.Left="50" Canvas.Top="100" Width="200" Height="5" 
-                     Fill="#7B1FA2"/>
-          <Rectangle Canvas.Left="50" Canvas.Top="160" Width="200" Height="5" 
-                     Fill="#7B1FA2"/>
+          <TextBlock Text="College Email" Margin="0,0,0,5"/>
+          <TextBox Text="{Binding Email}" Watermark="@ihec.ucar.tn" Height="40" Margin="0,0,0,15"/>
           
-          <!-- Books on shelves -->
-          <Rectangle Canvas.Left="60" Canvas.Top="50" Width="15" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="80" Canvas.Top="50" Width="15" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="100" Canvas.Top="50" Width="15" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="120" Canvas.Top="50" Width="20" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="145" Canvas.Top="50" Width="10" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="160" Canvas.Top="50" Width="25" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="190" Canvas.Top="50" Width="15" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="210" Canvas.Top="50" Width="20" Height="45" 
-                     Fill="#B39DDB"/>
+          <TextBlock Text="Password" Margin="0,0,0,5"/>
+          <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Height="40" Margin="0,0,0,5"/>
           
-          <!-- Second shelf books -->
-          <Rectangle Canvas.Left="60" Canvas.Top="110" Width="20" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="85" Canvas.Top="110" Width="15" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="105" Canvas.Top="110" Width="25" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="135" Canvas.Top="110" Width="15" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="155" Canvas.Top="110" Width="20" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="180" Canvas.Top="110" Width="30" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="215" Canvas.Top="110" Width="15" Height="45" 
-                     Fill="#B39DDB"/>
+          <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,20">
+            <CheckBox Grid.Column="0" IsChecked="{Binding RememberMe}" Content="Remember me" VerticalAlignment="Center"/>
+            <Button Grid.Column="2" Content="Forgot password?" Command="{Binding ForgotPasswordCommand}" 
+                    Background="Transparent" Foreground="#2373B3" Padding="0" VerticalAlignment="Center"/>
+          </Grid>
           
-          <!-- Third shelf books -->
-          <Rectangle Canvas.Left="60" Canvas.Top="170" Width="25" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="90" Canvas.Top="170" Width="15" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="110" Canvas.Top="170" Width="20" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="135" Canvas.Top="170" Width="10" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="150" Canvas.Top="170" Width="30" Height="45" 
-                     Fill="#D1C4E9"/>
-          <Rectangle Canvas.Left="185" Canvas.Top="170" Width="15" Height="45" 
-                     Fill="#B39DDB"/>
-          <Rectangle Canvas.Left="205" Canvas.Top="170" Width="25" Height="45" 
-                     Fill="#D1C4E9"/>
+          <Button Content="Login as Administrator" Command="{Binding SignInCommand}" 
+                  Background="#2373B3" Foreground="White" 
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                  Height="50" CornerRadius="4" Margin="0,0,0,20"/>
           
-          <!-- Librarian badge -->
-          <Ellipse Canvas.Left="125" Canvas.Top="250" Width="50" Height="50" 
-                   Fill="#9C27B0" Stroke="#7B1FA2" StrokeThickness="2"/>
-          <TextBlock Canvas.Left="137" Canvas.Top="260" Text="A" 
-                     FontSize="28" FontWeight="Bold" Foreground="White"/>
-        </Canvas>
-      </StackPanel>
-    </Grid>
-
-    <!-- Partie droite avec formulaire de connexion admin -->
-    <Border Grid.Column="1" Background="White" Padding="30">
-      <StackPanel VerticalAlignment="Center">
-        <TextBlock Text="Admin Login" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,30"/>
-        
-        <TextBlock Text="College Email" Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Email}" Watermark="@ihec.ucar.tn" Height="40" Margin="0,0,0,15"/>
-        
-        <TextBlock Text="Password" Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Password}" PasswordChar="•" Watermark="••••••••" Height="40" Margin="0,0,0,5"/>
-        
-        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,30">
-          <CheckBox IsChecked="{Binding RememberMe}" Content="Remember me" Grid.Column="0"/>
-          <Button Content="Forgot password?" Command="{Binding ForgotPasswordCommand}" 
-                  Grid.Column="2" Background="Transparent" Foreground="#9C27B0"
-                  Padding="0"/>
-        </Grid>
-        
-        <Button Content="Login as Administrator" Command="{Binding SignInCommand}" 
-                Background="#9C27B0" Foreground="White" 
-                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                Height="50" CornerRadius="4" Margin="0,0,0,20"/>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-          <TextBlock Text="Need an admin account? " VerticalAlignment="Center"/>
-          <Button Content="Register" Command="{Binding GoToAdminRegisterCommand}" 
-                  Background="Transparent" Foreground="#9C27B0" Padding="0"/>
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock Text="Need an admin account? " VerticalAlignment="Center"/>
+            <Button Content="Register" Command="{Binding GoToAdminRegisterCommand}" 
+                    Background="Transparent" Foreground="#2373B3" Padding="0"/>
+          </StackPanel>
+                  
+          <Button Content="Back to Student Login" Command="{Binding GoToUserLoginCommand}" 
+                  HorizontalAlignment="Center" Background="Transparent" Foreground="#2373B3"
+                  Padding="0" Margin="0,10,0,0"/>
         </StackPanel>
-        
-        <Button Content="Back to User Login" Command="{Binding GoToUserLoginCommand}" 
-                HorizontalAlignment="Center" Background="Transparent" Foreground="#9C27B0"
-                Padding="0" Margin="0,10,0,0"/>
-      </StackPanel>
-    </Border>
+      </Border>
+    </Grid>
+    
+    <!-- Top Admin Login text -->
+    <TextBlock Text="Admin Login" FontSize="14" Foreground="#888888" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,10,0,0"/>
   </Grid>
 </UserControl>
