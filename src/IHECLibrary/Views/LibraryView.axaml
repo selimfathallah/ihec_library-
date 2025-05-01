@@ -173,10 +173,20 @@
                         <RowDefinition Height="*"/>
                       </Grid.RowDefinitions>
                       
-                      <!-- Book icon -->
-                      <Border Grid.Row="0" Width="90" Height="120" CornerRadius="4" Background="#FFF0F0"
+                      <!-- Book cover image -->
+                      <Border Grid.Row="0" Width="90" Height="120" CornerRadius="4" 
+                              Background="#F5F5F5" ClipToBounds="True"
                               HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <Image Source="/Assets/books.png" Width="48" Height="48" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Grid>
+                          <!-- Fallback image if no cover URL is available -->
+                          <Image Source="/Assets/books.png" Width="48" Height="48" 
+                                 VerticalAlignment="Center" HorizontalAlignment="Center"
+                                 IsVisible="{Binding !CoverImageUrl.Length}"/>
+                          
+                          <!-- Actual book cover image -->
+                          <Image Source="{Binding CoverImageUrl}" Stretch="Uniform"
+                                 IsVisible="{Binding CoverImageUrl.Length}" />
+                        </Grid>
                       </Border>
                       
                       <!-- Availability tag -->

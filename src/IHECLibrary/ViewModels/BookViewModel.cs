@@ -57,16 +57,17 @@ namespace IHECLibrary.ViewModels
             Author = book.Author;
             Category = book.Category;
             
-            // Improved placeholder image handling - more resilient
+            // More robust cover image handling
             if (!string.IsNullOrEmpty(book.CoverImageUrl) && Uri.IsWellFormedUriString(book.CoverImageUrl, UriKind.Absolute))
             {
                 CoverImageUrl = book.CoverImageUrl;
+                Console.WriteLine($"Using original cover URL for '{book.Title}': {CoverImageUrl}");
             }
             else
             {
-                // Use a more reliable placeholder service with book title encoded properly
-                string encodedTitle = Uri.EscapeDataString(book.Title?.Length > 20 ? book.Title.Substring(0, 20) : (book.Title ?? "Book"));
-                CoverImageUrl = $"https://placehold.co/200x300/e8e8e8/4a4a4a?text={encodedTitle}";
+                // Use a local asset as fallback instead of an external service
+                CoverImageUrl = "/Assets/books.png";
+                Console.WriteLine($"Using fallback cover for '{book.Title}'");
             }
             
             // Set availability status and color
