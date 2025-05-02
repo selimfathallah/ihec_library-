@@ -1,4 +1,4 @@
-Date: 30/04/2025 21:06:51
+Date: 02/05/2025 11:55:49
 Exception: Vue non reconnue: EditProfile
 Stack Trace:    at IHECLibrary.Services.Implementations.NavigationService.NavigateToAsync(String viewName, Object parameter) in D:\webapp\ihec_library-\src\IHECLibrary\Services\Implementations\NavigationService.cs:line 50
    at IHECLibrary.ViewModels.ProfileViewModel.EditProfile() in D:\webapp\ihec_library-\src\IHECLibrary\ViewModels\ProfileViewModel.cs:line 168

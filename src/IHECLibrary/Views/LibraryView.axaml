@@ -161,58 +161,123 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="vm:BookViewModel">
-                  <Border Background="{Binding BackgroundColor, FallbackValue=#F3F9FD}" Width="200" Height="250" 
-                          CornerRadius="8" Margin="0,0,15,15" BorderBrush="#E0E0E0" BorderThickness="1">
-                    <Grid Margin="12">
+                  <Border Background="White" Width="220" Height="320" 
+                          CornerRadius="8" Margin="0,0,20,20" 
+                          BoxShadow="0 2 8 0 #20000000">
+                    <Border.Transitions>
+                      <Transitions>
+                        <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.2" />
+                        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" />
+                      </Transitions>
+                    </Border.Transitions>
+                    <Border.Styles>
+                      <Style Selector="Border:pointerover">
+                        <Setter Property="BoxShadow" Value="0 8 16 0 #30000000" />
+                        <Setter Property="RenderTransform" Value="scale(1.02)" />
+                        <Setter Property="ZIndex" Value="1" />
+                      </Style>
+                    </Border.Styles>
+                    <Grid>
                       <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="180"/>
                         <RowDefinition Height="*"/>
                       </Grid.RowDefinitions>
                       
-                      <!-- Book cover image -->
-                      <Border Grid.Row="0" Width="90" Height="120" CornerRadius="4" 
-                              Background="#F5F5F5" ClipToBounds="True"
-                              HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <Grid>
-                          <!-- Fallback image if no cover URL is available -->
-                          <Image Source="/Assets/books.png" Width="48" Height="48" 
-                                 VerticalAlignment="Center" HorizontalAlignment="Center"
-                                 IsVisible="{Binding !CoverImageUrl.Length}"/>
+                      <!-- Book cover with overlay elements -->
+                      <Panel Grid.Row="0">
+                        <!-- Cover background -->
+                        <Border CornerRadius="8,8,0,0" ClipToBounds="True" Background="#F0F0F0">
+                          <Panel>
+                            <!-- Book cover image -->
+                            <Image Source="{Binding CoverImage}" Stretch="UniformToFill" />
+                            
+                            <!-- Fallback image shown only when there's no cover image loaded -->
+                            <Panel IsVisible="{Binding CoverImage, Converter={x:Static ObjectConverters.IsNull}}">
+                              <Image Source="/Assets/books.png" Width="64" Height="64"
+                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Panel>
+                          </Panel>
+                        </Border>
+                        
+                        <!-- Category badge -->
+                        <Border Background="#2E74A8" CornerRadius="4" 
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Margin="10,10,0,0" Padding="8,4">
+                          <TextBlock Text="{Binding Category}" Foreground="White" 
+                                     FontSize="10" FontWeight="SemiBold"/>
+                        </Border>
+                        
+                        <!-- Availability badge -->
+                        <Border Background="{Binding AvailabilityColor}" CornerRadius="4" 
+                                HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Margin="0,10,10,0" Padding="8,4">
+                          <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" 
+                                     FontSize="10" FontWeight="SemiBold"/>
+                        </Border>
+                      </Panel>
+                      
+                      <!-- Book info section -->
+                      <Grid Grid.Row="1" Margin="15,12,15,12">
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Book title -->
+                        <TextBlock Grid.Row="0" Text="{Binding Title}" 
+                                   FontWeight="SemiBold" FontSize="16" 
+                                   TextWrapping="Wrap" MaxLines="2"
+                                   TextTrimming="CharacterEllipsis"/>
+                        
+                        <!-- Author -->
+                        <TextBlock Grid.Row="1" Text="{Binding Author}" 
+                                   FontSize="12" Foreground="#555555"
+                                   Margin="0,5,0,0"/>
+                        
+                        <!-- Rating display -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,8,0,0">
+                          <Panel Width="80" Height="16">
+                            <Border Background="#E0E0E0" CornerRadius="2" VerticalAlignment="Center" Height="8" />
+                            <Border Width="{Binding RatingPercentage, StringFormat={}{0}%}" Background="#FFC107" 
+                                    CornerRadius="2" VerticalAlignment="Center" Height="8" 
+                                    HorizontalAlignment="Left" />
+                          </Panel>
+                          <TextBlock Text="{Binding RatingText}" FontSize="12" Margin="8,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <!-- Action buttons -->
+                        <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                          </Grid.ColumnDefinitions>
                           
-                          <!-- Actual book cover image -->
-                          <Image Source="{Binding CoverImageUrl}" Stretch="Uniform"
-                                 IsVisible="{Binding CoverImageUrl.Length}" />
+                          <!-- Primary action button -->
+                          <Button Grid.Column="0" Content="{Binding ActionButtonText}" 
+                                  Command="{Binding ActionCommand}"
+                                  Background="{Binding ActionButtonBackground}" 
+                                  Foreground="White"
+                                  Height="36" CornerRadius="4" FontSize="13"
+                                  HorizontalAlignment="Stretch" 
+                                  HorizontalContentAlignment="Center"/>
+                          
+                          <!-- Like button -->
+                          <Button Grid.Column="1" Width="36" Height="36" 
+                                  Command="{Binding ToggleLikeCommand}"
+                                  Background="Transparent" 
+                                  BorderThickness="1" 
+                                  BorderBrush="#E0E0E0"
+                                  CornerRadius="4" Margin="8,0,0,0"
+                                  HorizontalContentAlignment="Center" 
+                                  VerticalContentAlignment="Center">
+                            <TextBlock Text="{Binding LikeButtonText}" 
+                                       FontSize="16" 
+                                       Foreground="{Binding LikeButtonColor}"/>
+                          </Button>
                         </Grid>
-                      </Border>
-                      
-                      <!-- Availability tag -->
-                      <Border Grid.Row="1" Background="{Binding AvailabilityColor}" CornerRadius="15" 
-                              HorizontalAlignment="Center" Padding="10,5" Margin="0,0,0,8">
-                        <TextBlock Text="{Binding AvailabilityStatus}" Foreground="White" FontSize="12" FontWeight="Medium"/>
-                      </Border>
-                      
-                      <!-- Book title -->
-                      <TextBlock Grid.Row="2" Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" 
-                                 HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,4"/>
-                      
-                      <!-- Author -->
-                      <TextBlock Grid.Row="3" Text="{Binding Author}" FontSize="12" 
-                                 HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                      
-                      <!-- Category -->
-                      <TextBlock Grid.Row="4" Text="{Binding Category}" FontSize="11" Foreground="Gray" 
-                                 HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                      
-                      <!-- Action button -->
-                      <Button Grid.Row="5" Content="{Binding ActionButtonText}" Command="{Binding ActionCommand}" 
-                              Background="{Binding ActionButtonBackground}" Foreground="White" 
-                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                              VerticalAlignment="Bottom" Height="32" CornerRadius="4"
-                              FontSize="12" FontWeight="Medium"/>
+                      </Grid>
                     </Grid>
                   </Border>
                 </DataTemplate>

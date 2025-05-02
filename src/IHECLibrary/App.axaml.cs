@@ -268,6 +268,11 @@ namespace IHECLibrary
                 provider.GetRequiredService<IAuthService>()
             ));
             
+            services.AddTransient<EditProfileViewModel>(provider => new EditProfileViewModel(
+                provider.GetRequiredService<IUserService>(),
+                provider.GetRequiredService<INavigationService>()
+            ));
+            
             services.AddTransient<ChatbotViewModel>(provider => new ChatbotViewModel(
                 provider.GetRequiredService<INavigationService>(),
                 provider.GetRequiredService<IUserService>(),

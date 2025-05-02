@@ -36,6 +36,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [D:/webapp/ihec_library-/src/IHECLibrary/Views/ChatbotView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[D:/webapp/ihec_library-/src/IHECLibrary/Views/EditProfile.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [D:/webapp/ihec_library-/src/IHECLibrary/Views/HomeView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

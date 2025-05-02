@@ -1,0 +1,245 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:IHECLibrary.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+             x:Class="IHECLibrary.Views.EditProfileView"
+             x:DataType="vm:EditProfileViewModel">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <!-- Barre de navigation -->
+    <Grid Grid.Row="0" Background="White" Height="70">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      
+      <!-- Logo et titre -->
+      <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+        <TextBlock Text="IHEC Library" FontSize="24" FontWeight="Bold" Foreground="#2E74A8"/>
+      </StackPanel>
+      
+      <!-- Menu de navigation -->
+      <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Content="Home" Command="{Binding NavigateToHomeCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="Library" Command="{Binding NavigateToLibraryCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="HEC 1.0" Command="{Binding NavigateToChatbotCommand}" 
+                Background="Transparent" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+        <Button Content="Profile" Command="{Binding NavigateToProfileCommand}" 
+                Background="#E6F2F8" Foreground="#2E74A8" 
+                Padding="15,10" Margin="5,0" CornerRadius="20"/>
+      </StackPanel>
+    </Grid>
+    
+    <!-- Main content area -->
+    <Grid Grid.Row="1" Background="#eff4ff">
+      <Border Background="White" 
+              Margin="30" 
+              CornerRadius="10" 
+              BoxShadow="0 2 10 0 #20000000">
+        
+        <Grid Margin="30">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          
+          <!-- Header -->
+          <Grid Grid.Row="0" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0">
+              <TextBlock Text="Edit Profile" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#2E74A8"/>
+              <TextBlock Text="Update your personal information and preferences" 
+                       Foreground="#777777"
+                       Margin="0,5,0,0"/>
+            </StackPanel>
+            
+            <Border Grid.Column="1"
+                    Width="100"
+                    Height="100"
+                    CornerRadius="50"
+                    ClipToBounds="True">
+              <Panel>
+                <Image Source="/Assets/86e75388-ca74-4247-8493-b54c288ba351.png" Stretch="UniformToFill"/>
+                <Button Content="📷"
+                        FontSize="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Opacity="0.7"
+                        Background="#80000000"
+                        Foreground="White"
+                        Width="40"
+                        Height="40"
+                        CornerRadius="20"/>
+              </Panel>
+            </Border>
+          </Grid>
+
+          <!-- Form Content -->
+          <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+              <!-- Personal Information Section -->
+              <TextBlock Text="Informations Personnelles" 
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+              
+              <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" Margin="0,0,0,30">
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,15,15">
+                  <TextBlock Text="Prénom" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding FirstName}" Watermark="Mohamed Fadi" Height="40"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="15,0,0,15">
+                  <TextBlock Text="Nom" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding LastName}" Watermark="Nassraoui" Height="40"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,15,15">
+                  <TextBlock Text="Email" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding Email}" Watermark="mohamedfadi.nassraoui.2024@ihec.ucar.tn" Height="40" IsReadOnly="True"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="15,0,0,15">
+                  <TextBlock Text="Numéro de Téléphone" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding PhoneNumber}" Watermark="+216 56415725" Height="40"/>
+                </StackPanel>
+              </Grid>
+              
+              <!-- Academic Information -->
+              <TextBlock Text="Informations Académiques" 
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+              
+              <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" Margin="0,0,0,30">
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,15,15">
+                  <TextBlock Text="Niveau d'Études" Margin="0,0,0,5"/>
+                  <ComboBox SelectedItem="{Binding LevelOfStudy}" 
+                          PlaceholderText="1" 
+                          HorizontalAlignment="Stretch"
+                          Height="40">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                  </ComboBox>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="15,0,0,15">
+                  <TextBlock Text="Domaine d'Études" Margin="0,0,0,5"/>
+                  <ComboBox SelectedItem="{Binding FieldOfStudy}" 
+                          PlaceholderText="BI" 
+                          HorizontalAlignment="Stretch"
+                          Height="40">
+                    <ComboBoxItem>BI</ComboBoxItem>
+                    <ComboBoxItem>Finance</ComboBoxItem>
+                    <ComboBoxItem>Marketing</ComboBoxItem>
+                    <ComboBoxItem>Management</ComboBoxItem>
+                    <ComboBoxItem>Economics</ComboBoxItem>
+                  </ComboBox>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,15,15">
+                  <TextBlock Text="Identifiant d'Étudiant" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding StudentId}" Watermark="2024-IHEC-5647" Height="40" IsReadOnly="True"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="15,0,0,15">
+                  <TextBlock Text="Département" Margin="0,0,0,5"/>
+                  <TextBox Text="{Binding Department}" Watermark="Business Intelligence" Height="40" IsReadOnly="True"/>
+                </StackPanel>
+              </Grid>
+              
+              <!-- Preferences -->
+              <TextBlock Text="Préférences" 
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+              
+              <StackPanel Margin="0,0,0,30">
+                <TextBlock Text="Centres d'intérêt" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding Preferences}" 
+                       Watermark="Data Science, Business Analytics, Machine Learning" 
+                       Height="40"/>
+                <TextBlock Text="Séparez les centres d'intérêt par des virgules" 
+                         FontSize="12"
+                         Foreground="#777777"
+                         Margin="0,5,0,0"/>
+              </StackPanel>
+              
+              <!-- Notifications -->
+              <TextBlock Text="Notifications" 
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+              
+              <StackPanel Margin="0,0,0,20">
+                <CheckBox Content="Recevoir des notifications d'échéance de retour" 
+                        IsChecked="{Binding NotifyReturns}"
+                        Margin="0,0,0,10"/>
+                <CheckBox Content="Recevoir des notifications de réservation disponible" 
+                        IsChecked="{Binding NotifyReservations}"
+                        Margin="0,0,0,10"/>
+                <CheckBox Content="Recevoir des notifications pour les nouveaux livres" 
+                        IsChecked="{Binding NotifyNewBooks}"
+                        Margin="0,0,0,10"/>
+              </StackPanel>
+            </StackPanel>
+          </ScrollViewer>
+          
+          <!-- Action buttons -->
+          <Grid Grid.Row="2" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="1"
+                    Content="Annuler"
+                    Command="{Binding CancelCommand}"
+                    Width="150"
+                    Height="45"
+                    Background="Transparent"
+                    Foreground="#2E74A8"
+                    BorderBrush="#2E74A8"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Margin="0,0,10,0"/>
+            
+            <Button Grid.Column="2"
+                    Content="Enregistrer les modifications"
+                    Command="{Binding SaveCommand}"
+                    Width="250"
+                    Height="45"
+                    Background="#2E74A8"
+                    Foreground="White"
+                    CornerRadius="5"/>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

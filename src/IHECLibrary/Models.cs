@@ -61,6 +61,13 @@ namespace IHECLibrary
         public string? JobTitle { get; set; }
         public bool IsApproved { get; set; }
         public bool IsBlocked { get; set; }
+        // Added properties for the EditProfile view
+        public string? StudentId { get; set; }
+        public string? Department { get; set; }
+        public string? Preferences { get; set; }
+        public bool NotifyReturns { get; set; } = true;
+        public bool NotifyReservations { get; set; } = true;
+        public bool NotifyNewBooks { get; set; } = true;
     }
 
     public class UserProfileUpdateModel
@@ -71,6 +78,11 @@ namespace IHECLibrary
         public string? LevelOfStudy { get; set; }
         public string? FieldOfStudy { get; set; }
         public string? ProfilePictureUrl { get; set; }
+        // Added properties for the EditProfile view
+        public string? Preferences { get; set; }
+        public bool NotifyReturns { get; set; }
+        public bool NotifyReservations { get; set; }
+        public bool NotifyNewBooks { get; set; }
     }
 
     public class UserStatisticsModel

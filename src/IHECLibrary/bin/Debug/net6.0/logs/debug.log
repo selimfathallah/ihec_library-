@@ -1416,3 +1416,324 @@ Inner Exception: The resource /Assets/admin_laptop.png could not be found.
 [2025-05-01 17:19:15.881] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
 [2025-05-01 17:19:17.445] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
 [2025-05-01 17:19:17.445] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 17:39:28.398] Application IHEC Library démarrée
+[2025-05-01 17:39:29.107] Creating MainWindow
+[2025-05-01 17:39:29.322] Setting up navigation service
+[2025-05-01 17:39:29.400] Application started successfully
+[2025-05-01 17:39:29.610] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 17:39:29.610] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 17:39:44.386] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:39:44.386] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 17:39:49.966] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-01 17:39:49.966] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-01 17:39:51.545] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:39:51.546] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 17:40:33.380] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-01 17:40:33.380] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-01 17:40:35.454] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-01 17:40:35.455] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-01 17:40:36.462] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-01 17:40:36.463] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-01 17:40:36.925] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-01 17:40:36.926] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-01 17:40:37.378] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-01 17:40:37.378] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-01 17:40:38.457] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:40:38.457] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 17:43:26.229] Application IHEC Library démarrée
+[2025-05-01 17:43:26.747] Creating MainWindow
+[2025-05-01 17:43:26.904] Setting up navigation service
+[2025-05-01 17:43:26.936] Application started successfully
+[2025-05-01 17:43:27.029] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 17:43:27.030] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 17:43:34.462] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:43:34.463] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 17:48:07.508] Application IHEC Library démarrée
+[2025-05-01 17:48:08.011] Creating MainWindow
+[2025-05-01 17:48:08.175] Setting up navigation service
+[2025-05-01 17:48:08.207] Application started successfully
+[2025-05-01 17:48:08.297] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 17:48:08.297] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 17:48:26.928] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:48:26.929] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 17:55:07.181] Application IHEC Library démarrée
+[2025-05-01 17:55:08.618] Creating MainWindow
+[2025-05-01 17:55:09.191] Setting up navigation service
+[2025-05-01 17:55:09.279] Application started successfully
+[2025-05-01 17:55:09.655] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 17:55:09.661] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 17:55:37.402] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 17:55:37.403] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 19:37:37.848] Application IHEC Library démarrée
+[2025-05-01 19:37:38.309] Creating MainWindow
+[2025-05-01 19:37:38.456] Setting up navigation service
+[2025-05-01 19:37:38.483] Application started successfully
+[2025-05-01 19:37:38.565] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 19:37:38.566] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 19:38:06.421] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 19:38:06.421] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 19:45:57.943] Application IHEC Library démarrée
+[2025-05-01 19:45:58.703] Creating MainWindow
+[2025-05-01 19:45:58.920] Setting up navigation service
+[2025-05-01 19:45:58.954] Application started successfully
+[2025-05-01 19:45:59.041] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-01 19:45:59.042] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-01 19:46:26.852] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 19:46:26.853] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-01 19:50:33.582] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-01 19:50:33.583] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-01 19:51:05.387] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-01 19:51:05.387] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-01 19:51:06.235] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-01 19:51:06.235] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-01 19:51:07.631] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-01 19:51:07.631] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-01 19:51:55.073] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-01 19:51:55.074] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-01 19:51:56.286] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-01 19:51:56.287] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 07:43:20.714] Application IHEC Library démarrée
+[2025-05-02 07:43:23.540] Creating MainWindow
+[2025-05-02 07:43:24.158] Setting up navigation service
+[2025-05-02 07:43:24.188] Application started successfully
+[2025-05-02 07:43:24.281] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 07:43:24.281] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 07:45:03.247] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 07:45:03.248] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 07:45:18.014] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 07:45:18.015] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 07:45:19.776] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 07:45:19.777] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 07:45:20.706] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 07:45:20.707] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 07:53:25.838] Application IHEC Library démarrée
+[2025-05-02 07:53:26.286] Creating MainWindow
+[2025-05-02 07:53:26.429] Setting up navigation service
+[2025-05-02 07:53:26.456] Application started successfully
+[2025-05-02 07:53:26.535] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 07:53:26.535] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 07:54:01.925] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 07:54:01.925] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:03:48.304] Application IHEC Library démarrée
+[2025-05-02 08:03:48.777] Creating MainWindow
+[2025-05-02 08:03:48.948] Setting up navigation service
+[2025-05-02 08:03:48.977] Application started successfully
+[2025-05-02 08:03:49.063] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:03:49.063] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:04:15.612] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:04:15.613] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:14:43.359] Application IHEC Library démarrée
+[2025-05-02 08:14:43.973] Creating MainWindow
+[2025-05-02 08:14:44.272] Setting up navigation service
+[2025-05-02 08:14:44.345] Application started successfully
+[2025-05-02 08:14:44.486] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:14:44.487] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:15:27.777] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:15:27.778] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:15:42.625] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 08:15:42.625] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 08:15:43.598] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 08:15:43.598] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 08:15:44.349] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:15:44.349] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:19:11.508] Application IHEC Library démarrée
+[2025-05-02 08:19:12.076] Creating MainWindow
+[2025-05-02 08:19:12.236] Setting up navigation service
+[2025-05-02 08:19:12.302] Application started successfully
+[2025-05-02 08:19:12.395] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:19:12.396] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:19:34.223] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:19:34.223] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:23:54.425] Application IHEC Library démarrée
+[2025-05-02 08:23:54.956] Creating MainWindow
+[2025-05-02 08:23:55.128] Setting up navigation service
+[2025-05-02 08:23:55.161] Application started successfully
+[2025-05-02 08:23:55.256] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:23:55.257] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:24:14.477] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:24:14.477] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:26:30.761] Application IHEC Library démarrée
+[2025-05-02 08:26:31.233] Creating MainWindow
+[2025-05-02 08:26:31.387] Setting up navigation service
+[2025-05-02 08:26:31.422] Application started successfully
+[2025-05-02 08:26:31.512] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:26:31.512] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:26:46.937] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:26:46.937] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:27:16.525] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 08:27:16.526] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 08:27:19.216] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 08:27:19.217] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 08:40:59.285] Application IHEC Library démarrée
+[2025-05-02 08:40:59.723] Creating MainWindow
+[2025-05-02 08:40:59.869] Setting up navigation service
+[2025-05-02 08:40:59.895] Application started successfully
+[2025-05-02 08:40:59.978] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 08:40:59.978] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 08:41:11.884] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 08:41:11.884] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 08:41:15.307] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 08:41:15.307] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 10:09:46.228] Application IHEC Library démarrée
+[2025-05-02 10:09:49.259] Creating MainWindow
+[2025-05-02 10:09:50.027] Setting up navigation service
+[2025-05-02 10:09:50.059] Application started successfully
+[2025-05-02 10:09:50.156] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 10:09:50.156] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 10:10:11.096] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-05-02 10:10:11.096] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-05-02 10:10:14.198] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 10:10:14.199] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 10:10:16.759] ViewLocator: Looking for view IHECLibrary.Views.AdminLoginView for ViewModel IHECLibrary.ViewModels.AdminLoginViewModel
+[2025-05-02 10:10:16.760] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
+[2025-05-02 10:10:21.795] ViewLocator: Looking for view IHECLibrary.Views.AdminRegisterView for ViewModel IHECLibrary.ViewModels.AdminRegisterViewModel
+[2025-05-02 10:10:21.795] ViewLocator: Creating instance of IHECLibrary.Views.AdminRegisterView
+[2025-05-02 10:10:23.801] ViewLocator: Looking for view IHECLibrary.Views.AdminLoginView for ViewModel IHECLibrary.ViewModels.AdminLoginViewModel
+[2025-05-02 10:10:23.802] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
+[2025-05-02 10:10:25.605] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 10:10:25.605] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 10:11:40.773] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 10:11:40.773] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 10:11:48.147] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 10:11:48.148] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 10:11:51.047] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 10:11:51.049] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 10:13:01.940] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 10:13:01.940] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 11:49:08.960] Application IHEC Library démarrée
+[2025-05-02 11:49:09.911] Creating MainWindow
+[2025-05-02 11:49:10.236] Setting up navigation service
+[2025-05-02 11:49:10.300] Application started successfully
+[2025-05-02 11:49:10.478] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 11:49:10.479] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 11:53:39.199] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 11:53:39.199] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 11:54:03.673] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 11:54:03.674] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 11:57:58.053] Application IHEC Library démarrée
+[2025-05-02 11:57:59.059] Creating MainWindow
+[2025-05-02 11:57:59.425] Setting up navigation service
+[2025-05-02 11:57:59.494] Application started successfully
+[2025-05-02 11:57:59.700] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 11:57:59.701] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 12:13:11.152] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 12:13:11.153] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 12:13:13.880] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 12:13:13.881] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 12:50:49.875] Application IHEC Library démarrée
+[2025-05-02 12:50:53.022] Creating MainWindow
+[2025-05-02 12:50:53.791] Setting up navigation service
+[2025-05-02 12:50:53.823] Application started successfully
+[2025-05-02 12:50:53.921] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 12:50:53.922] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 12:51:19.889] ViewLocator: Looking for view IHECLibrary.Views.RegisterView for ViewModel IHECLibrary.ViewModels.RegisterViewModel
+[2025-05-02 12:51:19.890] ViewLocator: Creating instance of IHECLibrary.Views.RegisterView
+[2025-05-02 12:51:22.315] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 12:51:22.315] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 12:51:24.081] ViewLocator: Looking for view IHECLibrary.Views.AdminLoginView for ViewModel IHECLibrary.ViewModels.AdminLoginViewModel
+[2025-05-02 12:51:24.082] ViewLocator: Creating instance of IHECLibrary.Views.AdminLoginView
+[2025-05-02 12:51:26.847] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 12:51:26.847] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 12:52:06.474] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 12:52:06.474] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 12:53:27.695] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 12:53:27.696] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 12:53:35.150] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 12:53:35.151] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 13:46:35.073] Application IHEC Library démarrée
+[2025-05-02 13:46:39.940] Creating MainWindow
+[2025-05-02 13:46:40.893] Setting up navigation service
+[2025-05-02 13:46:40.926] Application started successfully
+[2025-05-02 13:46:41.023] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 13:46:41.024] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 13:47:04.022] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 13:47:04.022] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 13:47:11.530] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 13:47:11.531] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 13:47:12.604] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 13:47:12.605] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 13:47:13.520] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 13:47:13.521] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 13:47:14.625] ViewLocator: Looking for view IHECLibrary.Views.EditProfileView for ViewModel IHECLibrary.ViewModels.EditProfileViewModel
+[2025-05-02 13:47:14.626] ViewLocator: Creating instance of IHECLibrary.Views.EditProfileView
+[2025-05-02 18:43:07.500] Application IHEC Library démarrée
+[2025-05-02 18:43:08.866] Creating MainWindow
+[2025-05-02 18:43:09.250] Setting up navigation service
+[2025-05-02 18:43:09.315] Application started successfully
+[2025-05-02 18:43:09.534] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 18:43:09.534] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 18:43:37.978] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:43:37.979] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:43:46.818] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 18:43:46.819] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 18:43:48.313] ViewLocator: Looking for view IHECLibrary.Views.EditProfileView for ViewModel IHECLibrary.ViewModels.EditProfileViewModel
+[2025-05-02 18:43:48.314] ViewLocator: Could not find view type for IHECLibrary.Views.EditProfileView
+[2025-05-02 18:43:48.314] ViewLocator: No view found for IHECLibrary.Views.EditProfileView
+[2025-05-02 18:48:54.582] Application IHEC Library démarrée
+[2025-05-02 18:48:55.620] Creating MainWindow
+[2025-05-02 18:48:55.992] Setting up navigation service
+[2025-05-02 18:48:56.057] Application started successfully
+[2025-05-02 18:48:56.240] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 18:48:56.241] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 18:49:23.084] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:49:23.099] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:49:26.316] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 18:49:26.316] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 18:49:29.284] ViewLocator: Looking for view IHECLibrary.Views.EditProfileView for ViewModel IHECLibrary.ViewModels.EditProfileViewModel
+[2025-05-02 18:49:29.285] ViewLocator: Creating instance of IHECLibrary.Views.EditProfileView
+[2025-05-02 18:49:53.233] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 18:49:53.233] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 18:49:58.828] ViewLocator: Looking for view IHECLibrary.Views.EditProfileView for ViewModel IHECLibrary.ViewModels.EditProfileViewModel
+[2025-05-02 18:49:58.829] ViewLocator: Creating instance of IHECLibrary.Views.EditProfileView
+[2025-05-02 18:50:31.092] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 18:50:31.093] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 18:50:32.934] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 18:50:32.935] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 18:50:49.991] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:50:49.991] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:50:52.322] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 18:50:52.323] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 18:50:54.209] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:50:54.209] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:51:07.578] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 18:51:07.578] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 18:51:08.826] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 18:51:08.826] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 18:51:09.713] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:51:09.714] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:51:11.298] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 18:51:11.298] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 18:51:14.446] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:51:14.446] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 18:51:18.817] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 18:51:18.818] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 18:51:19.578] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 18:51:19.578] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 19:04:03.285] Application IHEC Library démarrée
+[2025-05-02 19:04:03.773] Creating MainWindow
+[2025-05-02 19:04:03.970] Setting up navigation service
+[2025-05-02 19:04:04.009] Application started successfully
+[2025-05-02 19:04:04.101] ViewLocator: Looking for view IHECLibrary.Views.LoginView for ViewModel IHECLibrary.ViewModels.LoginViewModel
+[2025-05-02 19:04:04.101] ViewLocator: Creating instance of IHECLibrary.Views.LoginView
+[2025-05-02 19:04:17.894] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 19:04:17.895] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 19:04:20.374] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 19:04:20.375] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 19:06:42.843] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 19:06:42.844] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 19:07:51.680] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 19:07:51.680] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 19:08:01.447] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 19:08:01.448] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 19:08:20.773] ViewLocator: Looking for view IHECLibrary.Views.ChatbotView for ViewModel IHECLibrary.ViewModels.ChatbotViewModel
+[2025-05-02 19:08:20.774] ViewLocator: Creating instance of IHECLibrary.Views.ChatbotView
+[2025-05-02 19:08:32.985] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 19:08:32.985] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 19:13:43.324] ViewLocator: Looking for view IHECLibrary.Views.LibraryView for ViewModel IHECLibrary.ViewModels.LibraryViewModel
+[2025-05-02 19:13:43.325] ViewLocator: Creating instance of IHECLibrary.Views.LibraryView
+[2025-05-02 19:19:45.028] ViewLocator: Looking for view IHECLibrary.Views.HomeView for ViewModel IHECLibrary.ViewModels.HomeViewModel
+[2025-05-02 19:19:45.028] ViewLocator: Creating instance of IHECLibrary.Views.HomeView
+[2025-05-02 19:19:49.702] ViewLocator: Looking for view IHECLibrary.Views.ProfileView for ViewModel IHECLibrary.ViewModels.ProfileViewModel
+[2025-05-02 19:19:49.702] ViewLocator: Creating instance of IHECLibrary.Views.ProfileView
+[2025-05-02 19:20:28.331] ViewLocator: Looking for view IHECLibrary.Views.EditProfileView for ViewModel IHECLibrary.ViewModels.EditProfileViewModel
+[2025-05-02 19:20:28.332] ViewLocator: Creating instance of IHECLibrary.Views.EditProfileView

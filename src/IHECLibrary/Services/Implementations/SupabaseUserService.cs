@@ -222,6 +222,11 @@ namespace IHECLibrary.Services.Implementations
                     .Where(b => b.UserId == userId && !b.IsReturned)
                     .Get();
 
+                // Obtenir les emprunts historiques (tous les emprunts, y compris retournés)
+                var allBorrowings = await _supabaseClient.From<DbBookBorrowing>()
+                    .Where(b => b.UserId == userId)
+                    .Get();
+
                 // Obtenir les livres d'intérêt (réservations)
                 var booksOfInterest = await _supabaseClient.From<DbBookOfInterest>()
                     .Where(r => r.UserId == userId)
@@ -232,10 +237,38 @@ namespace IHECLibrary.Services.Implementations
                     .Where(l => l.UserId == userId)
                     .Get();
 
+                // Obtenir le profil étudiant pour vérifier si le rang est déjà enregistré
+                var studentProfile = await _supabaseClient.From<DbStudentProfile>()
+                    .Where(p => p.StudentId == userId)
+                    .Single();
+
                 statistics.BorrowedBooksCount = activeBorrowings.Models.Count;
                 statistics.ReservedBooksCount = booksOfInterest.Models.Count;
                 statistics.LikedBooksCount = likedBooks.Models.Count;
-                statistics.Ranking = await GetUserRankingAsync(userId);
+                
+                // Déterminer le rang en fonction du nombre total de livres empruntés historiquement
+                int totalBorrowedBooks = allBorrowings.Models.Count;
+                string ranking;
+                
+                if (totalBorrowedBooks > 10)
+                    ranking = "Master";
+                else if (totalBorrowedBooks >= 5)
+                    ranking = "Gold";
+                else if (totalBorrowedBooks >= 2)
+                    ranking = "Silver";
+                else
+                    ranking = "Bronze";
+                
+                statistics.Ranking = ranking;
+                
+                // Si un profil étudiant existe, mettre à jour le rang dans la base de données
+                if (studentProfile != null && !string.IsNullOrEmpty(studentProfile.StudentId))
+                {
+                    studentProfile.Ranking = ranking;
+                    await _supabaseClient.From<DbStudentProfile>()
+                        .Where(p => p.StudentId == userId)
+                        .Update(studentProfile);
+                }
 
                 // Récupérer les détails des livres empruntés
                 foreach (var borrowing in activeBorrowings.Models)
@@ -259,7 +292,7 @@ namespace IHECLibrary.Services.Implementations
                             Publisher = book.Publisher ?? "",
                             Category = book.Category ?? "",
                             Description = book.Description ?? "",
-                            CoverImageUrl = "", 
+                            CoverImageUrl = book.CoverImageUrl,
                             AvailableCopies = 0,
                             TotalCopies = 0,
                             LikesCount = 0
@@ -289,7 +322,7 @@ namespace IHECLibrary.Services.Implementations
                             Publisher = book.Publisher ?? "",
                             Category = book.Category ?? "",
                             Description = book.Description ?? "",
-                            CoverImageUrl = "",
+                            CoverImageUrl = book.CoverImageUrl,
                             AvailableCopies = 0,
                             TotalCopies = 0,
                             LikesCount = 0
@@ -319,7 +352,7 @@ namespace IHECLibrary.Services.Implementations
                             Publisher = book.Publisher ?? "",
                             Category = book.Category ?? "",
                             Description = book.Description ?? "",
-                            CoverImageUrl = "",
+                            CoverImageUrl = book.CoverImageUrl,
                             AvailableCopies = 0,
                             TotalCopies = 0,
                             LikesCount = 0
@@ -329,8 +362,9 @@ namespace IHECLibrary.Services.Implementations
 
                 return statistics;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error getting user statistics: {ex.Message}");
                 return new UserStatisticsModel
                 {
                     Ranking = "Bronze" // Rang par défaut en cas d'erreur
@@ -378,6 +412,9 @@ namespace IHECLibrary.Services.Implementations
 
         [Column("field_of_study")]
         public string? FieldOfStudy { get; set; }
+        
+        [Column("ranking")]
+        public string? Ranking { get; set; }
     }
 
     [Table("admin_profiles")]

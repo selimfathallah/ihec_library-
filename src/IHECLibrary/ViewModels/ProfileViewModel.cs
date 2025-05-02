@@ -165,7 +165,14 @@ namespace IHECLibrary.ViewModels
         [RelayCommand]
         private async Task EditProfile()
         {
-            await _navigationService.NavigateToAsync("EditProfile");
+            try
+            {
+                await _navigationService.NavigateToAsync("EditProfile");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error navigating to Edit Profile page: {ex.Message}");
+            }
         }
 
         [RelayCommand]

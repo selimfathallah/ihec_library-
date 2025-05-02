@@ -854,6 +854,21 @@ namespace IHECLibrary.Services.Implementations
             {
                 if (book?.BookId != null)
                 {
+                    // Debug the raw URL from the database
+                    Console.WriteLine($"DEBUG: Raw CoverImageUrl for book '{book.Title}': '{book.CoverImageUrl}'");
+                    
+                    // Simply use the cover image URL directly from the database
+                    string coverUrl = book.CoverImageUrl ?? string.Empty;
+                    
+                    // Only use placeholder if URL is empty or null
+                    if (string.IsNullOrWhiteSpace(coverUrl))
+                    {
+                        // Create a placeholder URL as fallback
+                        coverUrl = $"https://fakeimg.pl/300x400/E9F0F8/2373B3/?text={Uri.EscapeDataString(book.Title ?? "Book")}";
+                    }
+                    
+                    Console.WriteLine($"DEBUG: Final CoverImageUrl: '{coverUrl}'");
+                    
                     bookModels.Add(new BookModel
                     {
                         Id = book.BookId,
@@ -864,10 +879,8 @@ namespace IHECLibrary.Services.Implementations
                         Publisher = book.Publisher ?? "",
                         Category = book.Category ?? "",
                         Description = book.Description ?? "",
-                        // Use the actual cover image URL from database
-                        CoverImageUrl = !string.IsNullOrEmpty(book.CoverImageUrl) 
-                            ? book.CoverImageUrl 
-                            : $"https://via.placeholder.com/150?text={Uri.EscapeDataString(book.Title ?? "Book")}",
+                        // Use the cover URL directly from the database
+                        CoverImageUrl = coverUrl,
                         // Add language from database, defaulting to English if not specified
                         Language = !string.IsNullOrEmpty(book.Language) ? book.Language : "English",
                         // Correction: Vérification insensible à la casse pour le statut
