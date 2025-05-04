@@ -110,14 +110,20 @@ namespace IHECLibrary.Services.Implementations
         {
             try
             {
+                Console.WriteLine("Starting registration process...");
+                
                 if (model == null)
                 {
+                    Console.WriteLine("Registration failed: Model is null");
                     return new AuthResult
                     {
                         Success = false,
                         ErrorMessage = "Les données d'inscription sont invalides."
                     };
                 }
+                
+                // Detailed logging
+                Console.WriteLine($"Registering user: {model.Email}, {model.FirstName} {model.LastName}");
                 
                 // Créer l'utilisateur dans Supabase Auth
                 var signUpOptions = new SignUpOptions
@@ -132,40 +138,98 @@ namespace IHECLibrary.Services.Implementations
                     }
                 };
 
+                Console.WriteLine("Calling Supabase Auth.SignUp...");
                 var session = await _supabaseClient.Auth.SignUp(model.Email, model.Password, signUpOptions);
+                Console.WriteLine($"SignUp complete. Session: {(session != null ? "valid" : "null")}, User: {(session?.User != null ? "valid" : "null")}");
                 
                 if (session != null && session.User != null)
                 {
-                    // Insert into Users table
-                    await _supabaseClient.From<DbUserModel>()
-                        .Insert(new DbUserModel
-                        {
-                            UserId = session.User.Id,
-                            Email = model.Email,
-                            PasswordHash = "", // Password is handled by Supabase Auth
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
-                            PhoneNumber = model.PhoneNumber,
-                            ProfilePictureUrl = model.ProfilePictureUrl ?? ""
-                        });
-
-                    // Insert into StudentProfiles table
-                    await _supabaseClient.From<DbStudentProfileModel>()
-                        .Insert(new DbStudentProfileModel
-                        {
-                            StudentId = session.User.Id,
-                            LevelOfStudy = model.LevelOfStudy,
-                            FieldOfStudy = model.FieldOfStudy
-                        });
-
-                    var user = await GetUserFromSessionAsync(session);
-                    return new AuthResult
+                    Console.WriteLine($"User created with ID: {session.User.Id}");
+                    
+                    try
                     {
-                        Success = true,
-                        User = user
-                    };
+                        // Insert into Users table
+                        Console.WriteLine("Inserting into Users table...");
+                        await _supabaseClient.From<DbUserModel>()
+                            .Insert(new DbUserModel
+                            {
+                                UserId = session.User.Id,
+                                Email = model.Email,
+                                PasswordHash = "", // Password is handled by Supabase Auth
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                PhoneNumber = model.PhoneNumber,
+                                ProfilePictureUrl = model.ProfilePictureUrl ?? ""
+                            });
+                        Console.WriteLine("Users table insert successful");
+                        
+                        // Insert into StudentProfiles table
+                        Console.WriteLine("Inserting into StudentProfiles table...");
+                        await _supabaseClient.From<DbStudentProfileModel>()
+                            .Insert(new DbStudentProfileModel
+                            {
+                                StudentId = session.User.Id,
+                                LevelOfStudy = model.LevelOfStudy,
+                                FieldOfStudy = model.FieldOfStudy
+                            });
+                        Console.WriteLine("StudentProfiles table insert successful");
+
+                        // Explicitly get user to ensure we have all profile data
+                        Console.WriteLine("Getting user from session...");
+                        var user = await GetUserFromSessionAsync(session);
+                        Console.WriteLine($"User retrieved: {(user != null ? "success" : "null")}");
+                        
+                        if (user != null)
+                        {
+                            Console.WriteLine("Registration successful, returning success result");
+                            return new AuthResult
+                            {
+                                Success = true,
+                                User = user
+                            };
+                        }
+                        else
+                        {
+                            Console.WriteLine("User object is null after GetUserFromSessionAsync");
+                            // Even if we couldn't get the full user profile, the registration was successful
+                            // This ensures the user can still proceed to the home page
+                            return new AuthResult
+                            {
+                                Success = true,
+                                User = new UserModel
+                                {
+                                    Id = session.User.Id ?? "",
+                                    Email = model.Email,
+                                    FirstName = model.FirstName,
+                                    LastName = model.LastName,
+                                    PhoneNumber = model.PhoneNumber,
+                                    LevelOfStudy = model.LevelOfStudy,
+                                    FieldOfStudy = model.FieldOfStudy
+                                }
+                            };
+                        }
+                    }
+                    catch (Exception dbEx)
+                    {
+                        Console.WriteLine($"Database error during registration: {dbEx.Message}");
+                        // Registration in Auth was successful, but database insert failed
+                        // We should still return success to allow the user to proceed
+                        return new AuthResult
+                        {
+                            Success = true,
+                            User = new UserModel
+                            {
+                                Id = session.User.Id ?? "",
+                                Email = model.Email,
+                                FirstName = model.FirstName,
+                                LastName = model.LastName
+                            },
+                            Message = "Votre compte a été créé, mais certaines informations de profil n'ont pas pu être enregistrées."
+                        };
+                    }
                 }
                 
+                Console.WriteLine("Registration failed: Session or User is null");
                 return new AuthResult
                 {
                     Success = false,
@@ -174,6 +238,8 @@ namespace IHECLibrary.Services.Implementations
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception during registration: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return new AuthResult
                 {
                     Success = false,

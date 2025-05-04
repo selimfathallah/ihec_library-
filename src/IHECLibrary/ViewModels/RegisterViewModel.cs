@@ -81,6 +81,7 @@ namespace IHECLibrary.ViewModels
 
             try
             {
+                Console.WriteLine("Creating registration model");
                 var registrationModel = new UserRegistrationModel
                 {
                     Email = Email,
@@ -92,16 +93,42 @@ namespace IHECLibrary.ViewModels
                     FieldOfStudy = SelectedField
                 };
 
+                Console.WriteLine("Calling RegisterAsync");
                 var result = await _authService.RegisterAsync(registrationModel);
+                Console.WriteLine($"Registration result - Success: {result.Success}, Error: {result.ErrorMessage ?? "None"}");
+                
                 if (result.Success)
                 {
                     // Add debug logging
                     Console.WriteLine("Registration successful, navigating to Home view");
+                    
                     // Clear any error message
                     ErrorMessage = string.Empty;
                     
-                    // Ensure we navigate to the Home view
-                    await _navigationService.NavigateToAsync("Home");
+                    try 
+                    {
+                        // Ensure we navigate to the Home view
+                        Console.WriteLine("Attempting navigation to Home view");
+                        await _navigationService.NavigateToAsync("Home");
+                        Console.WriteLine("Navigation to Home completed");
+                    }
+                    catch (Exception navEx)
+                    {
+                        Console.WriteLine($"Navigation error: {navEx.Message}");
+                        
+                        // Try again with a different approach if the first attempt fails
+                        try
+                        {
+                            Console.WriteLine("Attempting alternate navigation approach");
+                            await Task.Delay(500); // Small delay to ensure UI is ready
+                            await _navigationService.NavigateToAsync("Home");
+                        }
+                        catch (Exception ex2)
+                        {
+                            Console.WriteLine($"Second navigation attempt error: {ex2.Message}");
+                            ErrorMessage = "Inscription réussie, mais erreur lors de la navigation. Veuillez vous connecter manuellement.";
+                        }
+                    }
                 }
                 else
                 {
@@ -111,6 +138,8 @@ namespace IHECLibrary.ViewModels
             }
             catch (System.Exception ex)
             {
+                Console.WriteLine($"Exception during registration: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 ErrorMessage = $"Une erreur s'est produite: {ex.Message}";
             }
             finally

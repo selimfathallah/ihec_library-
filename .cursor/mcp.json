@@ -5,4 +5,17 @@
       "type": "sse"
     }
   }
+
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "sbp_136a2f67ce5587fb0b6d3e57e3364f9e1c936db9"
+      ]
+    },
+    "datapilot": {}
+  }
 }

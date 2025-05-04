@@ -1,142 +1,275 @@
-# Schéma de la base de données IHEC Library
+# IHEC Library Database Documentation
 
-## Introduction
-Ce document décrit la structure de la base de données Supabase pour l'application IHEC Library. La base de données est conçue pour stocker les informations sur les utilisateurs, les livres, les emprunts, les réservations et autres données nécessaires au fonctionnement de l'application.
+## Overview
 
-## Tables
+This document provides a comprehensive overview of the database schema for the IHEC Library management system. The system is built using Supabase as the backend database service, with PostgreSQL as the underlying database engine.
 
-### 1. Users (Utilisateurs)
-Table pour stocker les informations des utilisateurs (étudiants et administrateurs).
+## Database Information
+- **Project Name**: IHEC_Library
+- **Region**: eu-central-1
+- **Database Version**: 15.8.1.073
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| email | varchar | Email de l'utilisateur (@ihec.ucar.tn) |
-| password_hash | varchar | Hash du mot de passe |
-| first_name | varchar | Prénom |
-| last_name | varchar | Nom de famille |
-| phone_number | varchar | Numéro de téléphone (format tunisien: +216) |
-| level_of_study | varchar | Niveau d'étude (1, 2, 3, M1, M2, Autre) |
-| field_of_study | varchar | Domaine d'étude (BI, Gestion, Finance, etc.) |
-| profile_picture_url | varchar | URL de la photo de profil |
-| is_admin | boolean | Indique si l'utilisateur est un administrateur |
-| job_title | varchar | Titre du poste (pour les administrateurs) |
-| created_at | timestamp | Date de création du compte |
-| updated_at | timestamp | Date de dernière mise à jour |
-| is_approved | boolean | Indique si le compte administrateur est approuvé |
-| is_blocked | boolean | Indique si l'utilisateur est bloqué |
+## Entity Relationship Diagram
 
-### 2. Books (Livres)
-Table pour stocker les informations sur les livres disponibles dans la bibliothèque.
+The database consists of several related tables designed to manage library resources, user interactions, and administrative operations.
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| title | varchar | Titre du livre |
-| author | varchar | Auteur du livre |
-| isbn | varchar | Numéro ISBN |
-| publication_year | integer | Année de publication |
-| publisher | varchar | Éditeur |
-| category | varchar | Catégorie du livre |
-| description | text | Description du livre |
-| cover_image_url | varchar | URL de l'image de couverture |
-| available_copies | integer | Nombre d'exemplaires disponibles |
-| total_copies | integer | Nombre total d'exemplaires |
-| created_at | timestamp | Date d'ajout à la bibliothèque |
-| updated_at | timestamp | Date de dernière mise à jour |
+### Core Entities:
+- Users
+- Books
+- Admin Profiles
+- Book-related activities (borrowing, reservations, ratings, comments, likes)
+- Chatbot integration
 
-### 3. Borrows (Emprunts)
-Table pour enregistrer les emprunts de livres par les utilisateurs.
+## Tables Structure
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| user_id | uuid | ID de l'utilisateur (clé étrangère) |
-| book_id | uuid | ID du livre (clé étrangère) |
-| borrow_date | timestamp | Date d'emprunt |
-| due_date | timestamp | Date de retour prévue |
-| return_date | timestamp | Date de retour effective (null si non retourné) |
-| is_returned | boolean | Indique si le livre a été retourné |
-| created_at | timestamp | Date de création de l'enregistrement |
-| updated_at | timestamp | Date de dernière mise à jour |
+### Users
 
-### 4. Reservations (Réservations)
-Table pour enregistrer les réservations de livres par les utilisateurs.
+Primary table that stores information about all users in the system.
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| user_id | uuid | ID de l'utilisateur (clé étrangère) |
-| book_id | uuid | ID du livre (clé étrangère) |
-| reservation_date | timestamp | Date de réservation |
-| is_active | boolean | Indique si la réservation est active |
-| is_notified | boolean | Indique si l'utilisateur a été notifié de la disponibilité |
-| created_at | timestamp | Date de création de l'enregistrement |
-| updated_at | timestamp | Date de dernière mise à jour |
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| user_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| email | varchar | User email | NOT NULL, UNIQUE, CHECK (email LIKE '%@ihec.ucar.tn') |
+| password_hash | varchar | Hashed password | NOT NULL |
+| first_name | varchar | User's first name | NOT NULL |
+| last_name | varchar | User's last name | NOT NULL |
+| phone_number | varchar | User's phone number | NOT NULL, CHECK (phone_number LIKE '+216%') |
+| profile_picture_url | text | URL to profile picture | NOT NULL |
+| created_at | timestamptz | Account creation date | DEFAULT now() |
+| last_login | timestamptz | Most recent login time | NULL |
+| is_active | boolean | Account status | DEFAULT true |
+| level_of_study | varchar | Academic level | CHECK (level_of_study IN ('1', '2', '3', 'M1', 'M2', 'Other')) |
+| field_of_study | varchar | Major/specialization | CHECK (field_of_study IN ('BI', 'Gestion', 'Finance', 'Management', 'Marketing', 'Big Data', 'Accounting', 'Other')) |
+| books_borrowed | integer | Count of borrowed books | DEFAULT 0 |
+| books_reserved | integer | Count of reserved books | DEFAULT 0 |
+| ranking | varchar | User rank in the system | DEFAULT 'Bronze', CHECK (ranking IN ('Bronze', 'Silver', 'Gold', 'Master')) |
+| is_student | boolean | Student status flag | DEFAULT true |
+| bio | text | User biography | NULL |
+| field_interest | text[] | Array of academic interests | DEFAULT '{}' |
 
-### 5. BookRatings (Évaluations de livres)
-Table pour stocker les évaluations et commentaires des utilisateurs sur les livres.
+### AdminProfiles
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| user_id | uuid | ID de l'utilisateur (clé étrangère) |
-| book_id | uuid | ID du livre (clé étrangère) |
-| rating | integer | Note (1-5) |
-| comment | text | Commentaire |
-| created_at | timestamp | Date de création de l'évaluation |
-| updated_at | timestamp | Date de dernière mise à jour |
+Stores additional information about users with administrative privileges.
 
-### 6. BookLikes (Livres aimés)
-Table pour enregistrer les livres aimés par les utilisateurs.
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| admin_id | uuid | Primary key, references users(user_id) | NOT NULL |
+| job_title | varchar | Position title | NOT NULL, CHECK (job_title IN ('Professor', 'Librarian', 'Administration')) |
+| is_approved | boolean | Approval status | DEFAULT false |
+| approved_by | uuid | References the user who approved | NULL, REFERENCES users(user_id) |
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| user_id | uuid | ID de l'utilisateur (clé étrangère) |
-| book_id | uuid | ID du livre (clé étrangère) |
-| created_at | timestamp | Date de création de l'enregistrement |
+### Books
 
-### 7. ChatHistory (Historique des conversations)
-Table pour stocker l'historique des conversations avec le chatbot HEC 1.0.
+Contains information about all books in the library.
 
-| Colonne | Type | Description |
-|---------|------|-------------|
-| id | uuid | Identifiant unique, clé primaire |
-| user_id | uuid | ID de l'utilisateur (clé étrangère) |
-| message | text | Message de l'utilisateur |
-| response | text | Réponse du chatbot |
-| created_at | timestamp | Date de création de l'enregistrement |
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| book_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| title | varchar | Book title | NOT NULL |
+| author | varchar | Book author | NOT NULL |
+| publication_year | integer | Year published | NULL |
+| publisher | varchar | Publishing house | NULL |
+| isbn | varchar | ISBN number | NULL, UNIQUE |
+| description | text | Book description | NULL |
+| cover_image_url | text | URL to cover image | NULL |
+| page_count | integer | Number of pages | NULL |
+| language | varchar | Book language | NULL |
+| category | varchar | Primary category | NULL |
+| tags | text[] | Array of tags/keywords | NULL |
+| availability_status | varchar | Current status | DEFAULT 'Available', CHECK (availability_status IN ('Available', 'Borrowed', 'Reserved')) |
+| added_at | timestamptz | When book was added | DEFAULT now() |
+| added_by | uuid | User who added the book | NULL, REFERENCES users(user_id) |
+| copies | integer | Total number of copies | DEFAULT 1, NOT NULL |
+| copies_left | integer | Available copies | DEFAULT 1, NOT NULL |
 
-## Relations
+### BookStatistics
 
-1. Users (1) -> (*) Borrows : Un utilisateur peut emprunter plusieurs livres
-2. Users (1) -> (*) Reservations : Un utilisateur peut réserver plusieurs livres
-3. Users (1) -> (*) BookRatings : Un utilisateur peut évaluer plusieurs livres
-4. Users (1) -> (*) BookLikes : Un utilisateur peut aimer plusieurs livres
-5. Users (1) -> (*) ChatHistory : Un utilisateur peut avoir plusieurs conversations avec le chatbot
-6. Books (1) -> (*) Borrows : Un livre peut être emprunté plusieurs fois (par différents utilisateurs)
-7. Books (1) -> (*) Reservations : Un livre peut être réservé plusieurs fois (par différents utilisateurs)
-8. Books (1) -> (*) BookRatings : Un livre peut avoir plusieurs évaluations
-9. Books (1) -> (*) BookLikes : Un livre peut être aimé par plusieurs utilisateurs
+Aggregated statistics about each book.
 
-## Règles de sécurité et d'accès
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| book_id | uuid | Primary key, references books(book_id) | NOT NULL |
+| total_borrows | integer | Number of times borrowed | DEFAULT 0 |
+| total_reservations | integer | Number of times reserved | DEFAULT 0 |
+| average_rating | numeric | Average rating value | DEFAULT 0 |
+| total_ratings | integer | Number of ratings received | DEFAULT 0 |
+| total_likes | integer | Number of likes received | DEFAULT 0 |
 
-1. Les utilisateurs non authentifiés ne peuvent pas accéder aux données
-2. Les utilisateurs authentifiés peuvent :
-   - Lire les informations sur tous les livres
-   - Lire les évaluations et commentaires publics
-   - Gérer leurs propres emprunts, réservations, évaluations et likes
-   - Voir leur propre historique de conversation avec le chatbot
-3. Les administrateurs peuvent :
-   - Lire et modifier toutes les données
-   - Ajouter, modifier et supprimer des livres
-   - Gérer les comptes utilisateurs (approuver, bloquer)
-   - Voir les statistiques d'utilisation
+### BookBorrowings
 
-## Fonctions et déclencheurs
+Records of book borrowing transactions.
 
-1. Déclencheur pour mettre à jour le nombre d'exemplaires disponibles lorsqu'un livre est emprunté ou retourné
-2. Déclencheur pour envoyer une notification par email lorsqu'un livre réservé devient disponible
-3. Fonction pour calculer le classement des utilisateurs (Bronze, Silver, Gold, Master) en fonction du nombre de livres empruntés
-4. Fonction pour générer des recommandations de livres basées sur les préférences de l'utilisateur
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| borrowing_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| borrow_date | timestamptz | Date borrowed | NOT NULL, DEFAULT now() |
+| due_date | timestamptz | Return deadline | NOT NULL |
+| return_date | timestamptz | Actual return date | NULL |
+| is_returned | boolean | Return status | DEFAULT false |
+| reminder_sent | boolean | If reminder was sent | DEFAULT false |
+| created_at | timestamptz | Record creation time | DEFAULT now() |
+
+### BookReservations
+
+Records of book reservation requests.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| reservation_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| reservation_date | timestamptz | Date reserved | NOT NULL, DEFAULT now() |
+| notification_sent | boolean | If notification was sent | DEFAULT false |
+| is_active | boolean | If reservation is active | DEFAULT true |
+
+### BookRatings
+
+User ratings for books.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| rating_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| rating | integer | Rating value (1-5) | NOT NULL, CHECK (rating >= 1 AND rating <= 5) |
+| created_at | timestamptz | Rating submission time | DEFAULT now() |
+
+### BookComments
+
+User comments on books.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| comment_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| comment_text | text | Comment content | NOT NULL |
+| created_at | timestamptz | Comment submission time | DEFAULT now() |
+| updated_at | timestamptz | Comment update time | NULL |
+
+### BookLikes
+
+Records user "likes" of books.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| like_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| created_at | timestamptz | Like submission time | DEFAULT now() |
+
+### BooksOfInterest
+
+Records books users have marked as interesting.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| interest_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| book_id | uuid | References books(book_id) | NOT NULL |
+| created_at | timestamptz | Record creation time | DEFAULT now() |
+
+### AIChatHistory
+
+Stores conversations between users and the AI chatbot.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| chat_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| user_id | uuid | References users(user_id) | NOT NULL |
+| user_message | text | User's message | NOT NULL |
+| ai_response | text | Chatbot's response | NOT NULL |
+| created_at | timestamptz | Message timestamp | DEFAULT now() |
+
+### ActivityLogs
+
+System activity logs for audit and analysis.
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|------------|
+| log_id | uuid | Primary key | NOT NULL, DEFAULT uuid_generate_v4() |
+| user_id | uuid | References users(user_id) | NULL |
+| activity_type | varchar | Type of activity | NOT NULL |
+| activity_description | text | Description of activity | NULL |
+| ip_address | varchar | IP address | NULL |
+| created_at | timestamptz | Log timestamp | DEFAULT now() |
+
+## Relationships
+
+### Main Relationships:
+1. **Users and Books**:
+   - Users can borrow books (BookBorrowings)
+   - Users can reserve books (BookReservations)
+   - Users can rate books (BookRatings)
+   - Users can comment on books (BookComments)
+   - Users can like books (BookLikes)
+   - Users can mark books as interesting (BooksOfInterest)
+   - Admins (Users) can add books (Books.added_by)
+
+2. **Administrative Access**:
+   - Users can have admin profiles (AdminProfiles)
+   - Admins can approve other admins (AdminProfiles.approved_by)
+
+3. **Book Tracking**:
+   - Each book has statistics (BookStatistics)
+   - Activities related to books are tracked in ActivityLogs
+
+4. **Chatbot Integration**:
+   - User interactions with the chatbot are stored (AIChatHistory)
+
+## Security Features
+
+1. **Row Level Security (RLS)**:
+   - Enabled on users table
+   - Enabled on books table
+
+2. **Data Constraints**:
+   - Email validation (must end with @ihec.ucar.tn)
+   - Phone number validation (must start with +216)
+   - Enum-like constraints on various fields like ranking, level_of_study, etc.
+   - Rating values limited to 1-5
+
+## System Design Notes
+
+1. **User Ranking System**:
+   The system includes a gamification element with user rankings (Bronze, Silver, Gold, Master).
+
+2. **Book Availability Tracking**:
+   - The system tracks both total copies and available copies
+   - Availability status transitions (Available, Borrowed, Reserved)
+
+3. **Statistics Collection**:
+   Aggregated statistics for books are maintained separately for performance.
+
+4. **Activity Tracking**:
+   Comprehensive activity logging for audit and analysis purposes.
+
+5. **AI Integration**:
+   Built-in support for AI chatbot functionality with conversation history.
+
+## Usage Patterns
+
+This database structure supports the following key use cases:
+- Student registration and profile management
+- Admin registration and approval workflows
+- Book management (adding, updating inventory)
+- Borrowing and reservation processes
+- Social features (ratings, comments, likes)
+- Interest-based recommendations
+- AI-assisted library support
+- Activity tracking and analytics
+
+## Best Practices for Queries
+
+When querying this database:
+1. Use joins wisely when accessing related tables
+2. Consider performance implications for statistics-heavy queries
+3. Respect RLS policies when writing custom queries
+4. Use parameters for all user-supplied inputs to prevent injection attacks
+5. Cache frequently accessed read-only data when appropriate
+
+---
+
+This documentation represents the database schema as of May 4, 2025.
