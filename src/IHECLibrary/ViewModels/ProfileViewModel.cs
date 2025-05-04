@@ -32,7 +32,7 @@ namespace IHECLibrary.ViewModels
         private string _userRankColor = string.Empty;
 
         [ObservableProperty]
-        private string _userProfilePicture = string.Empty;
+        private string _userProfilePicture = "avares://IHECLibrary/Assets/86e75388-ca74-4247-8493-b54c288ba351.png";
 
         [ObservableProperty]
         private string _searchQuery = string.Empty;
@@ -84,7 +84,32 @@ namespace IHECLibrary.ViewModels
                     UserPhone = user.PhoneNumber;
                     UserLevel = user.LevelOfStudy ?? "N/A";
                     UserField = user.FieldOfStudy ?? "N/A";
-                    UserProfilePicture = user.ProfilePictureUrl ?? "/Assets/default_profile.png";
+                    
+                    // Log the profile picture URL for debugging
+                    Console.WriteLine($"Profile picture URL: {user.ProfilePictureUrl ?? "null"}");
+                    
+                    // Handle profile picture URL
+                    if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+                    {
+                        // If it's a remote URL starting with http:// or https://
+                        if (user.ProfilePictureUrl.StartsWith("http"))
+                        {
+                            UserProfilePicture = user.ProfilePictureUrl;
+                            Console.WriteLine($"Setting remote profile picture URL: {UserProfilePicture}");
+                        }
+                        else
+                        {
+                            // If it's a local resource, ensure proper format
+                            UserProfilePicture = user.ProfilePictureUrl;
+                            Console.WriteLine($"Setting local profile picture: {UserProfilePicture}");
+                        }
+                    }
+                    else
+                    {
+                        // Use Avalonia resource format for local assets
+                        UserProfilePicture = "avares://IHECLibrary/Assets/86e75388-ca74-4247-8493-b54c288ba351.png";
+                        Console.WriteLine($"Using default profile picture: {UserProfilePicture}");
+                    }
 
                     var statistics = await _userService.GetUserStatisticsAsync(user.Id);
                     BorrowedBooksCount = statistics.BorrowedBooksCount;

@@ -80,8 +80,14 @@
                     CornerRadius="50"
                     ClipToBounds="True">
               <Panel>
-                <Image Source="/Assets/86e75388-ca74-4247-8493-b54c288ba351.png" Stretch="UniformToFill"/>
-                <Button Content="📷"
+                <Image Source="{Binding ProfilePicturePreview}" 
+                       IsVisible="{Binding HasNewProfilePicture}"
+                       Stretch="UniformToFill"/>
+                <Image Source="{Binding CurrentProfilePictureUrl}" 
+                       IsVisible="{Binding !HasNewProfilePicture}"
+                       Stretch="UniformToFill"/>
+                <Button Command="{Binding SelectProfilePictureCommand}"
+                        Content="📷"
                         FontSize="20"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"

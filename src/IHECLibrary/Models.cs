@@ -78,6 +78,9 @@ namespace IHECLibrary
         public string? LevelOfStudy { get; set; }
         public string? FieldOfStudy { get; set; }
         public string? ProfilePictureUrl { get; set; }
+        // Added properties for profile picture updates
+        public bool HasNewProfilePicture { get; set; }
+        public string? ProfilePictureData { get; set; }
         // Added properties for the EditProfile view
         public string? Preferences { get; set; }
         public bool NotifyReturns { get; set; }
@@ -107,6 +110,9 @@ namespace IHECLibrary
         public string LevelOfStudy { get; set; } = string.Empty;
         public string FieldOfStudy { get; set; } = string.Empty;
         public string? ProfilePictureUrl { get; set; }
+        // New properties for profile picture upload
+        public string? ProfilePictureData { get; set; }
+        public bool HasProfilePicture { get; set; } = false;
     }
 
     public class AdminRegistrationModel

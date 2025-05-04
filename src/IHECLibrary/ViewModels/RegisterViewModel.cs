@@ -4,6 +4,10 @@ using IHECLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
+using Avalonia.Media.Imaging;
 
 namespace IHECLibrary.ViewModels
 {
@@ -36,6 +40,18 @@ namespace IHECLibrary.ViewModels
         [ObservableProperty]
         private string _errorMessage = string.Empty;
 
+        [ObservableProperty]
+        private string _profilePicturePath = string.Empty;
+
+        [ObservableProperty]
+        private Bitmap? _profilePicturePreview;
+
+        [ObservableProperty]
+        private bool _hasProfilePicture;
+
+        [ObservableProperty]
+        private string _profilePictureDisplay = "Select Profile Picture";
+
         public List<string> LevelOptions { get; } = new List<string>
         {
             "1", "2", "3", "M1", "M2", "Autre"
@@ -48,15 +64,83 @@ namespace IHECLibrary.ViewModels
 
         private readonly INavigationService _navigationService;
         private readonly IAuthService _authService;
+        private readonly Window? _parentWindow;
 
         public RegisterViewModel(INavigationService navigationService, IAuthService authService)
         {
             _navigationService = navigationService;
             _authService = authService;
             
+            // Get parent window for file picker
+            _parentWindow = App.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+                ? desktop.MainWindow
+                : null;
+            
             // Valeurs par défaut
             SelectedLevel = LevelOptions[0];
             SelectedField = FieldOptions[0];
+        }
+
+        [RelayCommand]
+        private async Task SelectProfilePicture()
+        {
+            if (_parentWindow == null)
+            {
+                ErrorMessage = "Cannot open file picker (window not available)";
+                return;
+            }
+
+            try
+            {
+                // Create file picker options for images
+                var options = new FilePickerOpenOptions
+                {
+                    Title = "Select Profile Picture",
+                    AllowMultiple = false,
+                    FileTypeFilter = new FilePickerFileType[]
+                    {
+                        new FilePickerFileType("Image Files")
+                        {
+                            Patterns = new[] { "*.jpg", "*.jpeg", "*.png", "*.gif" },
+                            MimeTypes = new[] { "image/jpeg", "image/png", "image/gif" }
+                        }
+                    }
+                };
+
+                // Open file picker
+                var result = await _parentWindow.StorageProvider.OpenFilePickerAsync(options);
+                
+                if (result != null && result.Count > 0)
+                {
+                    // Get the selected file
+                    var file = result[0];
+                    ProfilePicturePath = file.Path.LocalPath;
+                    ProfilePictureDisplay = Path.GetFileName(ProfilePicturePath);
+                    HasProfilePicture = true;
+
+                    // Load the image preview
+                    await LoadProfilePreview(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error selecting profile picture: {ex.Message}");
+                ErrorMessage = "Error selecting image file";
+            }
+        }
+
+        private async Task LoadProfilePreview(IStorageFile file)
+        {
+            try
+            {
+                using var stream = await file.OpenReadAsync();
+                ProfilePicturePreview = new Bitmap(stream);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading image preview: {ex.Message}");
+                ProfilePicturePreview = null;
+            }
         }
 
         [RelayCommand]
@@ -82,6 +166,24 @@ namespace IHECLibrary.ViewModels
             try
             {
                 Console.WriteLine("Creating registration model");
+                
+                // Prepare profile picture data if available
+                string profilePictureBase64 = string.Empty;
+                if (HasProfilePicture && !string.IsNullOrEmpty(ProfilePicturePath))
+                {
+                    try
+                    {
+                        byte[] imageBytes = File.ReadAllBytes(ProfilePicturePath);
+                        profilePictureBase64 = Convert.ToBase64String(imageBytes);
+                        Console.WriteLine("Profile picture data prepared");
+                    }
+                    catch (Exception imgEx)
+                    {
+                        Console.WriteLine($"Error reading profile picture: {imgEx.Message}");
+                        // Continue without profile picture
+                    }
+                }
+                
                 var registrationModel = new UserRegistrationModel
                 {
                     Email = Email,
@@ -90,7 +192,9 @@ namespace IHECLibrary.ViewModels
                     LastName = LastName,
                     PhoneNumber = "+216" + PhoneNumber,
                     LevelOfStudy = SelectedLevel,
-                    FieldOfStudy = SelectedField
+                    FieldOfStudy = SelectedField,
+                    ProfilePictureData = profilePictureBase64,
+                    HasProfilePicture = !string.IsNullOrEmpty(profilePictureBase64)
                 };
 
                 Console.WriteLine("Calling RegisterAsync");

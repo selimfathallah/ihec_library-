@@ -167,19 +167,89 @@ namespace IHECLibrary.Services.Implementations
                 user.LastName = model.LastName ?? "";
                 user.PhoneNumber = model.PhoneNumber ?? "";
                 
-                if (!string.IsNullOrEmpty(model.ProfilePictureUrl))
+                // Handle profile picture update if provided
+                if (model.HasNewProfilePicture && !string.IsNullOrEmpty(model.ProfilePictureData))
+                {
+                    try
+                    {
+                        Console.WriteLine("Uploading new profile picture...");
+                        
+                        // Create a unique filename for the profile picture
+                        string fileName = $"profile_{userId}_{DateTime.UtcNow.Ticks}.jpg";
+                        
+                        // Convert base64 string to bytes
+                        byte[] imageData = Convert.FromBase64String(model.ProfilePictureData);
+                        
+                        // Upload to Supabase Storage
+                        var upload = await _supabaseClient.Storage
+                            .From("profile-pictures")
+                            .Upload(
+                                imageData,
+                                fileName,
+                                new Supabase.Storage.FileOptions 
+                                { 
+                                    CacheControl = "3600", 
+                                    Upsert = true
+                                });
+                        
+                        if (!string.IsNullOrEmpty(upload))
+                        {
+                            // Get the public URL
+                            string profilePictureUrl = _supabaseClient.Storage
+                                .From("profile-pictures")
+                                .GetPublicUrl(fileName);
+                            
+                            Console.WriteLine($"Profile picture uploaded successfully: {profilePictureUrl}");
+                            
+                            // Update user's profile picture URL
+                            user.ProfilePictureUrl = profilePictureUrl;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error uploading profile picture: {ex.Message}");
+                        // Continue with the update even if image upload fails
+                    }
+                }
+                else if (!string.IsNullOrEmpty(model.ProfilePictureUrl))
                 {
                     user.ProfilePictureUrl = model.ProfilePictureUrl;
                 }
                 
-                // Save the changes
+                // Save the changes to user table
                 await _supabaseClient.From<DbUser>()
                     .Update(user);
+                
+                // Update student profile information if needed
+                try
+                {
+                    var studentProfile = await _supabaseClient.From<DbStudentProfile>()
+                        .Where(p => p.StudentId == userId)
+                        .Single();
+                        
+                    if (studentProfile != null)
+                    {
+                        if (!string.IsNullOrEmpty(model.LevelOfStudy))
+                            studentProfile.LevelOfStudy = model.LevelOfStudy;
+                            
+                        if (!string.IsNullOrEmpty(model.FieldOfStudy))
+                            studentProfile.FieldOfStudy = model.FieldOfStudy;
+                            
+                        await _supabaseClient.From<DbStudentProfile>()
+                            .Update(studentProfile);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error updating student profile: {ex.Message}");
+                    // Continue even if this part fails
+                }
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error in UpdateUserProfileAsync: {ex.Message}");
                 return false;
             }
         }

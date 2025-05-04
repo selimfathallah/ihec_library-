@@ -124,6 +124,40 @@
                        CornerRadius="0,4,4,0" BorderThickness="1" BorderBrush="#E0E0E0"/>
             </Grid>
             
+            <!-- Profile Picture Section -->
+            <TextBlock Text="Profile Picture" FontWeight="Medium" Margin="0,0,0,5"/>
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,15">
+              <Border Grid.Column="0" 
+                      BorderBrush="#E0E0E0" 
+                      BorderThickness="1" 
+                      CornerRadius="4"
+                      Height="40">
+                <TextBlock Text="{Binding ProfilePictureDisplay}" 
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           TextTrimming="CharacterEllipsis"/>
+              </Border>
+              <Button Grid.Column="1"
+                      Content="Browse"
+                      Command="{Binding SelectProfilePictureCommand}"
+                      Height="40"
+                      Margin="5,0,0,0"
+                      Classes="primary"
+                      CornerRadius="4"/>
+            </Grid>
+            
+            <!-- Profile Picture Preview -->
+            <Border IsVisible="{Binding HasProfilePicture}"
+                    Width="100" 
+                    Height="100"
+                    CornerRadius="50"
+                    ClipToBounds="True"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,15">
+              <Image Source="{Binding ProfilePicturePreview}"
+                     Stretch="UniformToFill"/>
+            </Border>
+            
             <TextBlock Text="Level of Study" FontWeight="Medium" Margin="0,0,0,5"/>
             <ComboBox SelectedItem="{Binding SelectedLevel}" ItemsSource="{Binding LevelOptions}" 
                       HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,15"
